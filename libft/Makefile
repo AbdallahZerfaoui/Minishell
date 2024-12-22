@@ -6,7 +6,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # List of source files
-SRC = ft_strcmp.c
+SRC = $(wildcard *.c)
 
 # Object files (by replacing .c with .o)
 OBJ = $(SRC:.c=.o)

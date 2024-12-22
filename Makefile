@@ -4,7 +4,8 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = libft.a
-SRC = main.c
+EXECUTION_SRC = $(wildcard execution_backup/*.c) $(wildcard execution_backup/buildins/*.c)
+SRC = main.c $(EXECUTION_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

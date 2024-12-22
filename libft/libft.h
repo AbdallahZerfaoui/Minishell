@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:01:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/22 19:07:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:04:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int					ft_tolower(int c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int 				ft_strcmp(const char *s1, const char *s2);
+int					ft_strcmp(const char *s1, const char *s2);
 void				*ft_memchr(const void *str, int c, size_t n);
 int					ft_memcmp(const void *block1, const void *block2, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
