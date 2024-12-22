@@ -1,0 +1,10 @@
+# General
+.vscode
+.DS_Store
+*backup*
+*.o
+*.py
+*.pyc
+*.out
+*.log
+
