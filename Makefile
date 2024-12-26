@@ -4,10 +4,19 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = libft.a
-EXECUTION_SRC = $(wildcard execution_backup/*.c) $(wildcard execution_backup/buildins/*.c)
-SRC = main.c $(EXECUTION_SRC)
+# EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
+# GNL_SRC = $(wildcard get_next_line/*.c)
+# PIEPX_SRC = $(wildcard pipex/*.c)
+# SRC = $(wildcard *.c) $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
+SRC = $(wildcard lexer/*.c)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
+
+#TEST : ls -la | grep "hello .txt" | sort > output.txt
+#TEST : ls -la | grep ".txt" | sort | wc -l > output.txt
+
+# $(info PIEPX_SRC = $(EXECUTION_SRC))
+# $(info SRC = $(SRC))
 
 # Rules
 all: art lib $(NAME)
@@ -40,4 +49,4 @@ art:
 	@echo "###       ### ########### ###    #### ########### ########  ###    ### ########## ########## ########## "
 	@echo "                                                               by The Greatest                          "
 
-.PHONY: all clean fclean re art
+.PHONY: all clean fclean re art lib

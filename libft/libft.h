@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:01:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/22 20:04:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:40:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t nitems, size_t size);
 char				*ft_strdup(const char *s);
+char				*ft_delsep(char *str); // from khnichou
 
 // Addictional functions (11)
 char				*ft_substr(char const *s, unsigned int start, size_t len);

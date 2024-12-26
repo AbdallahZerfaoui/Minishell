@@ -10,3 +10,8 @@
 
 # specific
 ft_malloc.h
+pipex/
+src/
+ft_malloc/
+get_next_line/*
+get_next_line
