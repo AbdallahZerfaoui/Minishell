@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 14:50:41 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:13:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@
 // 	}
 // }
 
-static void	shell_loop(char **env)
-{
-	char	*line;
-	t_exe	*exe;
+// static void	shell_loop(char **env)
+// {
+// 	char	*line;
+// 	t_exe	*exe;
 
-	while (1)
-	{
-		line = readline(MAGENTA"Minishell> "RESET);
-		if (!line || ft_strcmp(line, "exit") == 0)
-			break ;
-		if (line[0] != '\0')
-			add_history(line);
-		exe = parse_line(line, env);
-		launch(exe);
-		free(line);
-	}
-}
+// 	while (1)
+// 	{
+// 		line = readline(MAGENTA"Minishell> "RESET);
+// 		if (!line || ft_strcmp(line, "exit") == 0)
+// 			break ;
+// 		if (line[0] != '\0')
+// 			add_history(line);
+// 		exe = parse_line(line, env);
+// 		launch(exe);
+// 		free(line);
+// 	}
+// }
 
 // static void    shell_loop(char **envp)
 // {
@@ -71,11 +71,11 @@ static void	shell_loop(char **env)
 // 	printf(RESET);
 // }
 
-int	main(int argc, char **argv, char **env)
-{
-	(void)argv;
-	(void)argc;
-	shell_loop(env);
-	return (0);
-}
+// int	main(int argc, char **argv, char **env)
+// {
+// 	(void)argv;
+// 	(void)argc;
+// 	shell_loop(env);
+// 	return (0);
+// }
 

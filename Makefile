@@ -14,6 +14,7 @@ NAME = minishell
 
 #TEST : ls -la | grep "hello .txt" | sort > output.txt
 #TEST : ls -la | grep ".txt" | sort | wc -l > output.txt
+#test : <"input file">"output file" | <cat>file
 
 # $(info PIEPX_SRC = $(EXECUTION_SRC))
 # $(info SRC = $(SRC))

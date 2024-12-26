@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:01:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/22 23:40:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:50:50 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 // Functions of libc (23)
 int					ft_isalpha(int c);

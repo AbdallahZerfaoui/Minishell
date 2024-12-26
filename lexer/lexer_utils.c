@@ -6,21 +6,21 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 15:11:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:13:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token	*create_token(char *value, char *type)
+t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*new;
 
-	new = ft_calloc(1, sizeof(t_token));
+	new = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->value = value;
-	new->type = ft_strdup(type);
+	new->value = ft_strdup(value);
+	new->type = type;
 	return (new);
 }
 
