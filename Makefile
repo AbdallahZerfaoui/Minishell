@@ -8,7 +8,7 @@ LIBS = libft.a
 # GNL_SRC = $(wildcard get_next_line/*.c)
 # PIEPX_SRC = $(wildcard pipex/*.c)
 # SRC = $(wildcard *.c) $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-SRC = $(wildcard lexer/*.c)
+SRC = $(wildcard lexer/*.c) $(wildcard parser/*.c) utils.c
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

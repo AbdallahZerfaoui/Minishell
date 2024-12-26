@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 20:37:29 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 21:50:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,20 @@ t_token	*lexer(const char *line)
 	return (tokens);
 }
 
-int main(void)
-{
-	t_token	*tokens;
-	// char	*line = "cat<\"input file\">\"output file\" | <\"cat\">file | <ls -la | grep \".txt\" | sort | wc -l > output.txt";
-	char *line = "ls -la << grep \".txt\" >> sort | wc -l > output.txt";
+// int main(void)
+// {
+// 	t_token	*tokens;
+// 	// char	*line = "cat<\"input file\">\"output file\" | <\"cat\">file | <ls -la | grep \".txt\" | sort | wc -l > output.txt";
+// 	// char *line = "ls -la << grep \".txt\" >> sort | wc -l > output.txt";
+// 	// char *line = "<ls -la | grep \".txt\" | sort | wc -l > output.txt";
+// 	char *line = "cd | ls -al | wc -l> test.txt";
 
-	tokens = lexer(line);
-	while (tokens)
-	{
-		printf("value = %s	-	", tokens->value);
-		printf("type = %d\n", tokens->type);
-		tokens = tokens->next;
-	}
-	return (0);
-}
+// 	tokens = lexer(line);
+// 	while (tokens)
+// 	{
+// 		printf("value = %s	-	", tokens->value);
+// 		printf("type = %d\n", tokens->type);
+// 		tokens = tokens->next;
+// 	}
+// 	return (0);
+// }

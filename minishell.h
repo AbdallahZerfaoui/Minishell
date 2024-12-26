@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 20:11:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 22:41:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,35 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_cmd_node
+{
+	t_token				*cmd;
+	t_token				*files;
+	struct s_cmd_node	*next;
+	struct s_cmd_node	*prev;
+}					t_cmd_node;
+
 // Lexer
-t_token				*array2linked_list(char **array);
+t_token				*lexer(const char *line);
 
 // Lexer utils
 t_token				*create_token(char *value, t_token_type type);
 t_token				*get_last_token(t_token *token);
 void				append_token(t_token **head, t_token *new_token);
 char				**lex_split(const char *str);
+t_token				*array2linked_list(char **array);
+
+// Parser
+t_cmd_node			*parse(t_token *tokens);
+
+// Parser utils
+t_cmd_node			*create_cmd_node(void);
+void				append_cmd_node(t_cmd_node **head, t_cmd_node *new_node);
+void				add_cmd(t_cmd_node **head, t_token *token);
+void				add_file(t_cmd_node **head, t_token *token);
+
+// Utils
+int					len_tokens_lst(t_token *tokens);
 
 // t_exe	*parse_line(char *line, char **env);
 
