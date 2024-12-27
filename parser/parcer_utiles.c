@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 21:15:40 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 21:36:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:11:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	append_cmd_node(t_cmd_node **head, t_cmd_node *new_node)
 		*head = new_node;
 		new_node->prev = NULL;
 		new_node->next = NULL;
-		// return (new_node);
 	}
 	last = *head;
 	while (last->next)
@@ -39,7 +38,6 @@ void	append_cmd_node(t_cmd_node **head, t_cmd_node *new_node)
 	last->next = new_node;
 	new_node->prev = last;
 	new_node->next = NULL;
-	// return (head);
 }
 
 void	add_cmd(t_cmd_node **head, t_token *token)
@@ -61,4 +59,32 @@ void	add_file(t_cmd_node **head, t_token *token)
 	while (current->next)
 		current = current->next;
 	append_token(&current->files, token);
+}
+
+t_token	*move_forward_n(t_token *token, int n)
+{
+	int	i;
+
+	i = 0;
+	if (!token)
+		return (NULL);
+	while (i < n && token)
+	{
+		token = token->next;
+		i++;
+	}
+	return (token);
+}
+
+int	get_words_chain_len(t_token *token)
+{
+	int	len;
+
+	len = 0;
+	while (token && token->type == WORD)
+	{
+		len++;
+		token = token->next;
+	}
+	return (len);
 }

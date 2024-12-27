@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 22:41:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:11:52 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ t_cmd_node			*create_cmd_node(void);
 void				append_cmd_node(t_cmd_node **head, t_cmd_node *new_node);
 void				add_cmd(t_cmd_node **head, t_token *token);
 void				add_file(t_cmd_node **head, t_token *token);
+t_token				*move_forward_n(t_token *token, int n);
+int					get_words_chain_len(t_token *token);
 
 // Utils
 int					len_tokens_lst(t_token *tokens);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 23:43:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:12:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,35 @@
 // 	return (head);
 // }
 
-// t_token	*detach_token(t_token *target)
-// {
-// 	t_token	*current;
-// 	t_token	*previous;
-// 	t_token	*current_updated;
+t_token	*detach_token(t_token *target, int size)
+{
+	t_token	*previous;
+	t_token	*current_updated;
 
-// 	current = target;
-// 	previous = target->prev;
-// 	current_updated = target->next;
-// 	if (previous)
-// 	{
-// 		previous->next = current->next;
-// 	}
-// 	current->next->prev = previous;
-// 	current->prev = NULL;
-// 	current->next = NULL;
-// 	return (current_updated);
-// }
+	if (!target || size < 0)
+		return (NULL);
+	previous = target->prev;
+	current_updated = move_forward_n(target, size);
+	if (previous)
+	{
+		previous->next = current_updated;
+	}
+	if (current_updated)
+	{
+		current_updated->prev->next = NULL;
+		current_updated->prev = previous;
+	}
+	target->prev = NULL;
+	return (current_updated);
+}
 
 t_cmd_node	*parse(t_token *tokens)
 {
 	t_cmd_node	*head;
 	t_cmd_node	*new_node;
 	t_token		*current_token;
-	t_token		*previous_token;
 	t_token		*detached_token;
+	int			words_chain_len;
 
 	if (!tokens)
 		return (NULL);
@@ -93,8 +96,6 @@ t_cmd_node	*parse(t_token *tokens)
 		return (NULL);
 	new_node = head; // null or head???
 	current_token = tokens;
-	previous_token = NULL;
-
 	while (current_token)
 	{
 		if (current_token->type == PIPE)
@@ -104,44 +105,35 @@ t_cmd_node	*parse(t_token *tokens)
 				return (NULL);
 			append_cmd_node(&head, new_node);
 			// Move to the next token
-			previous_token = current_token;
 			current_token = current_token->next;
 		}
 		else if (current_token->type == WORD)
 		{
-			// Detach the current token
+			words_chain_len = get_words_chain_len(current_token);
 			detached_token = current_token;
-			if (previous_token)
-				previous_token->next = current_token->next; // Skip current_token
-			current_token = current_token->next;
-			detached_token->next = NULL;
+			current_token = detach_token(detached_token, words_chain_len);
 			add_cmd(&head, detached_token);
 		}
 		else if (current_token->type == INFILE || current_token->type == OUTFILE)
 		{
 			// Detach the file token
 			detached_token = current_token;
-			if (previous_token)
-				previous_token->next = current_token->next;
-			current_token = current_token->next;
-
-			if (!current_token)
-			{
-				fprintf(stderr, "Error: Expected a file after redirection token.\n");
-				return (NULL);
-			}
-			// Add file tokens
+			current_token = detach_token(detached_token, 2);
 			add_file(&head, detached_token);
-			add_file(&head, current_token);
-
-			// Move to the next token after the file
-			previous_token = current_token;
-			current_token = current_token->next;
+			// if (!current_token)
+			// {
+			// 	fprintf(stderr, "Error: Expected a file after redirection token.\n");
+			// 	return (NULL);
+			// }
+			// Add file tokens
+			
+			// detached_token = current_token;
+			// current_token = detach_token(detached_token);
+			// add_file(&head, detached_token);
 		}
 		else
 		{
 			// Move to the next token
-			previous_token = current_token;
 			current_token = current_token->next;
 		}
 	}
@@ -152,6 +144,8 @@ t_cmd_node	*parse(t_token *tokens)
 int main()
 {
 	char *line = "cd | ls -al | wc -l> test.txt";
+	// char	*line = "ps aux | grep \"root\" | awk '{print $1, $2, $11}' | sort -u | tee processes.log > summary.log";
+	// char	*line = "grep \"error\" < logs.txt | cut -d " " -f 2 > error_messages.txt";	 //problematic
 	// printf("line = %s\n", line);
 	t_token *tokens = lexer(line);
 	t_cmd_node *cmds = parse(tokens);
