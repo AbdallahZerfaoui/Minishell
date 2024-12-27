@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/27 16:11:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:58:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_token				*get_last_token(t_token *token);
 void				append_token(t_token **head, t_token *new_token);
 char				**lex_split(const char *str);
 t_token				*array2linked_list(char **array);
+void				free_all_split(char **split);
 
 // Parser
 t_cmd_node			*parse(t_token *tokens);
@@ -96,8 +97,13 @@ void				add_file(t_cmd_node **head, t_token *token);
 t_token				*move_forward_n(t_token *token, int n);
 int					get_words_chain_len(t_token *token);
 
+// Parser errors
+void				check_tokens(t_token *tokens);
+
 // Utils
 int					len_tokens_lst(t_token *tokens);
+void				free_tokens(t_token *head);
+void				free_cmds(t_cmd_node *head);
 
 // t_exe	*parse_line(char *line, char **env);
 

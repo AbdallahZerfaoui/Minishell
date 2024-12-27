@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 20:08:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:33:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static size_t	get_word_len(char const *str, size_t *i)
 	return (len);
 }
 
-void	*free_all(char **result, size_t j)
+void	*free_till_n(char **result, size_t j)
 {
-	while (j > 0)
+	while (j > 0 && result[j])
 	{
 		j--;
 		free(result[j]);
@@ -119,7 +119,7 @@ char	**lex_split(char const *s)
 			// printf("result[%zu] = %s\n", j, result[j]);
 			if (!result[j])
 			{
-				return (free_all(result, j));
+				return (free_till_n(result, j));
 			}
 			j++;
 		}

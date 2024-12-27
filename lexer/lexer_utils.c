@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/26 18:13:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:47:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,17 @@ void	append_token(t_token **head, t_token *new_token)
 	last->next = new_token;
 	new_token->prev = last;
 	new_token->next = NULL;
+}
+
+void	free_all_split(char **split)
+{
+	int		i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
