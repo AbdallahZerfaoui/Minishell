@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:47:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:54:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_token
 
 typedef struct s_cmd_node
 {
+	int					index;
 	t_token				*cmd;
 	char				**cmd_array;
 	t_token				*files;

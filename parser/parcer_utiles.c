@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 21:15:40 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 20:31:09 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:55:50 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 t_cmd_node	*create_cmd_node(void)
 {
+	static int	index;
 	t_cmd_node	*new;
 
 	new = (t_cmd_node *)ft_calloc(1, sizeof(t_cmd_node));
 	if (!new)
 		return (NULL);
+	new->index = index;
+	index++;
 	return (new);
 }
 
