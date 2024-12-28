@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 18:25:45 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:33:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+// #include "pipex.h"
+#include "../minishell.h"
 
 void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 {

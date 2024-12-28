@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 14:38:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:33:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+// #include "pipex.h"
+#include "../minishell.h"
 
 /**
  * This function load the variable cmds with the commands

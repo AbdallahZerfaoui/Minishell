@@ -6,32 +6,33 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 18:25:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:34:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+// #include "pipex.h"
+#include "../minishell.h"
 
-// static void	free_cmd_manager(t_cmd_manager *cmd_manager)
-// {
-// 	int	i;
+void	free_cmd_manager(t_cmd_manager *cmd_manager)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (i < cmd_manager->nbr_cmds)
-// 	{
-// 		free_all(cmd_manager->cmds[i].args);
-// 		free(cmd_manager->cmds[i].path);
-// 		i++;
-// 	}
-// 	free(cmd_manager->cmds);
-// 	i = 0;
-// 	while (i < cmd_manager->nbr_cmds - 1)
-// 	{
-// 		free(cmd_manager->pipes[i]);
-// 		i++;
-// 	}
-// 	free(cmd_manager->pipes);
-// }
+	i = 0;
+	while (i < cmd_manager->nbr_cmds)
+	{
+		free_all(cmd_manager->cmds[i].args);
+		free(cmd_manager->cmds[i].path);
+		i++;
+	}
+	free(cmd_manager->cmds);
+	i = 0;
+	while (i < cmd_manager->nbr_cmds - 1)
+	{
+		free(cmd_manager->pipes[i]);
+		i++;
+	}
+	free(cmd_manager->pipes);
+}
 
 /**
  * This function closes the unused pipes

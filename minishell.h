@@ -6,13 +6,14 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 14:47:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:44:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "structs.h"
 # include "libft/libft.h"
 // # include "minishell_backup.h"
 # include "pipex/pipex.h"
@@ -35,64 +36,7 @@
 # define CYAN "\x1b[36m"
 # define RESET "\x1b[0m"
 
-enum				e_token
-{
-	TK_DOLLAR = '$',
-	TK_S_QUOTE = '\'',
-	TK_D_QUOTE = '"',
-	TK_PIPE = '|',
-	TK_QUESTION_MARK = '?',
-	TK_SPACE = ' ',
-	TK_NEW_LINE = '\n',
-	TK_UNDERSCORE = '_',
-	TK_HYPHEN = '-',
-	TK_PERIOD = '.',
-	TK_LESS = '<',
-	TK_GREATER = '>',
-};
 
-typedef enum e_token_type //when use typedef and when only enum is enough
-{
-	WORD,
-	PIPE,
-	INFILE,
-	OUTFILE
-}					t_token_type;
-
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	struct s_token	*next;
-	struct s_token	*prev;
-}					t_token;
-
-typedef struct s_cmd_node
-{
-	t_token				*cmd;
-	char				**cmd_array;
-	t_token				*files;
-	struct s_cmd_node	*next;
-	struct s_cmd_node	*prev;
-}					t_cmd_node;
-
-typedef struct s_exec_unit
-{
-	size_t		index;
-	size_t		nbr_cmds;
-	char		**cmd;
-	char		*path;
-	int			fd_in;
-	int			fd_out;
-	int			pipe[2];
-	pid_t		*pids;
-}				t_exec_unit;
-
-typedef struct env_data
-{
-	char	**env;
-	int		nbr_pipes;
-}			t_env_data;
 
 // Lexer
 t_token				*lexer(const char *line);

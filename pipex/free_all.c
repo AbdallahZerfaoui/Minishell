@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:13:48 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/22 21:13:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:33:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+// #include "pipex.h"
+#include "../minishell.h"
 
 void	*free_all(char **result)
 {

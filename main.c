@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 16:33:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:24:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,12 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds, sizeof(t_command));
 	if (!cmd_manager->cmds)
 		return (NULL);
-	// cmd_manager->pipes = (int **)ft_calloc(cmd_manager->nbr_cmds - 1, sizeof(int *));
-	// if (!cmd_manager->pipes)
-	// 	return (NULL);
-	// i = 0;
-	// while (i < cmd_manager->nbr_cmds - 1)
-	// {
-	// 	cmd_manager->pipes[i] = (int *)ft_calloc(2, sizeof(int));
-	// 	if (!cmd_manager->pipes[i])
-	// 		return (NULL);
-	// 	if (pipe(cmd_manager->pipes[i]) == -1)
-	// 		return (NULL);
-	// 	i++;
-	// }
 	current = cmds;
 	i = 0;
 	while (current)
 	{
 		cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
 		cmd_manager->cmds[i].args = current->cmd_array;
-		// set_args(&cmd_manager->cmds[i].args, current->cmd_array);
 		current = current->next;
 		i++;
 	}
@@ -91,10 +77,10 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 static void	shell_loop(char **env)
 {
 	char			*line;
+	t_token			*tokens;
+	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
-	// int 			i;
 
-	// (void)env;
 	while (1)
 	{
 		line = readline(MAGENTA"Minishell> "RESET);
@@ -102,25 +88,18 @@ static void	shell_loop(char **env)
 			break ;
 		if (line[0] != '\0')
 			add_history(line);
-		// exe = parse_line(line, env);
-		cmd_manager = prepare_execution(parse(lexer(line)), env);
+		tokens = lexer(line);
+		cmds = parse(tokens);
+		cmd_manager = prepare_execution(cmds, env);
 		if (!cmd_manager)
 			return ;
 		initialize_pipes(cmd_manager);
-		// printf("nbr_cmds = %d\n", cmd_manager->nbr_cmds);
-		// printf("cmd[0].path = %s\n", cmd_manager->cmds[0].path);
-		// i = 0;
-		// while (cmd_manager->cmds[0].args[i])
-		// {
-		// 	printf("%s ", cmd_manager->cmds[0].args[i]);
-		// 	i++;
-		// }
-		// char *args_tmp[] = {"ls", NULL};
-		// execve(cmd_manager->cmds[0].path, cmd_manager->cmds[0].args, env);
 		create_cmd_processes(cmd_manager);
 		wait_for_children(cmd_manager->nbr_cmds);
 		close_pipes(cmd_manager);
-		// free_cmd_manager(cmd_manager);
+		// free_tokens(tokens);
+		free_cmds(cmds);
+		free_cmd_manager(cmd_manager);
 		free(line);
 	}
 }

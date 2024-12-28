@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:37:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 00:23:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:36:16 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define ARGUMENT_ERROR 127
 # define MALLOC_ERROR 127
 
+# include "../minishell.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,22 +29,22 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_command
-{
-	char		*path;
-	char		**args;
-}				t_command;
+// typedef struct s_command
+// {
+// 	char		*path;
+// 	char		**args;
+// }				t_command;
 
-typedef struct s_cmd_manager
-{
-	int			nbr_cmds;
-	int			**pipes;
-	int			fd_in;
-	int			fd_out;
-	t_command	*cmds;
-	pid_t		pid;
-	char		**env;
-}				t_cmd_manager;
+// typedef struct s_cmd_manager
+// {
+// 	int			nbr_cmds;
+// 	int			**pipes;
+// 	int			fd_in;
+// 	int			fd_out;
+// 	t_command	*cmds;
+// 	pid_t		pid;
+// 	char		**env;
+// }				t_cmd_manager;
 
 // Libft functions
 char			*ft_strjoin(char const *s1, char const *s2);
@@ -72,5 +73,6 @@ void			handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr);
 
 // Main
 void			create_cmd_processes(t_cmd_manager *cmd_manager);
+void			free_cmd_manager(t_cmd_manager *cmd_manager);
 
 #endif

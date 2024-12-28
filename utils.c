@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/27 22:54:25 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:20:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	free_tokens(t_token *head)
 	t_token	*current;
 	t_token	*next;
 
+	if (!head)
+		return ;
 	current = head;
 	while (current)
 	{
