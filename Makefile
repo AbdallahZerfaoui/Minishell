@@ -26,11 +26,11 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = libft.a
-# EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
-# GNL_SRC = $(wildcard get_next_line/*.c)
-# PIEPX_SRC = $(wildcard pipex/*.c)
-# SRC = $(wildcard *.c) $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-SRC = $(wildcard lexer/*.c) $(wildcard parser/*.c) utils.c
+EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
+GNL_SRC = $(wildcard get_next_line/*.c)
+PIEPX_SRC = $(wildcard pipex/*.c)
+# SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
+SRC = $(wildcard lexer/*.c) $(wildcard parser/*.c) $(PIEPX_SRC) utils.c main.c $(EXECUTION_SRC) $(GNL_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

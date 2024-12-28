@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/27 16:39:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:54:25 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@ int	len_tokens_lst(t_token *tokens)
 
 	len = 0;
 	current = tokens;
+	while (current)
+	{
+		len++;
+		current = current->next;
+	}
+	return (len);
+}
+
+int	len_cmds_lst(t_cmd_node *cmds)
+{
+	int			len;
+	t_cmd_node	*current;
+
+	len = 0;
+	current = cmds;
 	while (current)
 	{
 		len++;

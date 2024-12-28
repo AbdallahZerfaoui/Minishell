@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 21:15:40 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/27 16:11:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:36:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,35 @@ t_cmd_node	*create_cmd_node(void)
 	return (new);
 }
 
-void	append_cmd_node(t_cmd_node **head, t_cmd_node *new_node)
+t_cmd_node	*get_last_node(t_cmd_node *head)
+{
+	t_cmd_node	*current;
+
+	current = head;
+	while (current->next)
+		current = current->next;
+	return (current);
+}
+
+void	append_cmd_node(t_cmd_node **head, t_cmd_node **new_node)
 {
 	t_cmd_node	*last;
 
 	if (!*head)
 	{
-		*head = new_node;
-		new_node->prev = NULL;
-		new_node->next = NULL;
+		*head = *new_node;
+		(*new_node)->prev = NULL;
+		(*new_node)->next = NULL;
 	}
-	last = *head;
-	while (last->next)
-		last = last->next;
-	last->next = new_node;
-	new_node->prev = last;
-	new_node->next = NULL;
+	last = get_last_node(*head);
+	last->next = *new_node;
+	(*new_node)->prev = last;
+	(*new_node)->next = NULL;
+	last->cmd_array = linked_list2array(last->cmd);
+	if (!last->cmd_array)
+		return ;
+	free_tokens(last->cmd);
+	last->cmd = NULL;
 }
 
 void	add_cmd(t_cmd_node **head, t_token *token)
@@ -87,4 +100,25 @@ int	get_words_chain_len(t_token *token)
 		token = token->next;
 	}
 	return (len);
+}
+
+char	**linked_list2array(t_token *tokens)
+{
+	t_token	*current;
+	char	**array;
+	int		i;
+
+	i = 0;
+	current = tokens;
+	array = (char **)ft_calloc(get_words_chain_len(tokens) + 1, sizeof(char *));
+	if (!array)
+		return (NULL);
+	while (current)
+	{
+		array[i] = ft_strdup(current->value);
+		current = current->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }

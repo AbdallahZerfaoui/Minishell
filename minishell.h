@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/27 16:58:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:37:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
-// # include "minishell_backup.h"
-// # include "pipex/pipex.h"
+# include "minishell_backup.h"
+# include "pipex/pipex.h"
 # include <errno.h>
 # include <fcntl.h>
-// # include <readline/history.h>
-// # include <readline/readline.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -70,10 +70,29 @@ typedef struct s_token
 typedef struct s_cmd_node
 {
 	t_token				*cmd;
+	char				**cmd_array;
 	t_token				*files;
 	struct s_cmd_node	*next;
 	struct s_cmd_node	*prev;
 }					t_cmd_node;
+
+typedef struct s_exec_unit
+{
+	size_t		index;
+	size_t		nbr_cmds;
+	char		**cmd;
+	char		*path;
+	int			fd_in;
+	int			fd_out;
+	int			pipe[2];
+	pid_t		*pids;
+}				t_exec_unit;
+
+typedef struct env_data
+{
+	char	**env;
+	int		nbr_pipes;
+}			t_env_data;
 
 // Lexer
 t_token				*lexer(const char *line);
@@ -91,11 +110,14 @@ t_cmd_node			*parse(t_token *tokens);
 
 // Parser utils
 t_cmd_node			*create_cmd_node(void);
-void				append_cmd_node(t_cmd_node **head, t_cmd_node *new_node);
+void				append_cmd_node(t_cmd_node **head, t_cmd_node **new_node);
 void				add_cmd(t_cmd_node **head, t_token *token);
 void				add_file(t_cmd_node **head, t_token *token);
 t_token				*move_forward_n(t_token *token, int n);
 int					get_words_chain_len(t_token *token);
+char				**linked_list2array(t_token *tokens);
+int					len_cmds_lst(t_cmd_node *cmds);
+t_cmd_node			*get_last_node(t_cmd_node *head);
 
 // Parser errors
 void				check_tokens(t_token *tokens);
