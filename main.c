@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 01:02:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:33:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 		i++;
 	}
 	cmd_manager->env = env;
-	cmd_manager->fd_out = 1;
+	// cmd_manager->fd_in = -1;
+	// cmd_manager->fd_out = -1;
 	return (cmd_manager);
 }
 
@@ -117,8 +118,8 @@ static void	shell_loop(char **env)
 		// char *args_tmp[] = {"ls", NULL};
 		// execve(cmd_manager->cmds[0].path, cmd_manager->cmds[0].args, env);
 		create_cmd_processes(cmd_manager);
-		close_pipes(cmd_manager);
 		wait_for_children(cmd_manager->nbr_cmds);
+		close_pipes(cmd_manager);
 		// free_cmd_manager(cmd_manager);
 		free(line);
 	}
