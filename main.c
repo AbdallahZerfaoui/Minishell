@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 23:52:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:17:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,43 @@
 
 //     (*args)[j] = NULL; // Null-terminate the args array
 // }
+int	get_fd_in(t_cmd_node *node)
+{
+	t_token	*file;
+	int		fd_in;
+
+	fd_in = STDIN_FILENO;
+	if (node && node->files && node->files->type == INFILE)
+	{
+		file = node->files->next;
+		fd_in = open(file->value, O_RDONLY);
+		if (fd_in == -1)
+		{
+			perror("open");
+			exit(OPEN_ERROR);
+		}
+	}
+	return (fd_in);
+}
+
+int	get_fd_out(t_cmd_node *node)
+{
+	t_token	*file;
+	int		fd_out;
+
+	fd_out = STDOUT_FILENO;
+	if (node && node->files && node->files->type == OUTFILE)
+	{
+		file = node->files->next;
+		fd_out = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out == -1)
+		{
+			perror("open");
+			exit(OPEN_ERROR);
+		}
+	}
+	return (fd_out);
+}
 
 t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 {
@@ -65,6 +102,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	{
 		cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
 		cmd_manager->cmds[i].args = current->cmd_array;
+		cmd_manager->cmds[i].fd_in = get_fd_in(current);
+		cmd_manager->cmds[i].fd_out = get_fd_out(current);
 		current = current->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:33:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:01:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ void	initialize_pipes(t_cmd_manager *cmd_manager)
 	}
 }
 
-void	open_files(int argc, char **argv, t_cmd_manager *cmd_manager)
-{
-	char	*infile;
-	char	*outfile;
+// void	open_files(int argc, char **argv, t_cmd_manager *cmd_manager)
+// {
+// 	char	*infile;
+// 	char	*outfile;
 
-	infile = argv[1];
-	outfile = argv[argc - 1];
-	cmd_manager->fd_in = open(infile, O_RDONLY);
-	if (cmd_manager->fd_in == -1)
-	{
-		perror("Error opening input file");
-		exit(OPEN_ERROR);
-	}
-	cmd_manager->fd_out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (cmd_manager->fd_out == -1)
-	{
-		perror("Error opening output file");
-		close(cmd_manager->fd_in);
-		exit(OPEN_ERROR);
-	}
-}
+// 	infile = argv[1];
+// 	outfile = argv[argc - 1];
+// 	cmd_manager->fd_in = open(infile, O_RDONLY);
+// 	if (cmd_manager->fd_in == -1)
+// 	{
+// 		perror("Error opening input file");
+// 		exit(OPEN_ERROR);
+// 	}
+// 	cmd_manager->fd_out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	if (cmd_manager->fd_out == -1)
+// 	{
+// 		perror("Error opening output file");
+// 		close(cmd_manager->fd_in);
+// 		exit(OPEN_ERROR);
+// 	}
+// }
 
 /**
  * This function close the pipes that are not used by the child

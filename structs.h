@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:54:35 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:10:49 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ typedef struct s_command
 {
 	char		*path;
 	char		**args;
+	int 		fd_in;
+	int			fd_out; //magnific idea
 }				t_command;
 
 typedef struct s_cmd_manager
 {
 	int			nbr_cmds;
 	int			**pipes;
-	int			fd_in;
-	int			fd_out;
+	// int			fd_in;
+	// int			fd_out;
 	t_command	*cmds;
 	t_cmd_node	*cmds_lst;
 	pid_t		pid;

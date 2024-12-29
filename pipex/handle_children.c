@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 23:57:47 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:25:11 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 {
 	// int	fd_in;
-	// int	fd_out;
+	int	fd_out = cmd_manager->cmds[chd_nbr].fd_out;
 
 	// fd_in = get_fd_in(cmd_manager, chd_nbr);
 	// fd_out = get_fd_out(cmd_manager, chd_nbr);
@@ -96,11 +96,11 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	close(cmd_manager->pipes[chd_nbr - 1][0]);
 	// printf("fd_in = %d\n", fd_in);
 	// printf("fd_out = %d\n", fd_out);
-	// if (fd_out != STDOUT_FILENO)
-	// {
-	// 	dup2(fd_out, STDOUT_FILENO);
-	// 	close(fd_out);
-	// }
+	if (fd_out != STDOUT_FILENO)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
 }
 
 void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr)
