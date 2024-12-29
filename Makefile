@@ -27,12 +27,12 @@ CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = libft.a
 # EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
-# GNL_SRC = $(wildcard get_next_line/*.c)
+GNL_SRC = $(wildcard GetNextLine/*.c)
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC)
+SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

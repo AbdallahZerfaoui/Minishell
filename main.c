@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 16:17:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 21:23:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	i = 0;
 	while (current)
 	{
-		cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
+		if (access(current->cmd_array[0], X_OK) == 0)
+			cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
+		else
+			cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
 		cmd_manager->cmds[i].args = current->cmd_array;
 		cmd_manager->cmds[i].fd_in = get_fd_in(current);
 		cmd_manager->cmds[i].fd_out = get_fd_out(current);
@@ -123,12 +126,21 @@ static void	shell_loop(char **env)
 
 	while (1)
 	{
-		line = readline(MAGENTA"Minishell> "RESET);
+		// line = readline(MAGENTA"Minishell> "RESET);
+		if (isatty(fileno(stdin)))
+			line = readline(MAGENTA"Minishell> "RESET);
+		else
+		{
+			line = get_next_line(fileno(stdin));
+			line = ft_strtrim(line, "\n");
+			// free(line);
+		}
 		if (!line || ft_strcmp(line, "exit") == 0)
 			break ;
 		if (line[0] != '\0')
 			add_history(line);
 		tokens = lexer(line);
+		tokens = expand(tokens, env);
 		cmds = parse(tokens);
 		cmd_manager = prepare_execution(cmds, env);
 		if (!cmd_manager)

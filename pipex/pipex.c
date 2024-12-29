@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 22:56:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:55:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,12 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		}
 		if (cmd_manager->pid == 0) // 0 is the child
 		{
-			if (cmd_manager->nbr_cmds > 1)
-			{
-				if (chd_nbr == 0)
-					handle_first_child(cmd_manager, chd_nbr);
-				else if (chd_nbr == cmd_manager->nbr_cmds - 1)
-					handle_last_child(cmd_manager, chd_nbr);
-				else
-					handle_mid_children(cmd_manager, chd_nbr);
-			}
+			if (chd_nbr == 0)
+				handle_first_child(cmd_manager, chd_nbr);
+			else if (chd_nbr == cmd_manager->nbr_cmds - 1)
+				handle_last_child(cmd_manager, chd_nbr);
+			else
+				handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
 			if (execve(cmd_manager->cmds[chd_nbr].path,
 					cmd_manager->cmds[chd_nbr].args, cmd_manager->env) == -1)
 				exit(EXIT_FAILURE);

@@ -6,20 +6,21 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:37:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:36:16 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 21:16:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# define FORK_ERROR 127
+# define FORK_ERROR 7
 # define CHILD_PROCESS 0
-# define PIPE_ERROR 127
-# define OPEN_ERROR 127
-// # define EXIT_FAILURE 127
-# define ARGUMENT_ERROR 127
-# define MALLOC_ERROR 127
+# define PIPE_ERROR 7
+# define OPEN_ERROR 7
+// # define EXIT_FAILURE 0
+# define ARGUMENT_ERROR 7
+# define MALLOC_ERROR 7
+# define COMMAND_NOT_FOUND 127
 
 # include "../minishell.h"
 # include <fcntl.h>

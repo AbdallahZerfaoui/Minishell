@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:44:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 21:27:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 # include "libft/libft.h"
+# include "GetNextLine/get_next_line.h"
 // # include "minishell_backup.h"
 # include "pipex/pipex.h"
 # include <errno.h>
@@ -48,6 +49,9 @@ void				append_token(t_token **head, t_token *new_token);
 char				**lex_split(const char *str);
 t_token				*array2linked_list(char **array);
 void				free_all_split(char **split);
+
+// Expander
+t_token				*expand(t_token *tokens, char **env);
 
 // Parser
 t_cmd_node			*parse(t_token *tokens);

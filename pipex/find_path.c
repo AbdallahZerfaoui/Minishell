@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 21:33:32 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 19:16:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,8 @@ char	*get_command_path(char *cmd, char **env)
 		free(full_path);
 		i++;
 	}
+	// free_all(paths);
+	// fprintf(stderr, "%s: command not found\n", cmd);
+	// exit(COMMAND_NOT_FOUND);
 	return (NULL);
 }

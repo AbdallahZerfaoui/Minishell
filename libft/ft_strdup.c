@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/22 20:11:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:23:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ char	*ft_strdup(const char *s)
 	char	*ptr;
 	size_t	size;
 
+	if (!s)
+	{
+		ptr = (char *)malloc(1);
+		if (!ptr)
+			return (NULL);
+		ptr[0] = '\0';
+		return (ptr);
+	}
 	size = 0;
 	while (s[size])
 		size++;
