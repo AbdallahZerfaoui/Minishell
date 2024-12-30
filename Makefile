@@ -59,10 +59,18 @@ clean:
 lib:
 	make -C libft
 
-fclean: clean
-	@$(RM) $(NAME)
 
+collect_tester_garbage:
+	@$(RM) echo 
+	@$(RM) "out|cd"
+	@$(RM) tmp*
+	@$(RM) lol*
+
+fclean: clean collect_tester_garbage
+	@$(RM) $(NAME)
+	
 re: fclean all
+
 
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
@@ -81,4 +89,4 @@ art:
 	@echo "${RED}###       ### ########### ###    #### ########### ########  ###    ### ########## ########## ########## ${RESET}"
 	@echo "                                                               by The Greatest                          "
 
-.PHONY: all clean fclean re art lib
+.PHONY: all clean fclean re art lib valgrind cppcheck collect_tester_garbage

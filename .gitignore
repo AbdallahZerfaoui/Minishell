@@ -16,6 +16,7 @@ ft_malloc/
 get_next_line/*
 get_next_line
 $*
+tests/
 
 # tester
 42_minishell_tester/
