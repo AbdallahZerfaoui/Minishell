@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 21:27:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:26:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void				free_all_split(char **split);
 
 // Expander
 t_token				*expand(t_token *tokens, char **env);
+// void				print_tree(t_tree_node *root, int depth);
+// void				print_tree(const t_tree_node *root, const char *prefix, bool is_last);
+// void				print_tree_wrapper(const t_tree_node *root);
+void				print_tree(t_tree_node *node, int depth, int is_last);
 
 // Parser
 t_cmd_node			*parse(t_token *tokens);

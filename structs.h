@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 16:10:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:12:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ enum				e_token
 	TK_PERIOD = '.',
 	TK_LESS = '<',
 	TK_GREATER = '>',
+	TK_TILDE = '~',
+	TK_BACK_SLASH = '\\',
+	TK_NULL = '\0'
 };
 
 typedef enum e_token_type //when use typedef and when only enum is enough
@@ -43,6 +46,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				need_expand;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
@@ -82,5 +86,14 @@ typedef struct env_data
 	char	**env;
 	int		nbr_pipes;
 }			t_env_data;
+
+typedef struct s_tree_node
+{
+	char					*value;
+	int						can_expand;
+	struct s_tree_node		*parent;
+	struct s_tree_node		*children;
+	struct s_tree_node		*next_sibling;
+}				t_tree_node;
 
 #endif

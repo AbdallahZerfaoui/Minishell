@@ -17,6 +17,7 @@ get_next_line/*
 get_next_line
 $*
 tests/
+expander/libft/
 
 # tester
 42_minishell_tester/
