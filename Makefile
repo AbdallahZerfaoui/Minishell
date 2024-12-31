@@ -31,8 +31,9 @@ GNL_SRC = $(wildcard GetNextLine/*.c)
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
+COLLECTOR_SRC = $(wildcard collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC)
+SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(COLLECTOR_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

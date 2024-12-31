@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 20:36:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:35:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_cmd_node	*parse(t_token *tokens)
 	last->cmd_array = linked_list2array(last->cmd);
 	if (!last->cmd_array)
 		return (NULL);
-	free_tokens(last->cmd);
+	// free_tokens(last->cmd);
 	last->cmd = NULL;
 	return (head);
 }

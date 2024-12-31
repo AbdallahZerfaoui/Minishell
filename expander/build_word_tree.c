@@ -47,8 +47,10 @@ t_tree_node	*create_tree_node(const char *value)
 	if (!new)
 		return (NULL);
 	new->value = ft_strdup(value);
+	new->can_expand = 1;
 	new->parent = NULL;
 	new->children = NULL;
+	new->next_sibling = NULL;
 	return (new);
 }
 
@@ -235,7 +237,7 @@ char	*expand_part(const char *word, char **env)
 	$_can_expand = 1;
 	while (strcmp(expanded, expanded_tmp) != 0 && expanded && *expanded != '\0')
 	{
-		free(expanded_tmp);
+		// free(expanded_tmp);
 		expanded_tmp = ft_strdup(expanded);
 		len = ft_strlen(expanded_tmp);
 		end = len - 1;
@@ -315,7 +317,6 @@ t_tree_node	*build_word_tree(char *word, char **env)
 	t_tree_node *root;
 	t_tree_node *new_node;
 	
-	// printf("word = %s\n", word);
 	if (!word || *word == '\0' || are_empty_quotes(word))
 		return (NULL);
 	else if (count_quotes(word) == 0 && ft_strlen(word) > 0)
@@ -327,26 +328,13 @@ t_tree_node	*build_word_tree(char *word, char **env)
 	
 	while (*current_char != '\0')
 	{
-		// printf("current_char = %c\n", *current_char);
 		if (*current_char == TK_D_QUOTE || *current_char == TK_S_QUOTE)
 		{
-			// if (current_char - end_last_part > 1)
-			// {
-			// 	expanded = ft_strjoin(expanded, ft_substr(end_last_part + 1, 0, current_char - end_last_part - 1));
-			// }
-			// if (*current_char == '\'' && *(current_char + 1) == '$')
-			// 	can_expand = 0;
 			end_last_part = ft_strchr(current_char + 1, *current_char);
 			if (!end_last_part)
 				exit(1);
 			len = end_last_part - current_char - 1; // we remove the quotes
-			// if (len > 2)
-			// {
-			// 	expanded = ft_strjoin(expanded, expand_part(ft_substr(current_char, 0, len), env));
-			// }
 			sub_word = ft_substr(current_char + 1, 0, len);
-			// if (!sub_word)
-			// 	exit(1);
 			if (ft_strcmp(sub_word, word) != 0 && *current_char == TK_D_QUOTE 
 				&& sub_word && *sub_word != '\0')
 			{
@@ -354,20 +342,23 @@ t_tree_node	*build_word_tree(char *word, char **env)
 				// new_node = create_tree_node(sub_word);
 				new_node = build_word_tree(sub_word, env);
 				if (new_node)
+				{
 					append_child(&root, new_node);
+				}
 			}
 			else if (*current_char == TK_S_QUOTE)
 			{
 				new_node = create_tree_node(sub_word);
 				if (new_node)
+				{
+					new_node->can_expand = 0;
 					append_child(&root, new_node);
+				}
 			}
-			// build_word_tree(sub_word, env, &new_node);
 			current_char = end_last_part;
 		}
 		else //normal word
 		{
-			// printf("im here\n");
 			len = 0;
 			while (*current_char != TK_D_QUOTE && *current_char != TK_S_QUOTE 
 				&& *current_char != '\0')
@@ -375,68 +366,67 @@ t_tree_node	*build_word_tree(char *word, char **env)
 				len++;	
 				current_char++;
 			}
-			// printf("word = %s len = %d\n", word, len);
-			// printf("begin_sub_word = %c\n", *(current_char - len));
 			sub_word = ft_substr(current_char - len, 0, len);
 			if (!sub_word)
 				exit(1);
 			if (ft_strcmp(sub_word, word) != 0)
 			{
-				// new_node = create_tree_node(sub_word);
 				new_node = build_word_tree(sub_word, env);
 				if (new_node)
 					append_child(&root, new_node);
 			}
 			current_char --;
 		}
-		// if (*current_char != TK_D_QUOTE && *current_char != TK_S_QUOTE)
 		current_char ++;
-		// printf("end_current_char = %c\n", *current_char);
 	}
 	return (root);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_tree_node *root;
-	// char *word = "\"$USER\"USER 'hello' abdallah zerfaoui";
-	// char *word = "\"$USER\"USER\"123\"";
-	// char *word = "\"$HOME\"abdallahzerfaoui\'$USER\'";
-	// char *word = "\"\"$USER\"USER 'hello'\" abdallah zerfaoui";	//doesnt work
-	// char *word = "\"\'\'$USER\'USER\' \'hello\'\"";
-	char *word = "\"$USER\"USER 'hello' abdallah zerfaoui \"parent 'child' parent\"";
-	// root = create_tree_node(word);
-	// char *expanded = expand_word(word, env, &root);
-	root = build_word_tree(word, env);
-	// root = create_tree_node(word);
-	// root->children = create_tree_node("abdallah");
-	// root->children->next_sibling = create_tree_node("zerfaoui");
-	// if (root)
-	// 	printf("root = %s\n", root->value);
-	// while (root)
-	// {
-	// 	printf("root = %s\n", root->value);
-	// 	root = root->children;
-	// }
-	print_tree(root, 0, 1);
-	// while (root)
-	// {
-	// 	printf("root : %s\n", root->value);
-	// 	while (root->children)
-	// 	{
-	// 		printf("%s *", root->children->value);
-	// 		root->children = root->children->next_sibling;
-	// 	}
-	// 	printf("\n");
-	// 	root = root->next_sibling;
-	// }
-	// print_tree_wrapper(root);
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_tree_node *root;
+// 	// char *word = "\"$USER\"USER 'hello' abdallah zerfaoui";
+// 	// char *word = "\"$USER\"USER\"123\"";
+// 	// char *word = "\"$HOME\"abdallahzerfaoui\'$USER\'";
+// 	// char *word = "\"\"$USER\"USER 'hello'\" abdallah zerfaoui";	//doesnt work
+// 	// char *word = "\"\'\'$USER\'USER\' \'hello\'\"";
+// 	// char *word = "\"$USER\"USER '$hello' abdallah zerfaoui \'parent \"$child\" parent\'";
+// 	char *word = "\"$USER\"USER '$hello' abdallah zerfaoui \"parent \'$child\' parent\"";
+// 	// root = create_tree_node(word);
+// 	char *expanded = NULL;
+// 	root = build_word_tree(word, env);
+// 	process_nodes(root);
+// 	merge_tree_nodes(root, &expanded);
+// 	// root = create_tree_node(word);
+// 	// root->children = create_tree_node("abdallah");
+// 	// root->children->next_sibling = create_tree_node("zerfaoui");
+// 	// if (root)
+// 	// 	printf("root = %s\n", root->value);
+// 	// while (root)
+// 	// {
+// 	// 	printf("root = %s\n", root->value);
+// 	// 	root = root->children;
+// 	// }
+// 	print_tree(root, 0, 1);
+// 	printf("expanded = *%s*\n", expanded);
+// 	// while (root)
+// 	// {
+// 	// 	printf("root : %s\n", root->value);
+// 	// 	while (root->children)
+// 	// 	{
+// 	// 		printf("%s *", root->children->value);
+// 	// 		root->children = root->children->next_sibling;
+// 	// 	}
+// 	// 	printf("\n");
+// 	// 	root = root->next_sibling;
+// 	// }
+// 	// print_tree_wrapper(root);
 	
-	// if (!expanded)
-	// 	printf("expanded = NULL\n");
-	// printf("original_word = %s\n", word);
-	// printf("expanded = %s\n", expanded);
-	return (0);
-}
+// 	// if (!expanded)
+// 	// 	printf("expanded = NULL\n");
+// 	// printf("original_word = %s\n", word);
+// 	// printf("expanded = %s\n", expanded);
+// 	return (0);
+// }
 
 // ""$HOME"adaljalsdjsaldj'$US'"

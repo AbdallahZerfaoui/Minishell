@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 21:23:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:59:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ static void	shell_loop(char **env)
 	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
 
+	gc_init_garbage_collector();
 	while (1)
 	{
 		// line = readline(MAGENTA"Minishell> "RESET);
@@ -140,7 +141,7 @@ static void	shell_loop(char **env)
 		if (line[0] != '\0')
 			add_history(line);
 		tokens = lexer(line);
-		tokens = expand(tokens, env);
+		// tokens = expand(tokens, env);
 		cmds = parse(tokens);
 		cmd_manager = prepare_execution(cmds, env);
 		if (!cmd_manager)
@@ -157,9 +158,10 @@ static void	shell_loop(char **env)
 		// 	printf("index = %d\n", cmds->index);
 		// 	cmds = cmds->next;
 		// }
-		free_cmds(cmds);
-		free_cmd_manager(cmd_manager);
-		free(line);
+	// free_cmds(cmds);
+	// free_cmd_manager(cmd_manager);
+	// free(line);
+		main_cleanup();
 	}
 }
 
@@ -196,9 +198,11 @@ static void	shell_loop(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
+	// gc_init_garbage_collector();
 	(void)argv;
 	(void)argc;
 	shell_loop(env);
+	// main_cleanup();
 	return (0);
 }
 

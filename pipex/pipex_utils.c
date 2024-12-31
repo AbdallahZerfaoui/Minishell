@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 21:14:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:16:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	get_commands(char **argv, t_cmd_manager *cmd_manager)
 	int			i;
 
 	i = 0;
-	cmd_manager->cmds = (t_command *)malloc(sizeof(t_command)
+	cmd_manager->cmds = (t_command *)ft_malloc(sizeof(t_command)
 			* cmd_manager->nbr_cmds);
 	if (!cmd_manager->cmds)
 		exit(EXIT_FAILURE);
@@ -43,13 +43,13 @@ void	initialize_pipes(t_cmd_manager *cmd_manager)
 	int	i;
 
 	i = 0;
-	cmd_manager->pipes = (int **) malloc(sizeof(int *)
+	cmd_manager->pipes = (int **) ft_malloc(sizeof(int *)
 			* (cmd_manager->nbr_cmds - 1));
 	if (!cmd_manager->pipes)
 		exit(MALLOC_ERROR);
 	while (i < cmd_manager->nbr_cmds - 1)
 	{
-		cmd_manager->pipes[i] = (int *) malloc(sizeof(int) * 2);
+		cmd_manager->pipes[i] = (int *) ft_malloc(sizeof(int) * 2);
 		if (pipe(cmd_manager->pipes[i]) == -1)
 			exit(PIPE_ERROR);
 		i++;

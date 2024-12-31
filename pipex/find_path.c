@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 19:16:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:44:15 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*join_paths(const char *dir, const char *cmd)
 	if (!tmp)
 		return (perror("Error"), NULL);
 	full_path = ft_strjoin(tmp, cmd);
-	free(tmp);
+	// free(tmp);
 	if (!full_path)
 		return (perror("Error"), NULL);
 	return (full_path);
@@ -55,7 +55,7 @@ char	**parse_env(char **env)
 			if (!path)
 				return (perror("Error"), NULL);
 			split_paths = ft_split(path, ':');
-			free(path);
+			// free(path);
 			if (!split_paths)
 				return (perror("Error"), NULL);
 			return (split_paths);

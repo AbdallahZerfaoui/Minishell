@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:54:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 14:12:48 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 14:20:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void print_tree(t_tree_node *node, int depth, int is_last)
     }
 
     // Print the value of the current node
-    printf("*%s*\n", node->value);
+    printf("*%s*%d\n", node->value, node->can_expand);
 
     // Recursively print children
     t_tree_node *child = node->children;

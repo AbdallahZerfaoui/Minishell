@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 17:03:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:38:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_token	*lexer(const char *line)
 	splited_line = lex_split(line);
 	// printf("splited_line[0] = %s\n", splited_line[0]);
 	tokens = array2linked_list(splited_line);
-	free_all_split(splited_line);
+	// free_all_split(splited_line);
 	return (tokens);
 }
 

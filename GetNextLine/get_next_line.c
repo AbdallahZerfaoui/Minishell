@@ -6,13 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/23 15:08:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:34:44 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_strjoin_gnl(char const *s1, char const *s2)
+char	*ft_strjoin_gnl(char const *s1, char const *s2)
 {
 	char	*str_result;
 
@@ -44,9 +44,9 @@ static char	*extract_and_update(char *new_line_ptr, char **remainder)
 	{
 		new_remainder = ft_strdup(new_line_ptr + 1);
 		if (!new_remainder)
-			return (free(line), NULL);
+			return (NULL);
 	}
-	free(*remainder);
+	// free(*remainder);
 	*remainder = new_remainder;
 	return (line);
 }
@@ -72,8 +72,8 @@ static ssize_t	read_and_append(int fd, char **remainder)
 	{
 		new_remainder = ft_strjoin_gnl(*remainder, buffer);
 		if (!new_remainder)
-			return (free(*remainder), *remainder = NULL, -1);
-		free(*remainder);
+			return (*remainder = NULL, -1);
+		// free(*remainder);
 		*remainder = new_remainder;
 	}
 	return (bytes_read);
@@ -92,7 +92,7 @@ static void	handle_eof(char **line, char **remainder)
 	if (*remainder && **remainder)
 	{
 		*line = ft_strdup(*remainder);
-		free(*remainder);
+		// free(*remainder);
 		*remainder = NULL;
 		if (!*line)
 			return ;
@@ -117,12 +117,12 @@ char	*get_next_line(int fd)
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (free(remainder), remainder = NULL, NULL);
+		return (remainder = NULL, NULL);
 	while (1)
 	{
 		bytes_read = read_and_append(fd, &remainder);
 		if (bytes_read < 0)
-			return (free(remainder), remainder = NULL, NULL);
+			return (remainder = NULL, NULL);
 		new_line_ptr = ft_strchr(remainder, '\n');
 		if (new_line_ptr)
 			return (line = extract_and_update(new_line_ptr, &remainder), line);
@@ -131,7 +131,7 @@ char	*get_next_line(int fd)
 			if (remainder && *remainder)
 				return (handle_eof(&line, &remainder), remainder = NULL, line);
 			else if (bytes_read == 0)
-				return (free(remainder), remainder = NULL, NULL);
+				return (remainder = NULL, NULL);
 		}
 	}
 }
