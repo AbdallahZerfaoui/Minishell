@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_word.c                                      :+:      :+:    :+:   */
+/*   build_word_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 00:47:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/31 14:14:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,27 +136,27 @@ int are_empty_quotes(const char *word)
 		return (0);
 }
 
-char	*get_env_value(const char *keyword, char **env)
-{
-	int		i;
-	char	*value;
-	int		keyword_len;
+// char	*get_env_value(const char *keyword, char **env)
+// {
+// 	int		i;
+// 	char	*value;
+// 	int		keyword_len;
 
-	i = 0;
-	keyword_len = ft_strlen(keyword);
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], keyword, keyword_len) == 0)
-		{
-			value = ft_strdup(env[i] + keyword_len + 1);
-			if (!value)
-				return (NULL);
-			return (value);
-		}
-		i++;
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	keyword_len = ft_strlen(keyword);
+// 	while (env[i])
+// 	{
+// 		if (ft_strncmp(env[i], keyword, keyword_len) == 0)
+// 		{
+// 			value = ft_strdup(env[i] + keyword_len + 1);
+// 			if (!value)
+// 				return (NULL);
+// 			return (value);
+// 		}
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 int	count_quotes(char *word)
 {
@@ -306,7 +306,7 @@ char	*expand_part(const char *word, char **env)
 // 	return (expand_word(expanded, env));
 // }
 
-t_tree_node	*expand_word(char *word, char **env)
+t_tree_node	*build_word_tree(char *word, char **env)
 {
 	char *current_char;
 	char *end_last_part;
@@ -351,12 +351,18 @@ t_tree_node	*expand_word(char *word, char **env)
 				&& sub_word && *sub_word != '\0')
 			{
 				printf("sub_word = %s\n", sub_word);
-				// new_node = expand_word(sub_word, env);
-				new_node = expand_word(sub_word, env);
+				// new_node = create_tree_node(sub_word);
+				new_node = build_word_tree(sub_word, env);
 				if (new_node)
 					append_child(&root, new_node);
 			}
-			// expand_word(sub_word, env, &new_node);
+			else if (*current_char == TK_S_QUOTE)
+			{
+				new_node = create_tree_node(sub_word);
+				if (new_node)
+					append_child(&root, new_node);
+			}
+			// build_word_tree(sub_word, env, &new_node);
 			current_char = end_last_part;
 		}
 		else //normal word
@@ -376,14 +382,15 @@ t_tree_node	*expand_word(char *word, char **env)
 				exit(1);
 			if (ft_strcmp(sub_word, word) != 0)
 			{
-				// new_node = expand_word(sub_word, env);
-				new_node = expand_word(sub_word, env);
+				// new_node = create_tree_node(sub_word);
+				new_node = build_word_tree(sub_word, env);
 				if (new_node)
 					append_child(&root, new_node);
 			}
+			current_char --;
 		}
-		if (*current_char != TK_D_QUOTE && *current_char != TK_S_QUOTE)
-			current_char ++;
+		// if (*current_char != TK_D_QUOTE && *current_char != TK_S_QUOTE)
+		current_char ++;
 		// printf("end_current_char = %c\n", *current_char);
 	}
 	return (root);
@@ -395,11 +402,12 @@ int main(int argc, char **argv, char **env)
 	// char *word = "\"$USER\"USER 'hello' abdallah zerfaoui";
 	// char *word = "\"$USER\"USER\"123\"";
 	// char *word = "\"$HOME\"abdallahzerfaoui\'$USER\'";
-	char *word = "\"\"$USER\"USER 'hello'\" abdallah zerfaoui";	//doesnt work
+	// char *word = "\"\"$USER\"USER 'hello'\" abdallah zerfaoui";	//doesnt work
 	// char *word = "\"\'\'$USER\'USER\' \'hello\'\"";
+	char *word = "\"$USER\"USER 'hello' abdallah zerfaoui \"parent 'child' parent\"";
 	// root = create_tree_node(word);
 	// char *expanded = expand_word(word, env, &root);
-	root = expand_word(word, env);
+	root = build_word_tree(word, env);
 	// root = create_tree_node(word);
 	// root->children = create_tree_node("abdallah");
 	// root->children->next_sibling = create_tree_node("zerfaoui");
