@@ -6,14 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 19:01:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:30:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:50:50 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "../collector/garbage_collector.h"
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>

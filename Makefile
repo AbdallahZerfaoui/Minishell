@@ -27,13 +27,15 @@ CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = libft.a
 # EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
-GNL_SRC = $(wildcard GetNextLine/*.c)
+# GNL_SRC = $(wildcard GetNextLine/*.c)
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
+# EXPANDER_SRC = $(wildcard expander/*.c)
 COLLECTOR_SRC = $(wildcard collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(COLLECTOR_SRC)
+# SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
+SRC = $(wildcard *.c) $(PIEPX_SRC) $(LEXER_SRC) $(COLLECTOR_SRC) $(PARSER_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
@@ -73,8 +75,10 @@ fclean: clean collect_tester_garbage
 re: fclean all
 
 
-valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
+valgrind: re
+	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < valgrind_test.txt
+# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
+# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
 
 cppcheck: re
 	cppcheck --enable=warning,style,performance,portability --enable=unusedFunction $(SRC)

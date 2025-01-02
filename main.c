@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:59:45 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:08:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,20 +123,35 @@ static void	shell_loop(char **env)
 	t_token			*tokens;
 	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
+	// int 			i;
+	// t_garbage_collector	*gc;
 
+	// (void)i;
+	// (void)env;
+	// (void)cmds;
+	// (void)cmd_manager;
+	// i = 0;
+	// gc = gc_init_garbage_collector();
 	gc_init_garbage_collector();
 	while (1)
 	{
-		// line = readline(MAGENTA"Minishell> "RESET);
+		// remove_empty_nodes();
 		if (isatty(fileno(stdin)))
 			line = readline(MAGENTA"Minishell> "RESET);
 		else
 		{
 			line = get_next_line(fileno(stdin));
 			line = ft_strtrim(line, "\n");
-			// free(line);
 		}
-		if (!line || ft_strcmp(line, "exit") == 0)
+		// line = ft_strdup("/bin/echo ''$?''\"42\"");
+		if (!line)
+			break ;
+		if (line[0] == '\0')
+		{
+			free(line);
+			continue;
+		}
+		if (ft_strcmp(line, "exit") == 0)
 			break ;
 		if (line[0] != '\0')
 			add_history(line);
@@ -158,11 +173,24 @@ static void	shell_loop(char **env)
 		// 	printf("index = %d\n", cmds->index);
 		// 	cmds = cmds->next;
 		// }
-	// free_cmds(cmds);
-	// free_cmd_manager(cmd_manager);
-	// free(line);
-		main_cleanup();
+		// free_cmds(cmds);
+		// free_cmd_manager(cmd_manager);
+		// if (line)
+		// 	free(line);
+		// i++;
+		// (void)tokens;
 	}
+	// my_gc_free_all();
+	// main_cleanup();
+
+	// printf("size = %zu\n", gc->size);
+	// while (gc->head && gc->head->pointer)
+	// {
+	// 	// printf("pointer = %s\n", (char *)gc->head->pointer);
+	// 	if (gc->head->pointer)
+	// 		free(gc->head->pointer);
+	// 	gc->head = gc->head->next;
+	// }
 }
 
 // static void    shell_loop(char **envp)
@@ -198,11 +226,12 @@ static void	shell_loop(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	// gc_init_garbage_collector();
 	(void)argv;
 	(void)argc;
 	shell_loop(env);
-	// main_cleanup();
+	clear_history();
+	main_cleanup();
+	// memset((void *)get_gc(), 0, sizeof(t_garbage_collector));
 	return (0);
 }
 

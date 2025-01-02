@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:46:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:14:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static size_t	get_word_len(char const *str, size_t *i, char c)
 	return (len);
 }
 
-// void	*free_all(char **result, size_t j)
-// {
-// 	while (j > 0)
-// 	{
-// 		j--;
-// 		free(result[j]);
-// 	}
-// 	free(result);
-// 	return (NULL);
-// }
+static void	*free_all(char **result, size_t j)
+{
+	while (j > 0)
+	{
+		j--;
+		free(result[j]);
+	}
+	free(result);
+	return (NULL);
+}
 
 // use ft_substr in ft_split
 char	**ft_split(char const *s, char c)
@@ -66,7 +66,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	result = (char **)ft_malloc(sizeof(char *) * (count_words(s, c) + 1));
+	result = (char **)ft_calloc((count_words(s, c) + 1), sizeof(char *));
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -78,8 +78,7 @@ char	**ft_split(char const *s, char c)
 		{
 			result[j] = ft_substr(s, i, len);
 			if (!result[j])
-				return(NULL);
-			// return (free_all(result, j));
+				return (free_all(result, j));
 			j++;
 		}
 		i += len;

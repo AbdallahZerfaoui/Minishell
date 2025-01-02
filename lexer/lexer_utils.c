@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/30 16:43:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:03:49 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*new;
 
+	if (!value)
+		return (NULL);
 	new = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
@@ -76,6 +78,26 @@ void	append_token(t_token **head, t_token *new_token)
 	new_token->prev = last;
 	new_token->next = NULL;
 }
+void free_if_not_in_gc(char *str)
+{
+	t_garbage_collector	*gc;
+	t_gc_node			*current;
+	size_t				i;
+
+	if (!str)
+		return ;
+	i = 0;
+	gc = get_gc();
+	current = gc->head;
+	while (current && i < gc->size)
+	{
+		if (current->pointer == str)
+			return ;
+		current = current->next;
+		i++;
+	}
+	free(str);
+}
 
 void	free_all_split(char **split)
 {
@@ -84,8 +106,10 @@ void	free_all_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		free(split[i]);
+		// free(split[i]);
+		free_if_not_in_gc(split[i]);
 		i++;
 	}
-	free(split);
+	// free(split);
+	free_if_not_in_gc((char *)split);
 }

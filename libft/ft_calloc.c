@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:39:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:30:47 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:12:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../collector/garbage_collector.h"
 
 // The calloc() function allocates memory for an array of nmemb elements of
 // size bytes each and returns a pointer to the allocated memory.

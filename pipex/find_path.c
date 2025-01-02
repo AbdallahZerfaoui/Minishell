@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:44:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:39:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ char	*get_command_path(char *cmd, char **env)
 	{
 		full_path = join_paths(paths[i], cmd);
 		if (access(full_path, X_OK) == 0)
-			return (free_all(paths), full_path);
-		free(full_path);
+			return (full_path);
+			// return (free_all(paths), full_path);
+		// free(full_path);
 		i++;
 	}
 	// free_all(paths);

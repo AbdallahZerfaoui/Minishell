@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gb_garbage_collector.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iziane <iziane@student.42.fr>              +#+  +:+       +#+        */
+/*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 23:49:05 by iziane            #+#    #+#             */
-/*   Updated: 2024/10/19 01:12:21 by iziane           ###   ########.fr       */
+/*   Updated: 2025/01/01 22:20:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ void	gc_free_all(void)
 	gc = get_gc();
 	current = gc->head;
 	len = gc->size;
+	// if (len == 0)
+	// 	return ;
 	i = -1;
 	while (++i < len && current)
 	{
 		temp = current->next;
-		free(current->pointer);
-		current->pointer = NULL;
+		if (current->pointer)
+		{
+			free(current->pointer);
+			current->pointer = NULL;
+		}
 		free(current);
 		current = NULL;
 		current = temp;
@@ -53,11 +58,22 @@ t_gc_node	*gc_create_node(void *pointer2mem)
 void	gc_add_begin(void *pointer)
 {
 	t_gc_node			*new_node;
+	t_gc_node			*current;
 	t_garbage_collector	*gc;
 
 	if (!pointer)
 		return ;
 	gc = get_gc();
+	// Check if the pointer already exists in the garbage collector
+    current = gc->head;
+    while (current) {
+        if (current->pointer == pointer) {
+            // Pointer already exists; skip adding
+            printf("Warning: Pointer already in garbage collector: %p\n", pointer);
+            return;
+        }
+        current = current->next;
+    }
 	new_node = gc_create_node(pointer);
 	if (!new_node)
 		ft_error("malloc fail", __FILE__, __LINE__, 1);

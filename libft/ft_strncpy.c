@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 20:54:26 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/01 17:59:10 by azerfaou         ###   ########.fr       */
+/*   Created: 2025/01/01 18:43:09 by azerfaou          #+#    #+#             */
+/*   Updated: 2025/01/01 18:43:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strncpy(char *destination, const char *source, size_t n)
 {
-	size_t	size;
+	size_t	i;
 
-	if (!s)
-		return (0);
-	size = 0;
-	while (*s)
+	i = 0;
+	if (!source)
+		return (destination);
+	while (source[i] && i < n)
 	{
-		size++;
-		s++;
+		destination[i] = source[i];
+		i++;
 	}
-	return (size);
+	while (i < n)
+	{
+		destination[i] = '\0';
+		i++;
+	}
+	return (destination);
 }

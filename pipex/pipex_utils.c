@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:16:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:18:19 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
  */
 void	get_commands(char **argv, t_cmd_manager *cmd_manager)
 {
-	int			i;
+	int	i;
 
 	i = 0;
-	cmd_manager->cmds = (t_command *)ft_malloc(sizeof(t_command)
-			* cmd_manager->nbr_cmds);
+	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds,
+			sizeof(t_command));
 	if (!cmd_manager->cmds)
 		exit(EXIT_FAILURE);
 	while (i < cmd_manager->nbr_cmds)
 	{
 		cmd_manager->cmds[i].args = ft_split(argv[i + 2], ' ');
-		cmd_manager->cmds[i].path = get_command_path
-			(cmd_manager->cmds[i].args[0], cmd_manager->env);
+		cmd_manager->cmds[i].path = get_command_path(cmd_manager->cmds[i].args[0],
+				cmd_manager->env);
 		i++;
 	}
 }
@@ -43,13 +43,13 @@ void	initialize_pipes(t_cmd_manager *cmd_manager)
 	int	i;
 
 	i = 0;
-	cmd_manager->pipes = (int **) ft_malloc(sizeof(int *)
-			* (cmd_manager->nbr_cmds - 1));
+	cmd_manager->pipes = (int **)ft_calloc((cmd_manager->nbr_cmds - 1),
+			sizeof(int *));
 	if (!cmd_manager->pipes)
 		exit(MALLOC_ERROR);
 	while (i < cmd_manager->nbr_cmds - 1)
 	{
-		cmd_manager->pipes[i] = (int *) ft_malloc(sizeof(int) * 2);
+		cmd_manager->pipes[i] = (int *)ft_calloc(2, sizeof(int));
 		if (pipe(cmd_manager->pipes[i]) == -1)
 			exit(PIPE_ERROR);
 		i++;

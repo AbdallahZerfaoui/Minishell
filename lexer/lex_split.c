@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:51:14 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 21:38:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ char	**lex_split(char const *s)
 			if (!result[j])
 			{
 				return (free_till_n(result, j));
+				// return (NULL);
 			}
 			j++;
 		}

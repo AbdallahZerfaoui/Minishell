@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:11:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:57:11 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 # include "libft/libft.h"
-# include "GetNextLine/get_next_line.h"
+# include "get_next_line.h"
 # include "collector/garbage_collector.h"
 // # include "minishell_backup.h"
 # include "pipex/pipex.h"
@@ -39,8 +39,6 @@
 # define RESET "\x1b[0m"
 
 
-// Basic
-char				*ft_strjoin_gnl(char const *s1, char const *s2);
 
 // Lexer
 t_token				*lexer(const char *line);
@@ -60,8 +58,8 @@ t_token				*expand(t_token *tokens, char **env);
 // void				print_tree_wrapper(const t_tree_node *root);
 void				print_tree(t_tree_node *node, int depth, int is_last);
 void				process_nodes(t_tree_node *root);
-// t_tree_node			get_last_child(t_tree_node *node);
-void				merge_tree_nodes(t_tree_node *root, char **expanded_word);
+void				merge_tree_nodes(t_tree_node *root, char **expanded);
+t_tree_node			*build_word_tree(char *word, char **env);
 
 // Parser
 t_cmd_node			*parse(t_token *tokens);

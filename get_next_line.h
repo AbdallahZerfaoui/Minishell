@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/10/22 18:30:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:17:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <unistd.h>
 
+char	*ft_strjoin_gnl(char const *s1, char const *s2);
 // Standard functions
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s);
