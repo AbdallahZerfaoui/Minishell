@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 17:08:36 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 20:42:32 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 static void	shell_loop(char **env)
 {
 	char			*line;
+	char			*trimmed_line;
 	t_token			*tokens;
 	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
@@ -133,22 +134,38 @@ static void	shell_loop(char **env)
 	// i = 0;
 	// gc = gc_init_garbage_collector();
 	gc_init_garbage_collector();
+	// int fd = open("tests.txt", O_RDONLY);
 	while (1)
 	{
+		printf("im in\n");
+		// line = ft_strtrim(line, "\n");
+		// printf("line = *%s*\n", line);
 		// remove_empty_nodes();
+		// isatty(fileno(stdin))
 		if (isatty(fileno(stdin)))
+		{
 			line = readline(MAGENTA"Minishell> "RESET);
+			if (!line)
+				break ;
+		}
 		else
 		{
 			line = get_next_line(fileno(stdin));
-			line = ft_strtrim(line, "\n");
+			if (!line || line[0] == '\0')
+				break ;
+			printf("line_raw = *%s*\n", line);
+			trimmed_line = ft_strtrim(line, "\n");
+			if (!trimmed_line)
+				break ;
+			// free(line);
+			line = trimmed_line;
+			// printf("line = *%s*\n", line);
 		}
-		// line = ft_strdup("/bin/echo ''$?''\"42\"");
 		if (!line)
 			break ;
 		if (line[0] == '\0')
 		{
-			free(line);
+			// free(line);
 			continue;
 		}
 		if (ft_strcmp(line, "exit") == 0)
@@ -179,7 +196,10 @@ static void	shell_loop(char **env)
 		// 	free(line);
 		// i++;
 		// (void)tokens;
+	printf("line = *%s*\n", line);
 	}
+	// close(fd);
+	printf("end loop\n");
 	// my_gc_free_all();
 	// main_cleanup();
 

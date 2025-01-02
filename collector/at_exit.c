@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 23:44:11 by iziane            #+#    #+#             */
-/*   Updated: 2025/01/02 17:07:24 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:58:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	main_cleanup(void)
 	// exit(0);
 }
 
-void	ft_error(char *msg, char *file, int line, uint8_t exit_stat)
+void	ft_error(const char *msg, char *file, int line, uint8_t exit_stat)
 {
 	(void)exit_stat;
 	fprintf(stderr, "Error: File %s line %d: %s\n", file, line, msg);

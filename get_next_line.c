@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 12:28:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/01 21:42:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 20:34:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,13 @@ char	*get_next_line(int fd)
 	static char	*remainder = NULL;
 
 	line = NULL;
+	// bytes_read = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (free(remainder), remainder = NULL, NULL);
 	while (1)
 	{
 		bytes_read = read_and_append(fd, &remainder);
+		// printf("bytes_read = %ld\n", bytes_read);
 		if (bytes_read < 0)
 			return (free(remainder), remainder = NULL, NULL);
 		new_line_ptr = ft_strchr(remainder, '\n');
@@ -130,7 +132,7 @@ char	*get_next_line(int fd)
 		{
 			if (remainder && *remainder)
 				return (handle_eof(&line, &remainder), remainder = NULL, line);
-			else if (bytes_read == 0)
+			else
 				return (free(remainder), remainder = NULL, NULL);
 		}
 	}
