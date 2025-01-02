@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 20:42:32 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 21:57:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ static void	shell_loop(char **env)
 	// int fd = open("tests.txt", O_RDONLY);
 	while (1)
 	{
-		printf("im in\n");
 		// line = ft_strtrim(line, "\n");
 		// printf("line = *%s*\n", line);
 		// remove_empty_nodes();
@@ -153,7 +152,7 @@ static void	shell_loop(char **env)
 			line = get_next_line(fileno(stdin));
 			if (!line || line[0] == '\0')
 				break ;
-			printf("line_raw = *%s*\n", line);
+			// printf("line_raw = *%s*\n", line);
 			trimmed_line = ft_strtrim(line, "\n");
 			if (!trimmed_line)
 				break ;
@@ -196,10 +195,10 @@ static void	shell_loop(char **env)
 		// 	free(line);
 		// i++;
 		// (void)tokens;
-	printf("line = *%s*\n", line);
+	// printf("line = *%s*\n", line);
 	}
 	// close(fd);
-	printf("end loop\n");
+	// printf("end loop\n");
 	// my_gc_free_all();
 	// main_cleanup();
 

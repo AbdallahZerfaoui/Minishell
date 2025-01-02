@@ -6,12 +6,16 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/01 21:38:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/02 21:53:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+ * @brief This function counts the number of words in the string
+ * a word is a sequence of characters separated by spaces or  <, >, <<, >>
+ */
 static size_t	count_words(char const *str)
 {
 	size_t	len;
@@ -29,14 +33,15 @@ static size_t	count_words(char const *str)
 			inside_d_quotes = !inside_d_quotes;
 		if (*str == TK_S_QUOTE)
 			inside_s_quotes = !inside_s_quotes;
-		if (*str == TK_GREATER || *str == TK_LESS)
+		if ((*str == TK_GREATER || *str == TK_LESS)
+			&& !inside_s_quotes && !inside_d_quotes)
 		{
 			len++;
 			// printf("str = %c\n", *str);
 			str += (*str == *(str + 1)) ? 1 : 0; // if the next char is the same as the current char, we skip it
 			is_new_word = 0;
 		}
-		if ((*str != TK_SPACE && !inside_s_quotes && !inside_d_quotes)
+		else if ((*str != TK_SPACE && !inside_s_quotes && !inside_d_quotes)
 			&& !is_new_word)
 		{
 			is_new_word = 1;
@@ -69,14 +74,14 @@ static size_t	get_word_len(char const *str, size_t *i)
 	{
 		return (1);
 	}
-	while (str[*i + len]
-		&& (str[*i + len] != TK_SPACE || inside_s_quotes || inside_d_quotes)
-		&& str[*i + len] != TK_GREATER && str[*i + len] != TK_LESS)
+	while ((str[*i + len] && str[*i + len] != TK_SPACE) || inside_s_quotes || inside_d_quotes)
 	{
 		if (str[*i + len] == TK_D_QUOTE)
 			inside_d_quotes = !inside_d_quotes;
 		if (str[*i + len] == TK_S_QUOTE)
 			inside_s_quotes = !inside_s_quotes;
+		if (!inside_s_quotes && !inside_d_quotes && (str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS))
+			break;
 		len++;
 	}
 	return (len);
@@ -100,7 +105,7 @@ char	**lex_split(char const *s)
 	size_t	j;
 	size_t	len;
 
-	if (!s)
+	if (!s || !ft_strlen(s))
 		return (NULL);
 	// printf("cout_words = %zu\n", count_words(s));
 	result = (char **)ft_calloc(count_words(s) + 1, sizeof(char *));
@@ -110,6 +115,8 @@ char	**lex_split(char const *s)
 	j = 0;
 	while (s[i])
 	{
+		// printf("i = %zu\n", i);
+		// printf("s[i] = %c\n", s[i]);
 		len = get_word_len(s, &i);
 		// printf("i = %zu - len = %zu\n", i, len);
 		if (len)
@@ -119,7 +126,7 @@ char	**lex_split(char const *s)
 			// printf("result[%zu] = %s\n", j, result[j]);
 			if (!result[j])
 			{
-				return (free_till_n(result, j));
+				return (free_till_n(result, j), NULL);
 				// return (NULL);
 			}
 			j++;
