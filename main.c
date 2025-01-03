@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 21:57:17 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:57:11 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ static void	shell_loop(char **env)
 		if (isatty(fileno(stdin)))
 		{
 			line = readline(MAGENTA"Minishell> "RESET);
+			// line = ft_strdup("/bin/echo $\"42$\"");
 			if (!line)
 				break ;
 		}
@@ -172,7 +173,14 @@ static void	shell_loop(char **env)
 		if (line[0] != '\0')
 			add_history(line);
 		tokens = lexer(line);
-		// tokens = expand(tokens, env);
+		// t_token *tmp = tokens;
+		// while (tmp)
+		// {
+		// 	printf("value = %s - %d\n", tmp->value, tmp->need_expand);
+		// 	tmp = tmp->next;
+		// }
+		// printf("im here\n");
+		tokens = expand(tokens, env);
 		cmds = parse(tokens);
 		cmd_manager = prepare_execution(cmds, env);
 		if (!cmd_manager)

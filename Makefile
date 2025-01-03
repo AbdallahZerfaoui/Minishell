@@ -31,11 +31,11 @@ LIBS = libft.a
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
-# EXPANDER_SRC = $(wildcard expander/*.c)
+EXPANDER_SRC = $(wildcard expander/*.c)
 COLLECTOR_SRC = $(wildcard collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(PIEPX_SRC) $(LEXER_SRC) $(COLLECTOR_SRC) $(PARSER_SRC)
+SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(COLLECTOR_SRC)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
