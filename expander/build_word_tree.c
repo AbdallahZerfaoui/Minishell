@@ -132,7 +132,9 @@ int		get_depth(t_tree_node *root)
 
 int are_empty_quotes(const char *word)
 {
-	if (!word || *word == '\0' || ft_strlen(word) == 2)
+	if (ft_strlen(word) == 2
+	&& (word[0] == TK_D_QUOTE || word[0] == TK_S_QUOTE)
+	&& word[1] == word[0])
 		return (1);
 	else
 		return (0);
@@ -307,38 +309,67 @@ int	is_expansion_done(char *word)
 // 	}
 // 	return (expand_word(expanded, env));
 // }
-
+/***
+ * @note be careful this function is recursive
+ */
 t_tree_node	*build_word_tree(char *word, char **env)
 {
 	char *current_char;
 	char *end_last_part;
 	char *sub_word;
 	int len;
+	static int inside_d_quotes;
 	t_tree_node *root;
 	t_tree_node *new_node;
-	
-	if (!word || *word == '\0' || are_empty_quotes(word))
-		return (NULL);
-	else if (count_quotes(word) == 0 && ft_strlen(word) > 0)
-		return (create_tree_node(word));
+
 	root = create_tree_node(word);
 	if (!root)
 		exit(1);
+	if (!word || *word == '\0') // i have removed the condition are_empty_quotes(word)
+		return (NULL);
+	else if (are_empty_quotes(word))
+	{
+		return (create_tree_node(""));
+	}
+	else if (ft_strlen(word) >= 2 && word[0] == TK_BACK_SLASH
+		&& (word[1] == word[0] || word[1] == TK_DOLLAR))
+	{
+		new_node = create_tree_node(ft_substr(word, 0, 2));
+		if (new_node)
+			append_child(&root, new_node);
+		new_node = build_word_tree(word + 2, env);
+		if (new_node)
+			append_child(&root, new_node);
+	}
+	else if (is_expansion_done(word))
+	{
+		return (create_tree_node(word));
+	}
+	else if (count_quotes(word) == 0 && ft_strlen(word) > 0)
+	{
+		return (create_tree_node(word));
+	}
 	current_char = word;
-	
 	while (*current_char != '\0')
 	{
-		if (*current_char == TK_D_QUOTE || *current_char == TK_S_QUOTE)
+		if (*current_char == TK_D_QUOTE)
+		{
+			inside_d_quotes = !inside_d_quotes;
+		}
+		// printf("current_char = %c - inside quotes = %d\n", *current_char, inside_d_quotes);
+		if (*current_char == TK_D_QUOTE
+			|| (*current_char == TK_S_QUOTE && !inside_d_quotes))
 		{
 			end_last_part = ft_strchr(current_char + 1, *current_char);
 			if (!end_last_part)
-				exit(1);
+				return (NULL);
 			len = end_last_part - current_char - 1; // we remove the quotes
 			sub_word = ft_substr(current_char + 1, 0, len);
-			if (ft_strcmp(sub_word, word) != 0 && *current_char == TK_D_QUOTE 
+			if (ft_strcmp(sub_word, word) != 0
+				&& *current_char == TK_D_QUOTE
 				&& sub_word && *sub_word != '\0')
 			{
-				// printf("sub_word = %s\n", sub_word);
+				// printf("sub_word = *%s*\n", sub_word);
 				// new_node = create_tree_node(sub_word);
 				new_node = build_word_tree(sub_word, env);
 				if (new_node)
@@ -346,7 +377,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 					append_child(&root, new_node);
 				}
 			}
-			else if (*current_char == TK_S_QUOTE)
+			else if (*current_char == TK_S_QUOTE && !inside_d_quotes)
 			{
 				new_node = create_tree_node(sub_word);
 				if (new_node)
@@ -355,30 +386,45 @@ t_tree_node	*build_word_tree(char *word, char **env)
 					append_child(&root, new_node);
 				}
 			}
+			else if (*current_char == TK_S_QUOTE && inside_d_quotes)
+			{
+				sub_word = ft_substr(current_char, 0, len + 2); // we keep the s quotes
+				new_node = create_tree_node(sub_word);
+				if (new_node)
+				{
+					append_child(&root, new_node);
+				}
+			}
 			current_char = end_last_part;
+			if (*end_last_part == TK_D_QUOTE)
+				inside_d_quotes = !inside_d_quotes;
 		}
 		else //normal word
 		{
 			len = 0;
-			while (*current_char != TK_D_QUOTE && *current_char != TK_S_QUOTE 
+			while (*current_char != TK_D_QUOTE
+				&& (*current_char != TK_S_QUOTE || inside_d_quotes)
 				&& *current_char != '\0')
 			{
-				len++;	
+				len++;
 				current_char++;
 			}
 			sub_word = ft_substr(current_char - len, 0, len);
 			if (!sub_word)
 				exit(1);
+			// printf("sub_word = %s word %s len = %d\n", sub_word, word, len);
 			if (ft_strcmp(sub_word, word) != 0)
 			{
 				new_node = build_word_tree(sub_word, env);
 				if (new_node)
 					append_child(&root, new_node);
 			}
-			current_char --;
+			if (current_char > word && !inside_d_quotes)
+				current_char --;
 		}
 		current_char ++;
 	}
+	// print_tree(root, 0, 1);
 	return (root);
 }
 

@@ -9,6 +9,7 @@
 *.out
 *.log
 *.txt
+*.sh
 
 # specific
 ft_malloc.h

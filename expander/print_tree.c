@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:54:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 14:20:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:55:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@
 //     print_tree(root, "", true);
 // }
 
-void print_tree(t_tree_node *node, int depth, int is_last)
+void print_tree(t_tree_node *node, int depth, int is_last) // forbidden function
 {
     if (!node)
         return;
 
     // Print indentation based on depth
-    for (int i = 0; i < depth; i++)
+    for (int i = 0; i < depth ; i++)
     {
         if (i == depth - 1)
             printf(is_last ? "└── " : "├── ");
@@ -107,6 +107,7 @@ void print_tree(t_tree_node *node, int depth, int is_last)
         child = child->next_sibling;
     }
 }
+
 
 // Helper function to create a new tree node
 // t_tree_node	*create_node(char *value)
