@@ -6,17 +6,17 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/03 21:59:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:26:48 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# define FORK_ERROR 1
+# define FORK_ERROR 127
 # define CHILD_PROCESS 0
 # define PIPE_ERROR 1
-# define OPEN_ERROR 1
+# define OPEN_ERROR -1
 // # define EXIT_FAILURE 0
 # define ARGUMENT_ERROR 1
 # define MALLOC_ERROR 1

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/01 20:18:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:51:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,3 +95,21 @@ void	wait_for_children(int nbr_cmds)
 		i++;
 	}
 }
+// void	wait_for_children(int nbr_cmds)
+// {
+// 	int		status;
+// 	pid_t	pid;
+
+// 	while (nbr_cmds-- > 0)
+// 	{
+// 		pid = wait(&status);
+// 		if (WIFEXITED(status))
+// 		{
+// 			g_data.exit_status = WEXITSTATUS(status);
+// 		}
+// 		else if (WIFSIGNALED(status))
+// 		{
+// 			g_data.exit_status = 128 + WTERMSIG(status);
+// 		}
+// 	}
+// }

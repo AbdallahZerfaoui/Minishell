@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 16:55:01 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:54:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 // 	get_commands(argv, &cmd_manager);
 // 	open_files(argc, argv, &cmd_manager);
 // 	initialize_pipes(&cmd_manager);
-// 	create_cmd_processes(&cmd_manager);
+// create_cmd_processes(&cmd_manager);
 // 	close_pipes(&cmd_manager);
 // 	wait_for_children(cmd_manager.nbr_cmds);
 // 	// free_cmd_manager(&cmd_manager);

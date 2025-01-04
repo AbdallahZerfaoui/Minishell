@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/30 17:12:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:31:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,11 @@ typedef struct s_tree_node
 	struct s_tree_node		*next_sibling;
 }				t_tree_node;
 
+typedef struct s_global_data {
+    char **env;
+    int exit_status;
+    int nb_pipe;
+} t_global_data;
+
+t_global_data g_data;
 #endif
