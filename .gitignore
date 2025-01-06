@@ -4,6 +4,7 @@
 *.dSYM
 *backup*
 *.o
+*.a
 *.py
 *.pyc
 *.out
@@ -20,6 +21,7 @@ get_next_line
 $*
 tests/
 expander/libft/
+minishell-lib/
 
 # tester
 42_minishell_tester/

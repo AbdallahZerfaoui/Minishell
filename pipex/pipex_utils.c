@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/04 20:51:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:15:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	get_commands(char **argv, t_cmd_manager *cmd_manager)
 		cmd_manager->cmds[i].args = ft_split(argv[i + 2], ' ');
 		cmd_manager->cmds[i].path = get_command_path(cmd_manager->cmds[i].args[0],
 				cmd_manager->env);
+		if (!cmd_manager->cmds[i].path)
+		{
+			g_data->exit_status = COMMAND_NOT_FOUND;
+			printf("im here");	
+		}
 		i++;
 	}
 }

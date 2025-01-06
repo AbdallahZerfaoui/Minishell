@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/01 19:57:11 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:23:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 # include "structs.h"
-# include "libft/libft.h"
-# include "get_next_line.h"
-# include "collector/garbage_collector.h"
+# include "minishell-lib/includes/libft.h"
+# include "minishell-lib/includes/get_next_line.h"
+# include "minishell-lib/includes/garbage_collector.h"
 // # include "minishell_backup.h"
 # include "pipex/pipex.h"
 # include <errno.h>

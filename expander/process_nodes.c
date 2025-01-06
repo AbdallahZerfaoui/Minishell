@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/04 20:06:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:14:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,16 @@ void	process_nodes(t_tree_node *root)
 	{
 		root->value = ft_strdup("\\");
 	}
-	if (root->can_expand && !root->children
+	else if (root->can_expand && !root->children
 		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\$") == 0)
 	{
 		root->value = ft_strdup("$");
+	}
+	else if (root->can_expand && ft_strcmp(root->value, "$?") == 0)
+	{
+		root->value = ft_itoa(g_data->exit_status);
+		printf("exit_status = %s\n", root->value);
+		printf("exit_status_vo = %d\n", g_data->exit_status);
 	}
 	else if (root->can_expand && !root->children
 		&& dollar_sign != NULL)

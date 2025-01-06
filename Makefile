@@ -25,17 +25,22 @@ CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
-LIBS = libft.a
+LIBS = minishell-lib.a
+GITHUB_REPO = https://github.com/AbdallahZerfaoui/minishell-lib
+FOLDER_NAME = minishell-lib
+LIBS_DIR = minishell-lib
+ZIP_URL = $(GITHUB_REPO)/archive/main.zip
 # EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
 # GNL_SRC = $(wildcard GetNextLine/*.c)
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
 EXPANDER_SRC = $(wildcard expander/*.c)
-COLLECTOR_SRC = $(wildcard collector/*.c)
+COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
 SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(COLLECTOR_SRC)
+
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
@@ -47,7 +52,7 @@ NAME = minishell
 # $(info SRC = $(SRC))
 
 # Rules
-all: art lib $(NAME)
+all: setup build
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB_FLAGS) $(LIBS)
@@ -55,13 +60,28 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	@$(RM) $(OBJ)
-	@make fclean -C libft
 
-lib:
-	make -C libft
 
+download_resources:
+	@if [ ! -d "./$(FOLDER_NAME)" ]; then \
+		echo "${GREEN}Downloading $(FOLDER_NAME) from GitHub...${RESET}"; \
+		mkdir -p $(LIBS_DIR); \
+		curl -L $(ZIP_URL) -o $(LIBS_DIR)/repo.zip; \
+		unzip $(LIBS_DIR)/repo.zip -d $(LIBS_DIR); \
+		mv $(LIBS_DIR)/minishell-lib-main/* $(LIBS_DIR)/; \
+		rm -rf $(LIBS_DIR)/minishell-lib-main $(LIBS_DIR)/repo.zip; \
+		echo "${GREEN}$(FOLDER_NAME) downloaded successfully!${RESET}"; \
+	else \
+		echo "${GREEN}$(FOLDER_NAME) already exists. Skipping download.${RESET}"; \
+	fi
+
+setup: art download_resources libs
+
+build: $(NAME) success_message
+
+libs:
+	make re -C $(LIBS_DIR)
+	@echo "${GREEN}Librarie $(LIBS) compiled successfully!${RESET}"
 
 collect_tester_garbage:
 	@$(RM) echo 
@@ -69,10 +89,17 @@ collect_tester_garbage:
 	@$(RM) tmp*
 	@$(RM) lol*
 
+clean:
+	@$(RM) $(OBJ)
+
 fclean: clean collect_tester_garbage
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) *.a
+	@if [ -d "$(LIBS_DIR)" ]; then \
+		$(MAKE) fclean -C $(LIBS_DIR); \
+	fi
+
 	
-re: fclean all
+re: fclean setup build
 
 
 valgrind: re
@@ -82,6 +109,9 @@ valgrind: re
 
 cppcheck: re
 	cppcheck --enable=warning,style,performance,portability --enable=unusedFunction $(SRC)
+
+success_message:
+	@echo "\033[31m	------------------***༺ (\033[31m\033[32mMinishell Compiled!\033[31m)༻***------------------\n\033[0m"
 
 
 art:
@@ -94,4 +124,4 @@ art:
 	@echo "${RED}###       ### ########### ###    #### ########### ########  ###    ### ########## ########## ########## ${RESET}"
 	@echo "                                                               by The Greatest                          "
 
-.PHONY: all clean fclean re art lib valgrind cppcheck collect_tester_garbage
+.PHONY: all clean fclean re art lib valgrind cppcheck collect_tester_garbage success_message
