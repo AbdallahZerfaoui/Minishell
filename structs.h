@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 18:43:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:41:30 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_command
 	char				*path;
 	char				**args;
 	int					fd_in;
-	int fd_out; // magnific idea
+	int					fd_out; // magnific idea
 }						t_command;
 
 typedef struct s_cmd_manager
@@ -94,13 +94,13 @@ typedef struct s_tree_node
 	struct s_tree_node	*next_sibling;
 }						t_tree_node;
 
-typedef struct s_global_data
-{
-	char				**env;
-	int					exit_status;
-	int					nb_pipe;
-}						t_global_data;
+// typedef struct s_global_data
+// {
+// 	char				**env;
+// 	int					exit_status;
+// 	int					nb_pipe;
+// }						t_global_data;
 
-static t_global_data			*g_data;
+// static t_global_data			*g_data;
 
 #endif

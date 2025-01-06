@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/04 20:27:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:34:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,48 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	return (cmd_manager);
 }
 
+char	*read_and_validate_input(void)
+{
+	char	*line;
+	char	*trimmed_line;
+
+	if (isatty(fileno(stdin)))
+	{
+		line = readline(MAGENTA "Minishell> " RESET);
+		line = ft_strtrim(line, " \n");
+		if (!line)
+			return ("");
+	}
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		if (!line || line[0] == '\0')
+			return ("exit");
+		trimmed_line = ft_strtrim(line, "\n");
+		if (!trimmed_line)
+			return ("exit");
+		line = trimmed_line;
+	}
+	if (!line)
+		return (NULL);
+	if (ft_strcmp(line, "exit") == 0)
+		return ("exit"); //is it the right way to handle exit?
+	if (line[0] == '\0')
+		return ("");
+	if (unbalanced_quotes(line))
+	{
+		printf(RED "Unbalanced quotes\n" RESET);
+		return ("");
+	}
+	add_history(line);
+	return (line);
+}
+
+
 static void	shell_loop(char **env)
 {
 	char			*line;
-	char			*trimmed_line;
+	// char			*trimmed_line;
 	t_token			*tokens;
 	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
@@ -141,37 +179,42 @@ static void	shell_loop(char **env)
 		// printf("line = *%s*\n", line);
 		// remove_empty_nodes();
 		// isatty(fileno(stdin))
-		if (isatty(fileno(stdin)))
-		{
-			line = readline(MAGENTA"Minishell> "RESET);
-			// line = ft_strdup("/bin/echo $\"42$\"");
-			if (!line)
-				break ;
-		}
-		else
-		{
-			line = get_next_line(fileno(stdin));
-			if (!line || line[0] == '\0')
-				break ;
-			// printf("line_raw = *%s*\n", line);
-			trimmed_line = ft_strtrim(line, "\n");
-			if (!trimmed_line)
-				break ;
-			// free(line);
-			line = trimmed_line;
-			// printf("line = *%s*\n", line);
-		}
-		if (!line)
-			break ;
-		if (line[0] == '\0')
-		{
-			// free(line);
-			continue;
-		}
+		// if (isatty(fileno(stdin)))
+		// {
+		// 	line = readline(MAGENTA"Minishell> "RESET);
+		// 	// line = ft_strdup("/bin/echo $\"42$\"");
+		// 	line = ft_strtrim(line, " \n");
+		// 	if (!line)
+		// 		break ;
+		// }
+		// else
+		// {
+		// 	line = get_next_line(fileno(stdin));
+		// 	if (!line || line[0] == '\0')
+		// 		break ;
+		// 	trimmed_line = ft_strtrim(line, "\n");
+		// 	if (!trimmed_line)
+		// 		break ;
+		// 	line = trimmed_line;
+		// }
+		// if (!line)
+		// 	break ;
+		// if (ft_strcmp(line, "exit") == 0)
+		// 	break ;
+		// if (line[0] == '\0')
+		// 	continue;
+		// if (unbalanced_quotes(line))
+		// {
+		// 	printf(RED"Unbalanced quotes\n"RESET);
+		// 	continue;
+		// }
+		// if (line[0] != '\0')
+		// 	add_history(line);
+		line = read_and_validate_input();
 		if (ft_strcmp(line, "exit") == 0)
 			break ;
-		if (line[0] != '\0')
-			add_history(line);
+		if (!line || line[0] == '\0')
+			continue ;
 		tokens = lexer(line);
 		// t_token *tmp = tokens;
 		// while (tmp)
@@ -253,8 +296,8 @@ static void	shell_loop(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	(void)argv;
-	(void)argc;
+	if (argc != 1 || *argv == NULL)
+		return (2);
 	shell_loop(env);
 	clear_history();
 	main_cleanup();
