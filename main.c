@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/18 16:25:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/18 19:15:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,8 @@ int	main(int argc, char **argv, char **env)
 {
 	int	is_interactive;
 
-	is_interactive = 0;
-	printf("is_interactive = %d\n", is_interactive);
+	is_interactive = isatty(fileno(stdin));
+	// printf("is_interactive = %d\n", is_interactive);
 	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	// init_shell(&shell, env);
