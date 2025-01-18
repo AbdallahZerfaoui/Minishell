@@ -25,3 +25,6 @@ minishell-lib/
 
 # tester
 42_minishell_tester/
+outfiles/
+123
+456

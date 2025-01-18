@@ -6,30 +6,36 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/07 12:19:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/18 14:46:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/***
+ * @brief This function checks if the string has unbalanced quotes.
+ * instead of counting the quotes, we use two flags
+ * to check if we are inside a quote
+ * @note this way we eliminate the quotes inside qotes problem
+ */
 int	unbalanced_quotes(const char *str)
 {
-	int	single_quote;
-	int	double_quote;
+	int	is_single_quote;
+	int	is_double_quote;
 	int	i;
 
-	single_quote = 0;
-	double_quote = 0;
+	is_single_quote = 0;
+	is_double_quote = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == TK_S_QUOTE)
-			single_quote++;
-		else if (str[i] == TK_D_QUOTE)
-			double_quote++;
+		if (str[i] == TK_S_QUOTE && !is_double_quote)
+			is_single_quote = !is_single_quote;
+		else if (str[i] == TK_D_QUOTE && !is_single_quote)
+			is_double_quote = !is_double_quote;
 		i++;
 	}
-	return ((single_quote % 2) || (double_quote % 2));
+	return (is_single_quote || is_double_quote);
 }
 
 void	init_shell(t_shell **shell, char **env)

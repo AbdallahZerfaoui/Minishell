@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 21:53:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:21:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static size_t	count_words(char const *str)
 	inside_d_quotes = 0;
 	while (*str)
 	{
+		if (*str == TK_PIPE)
+		{
+			len++;
+			str++;
+			is_new_word = 0;
+			continue ;
+		}
 		if (*str == TK_D_QUOTE)
 			inside_d_quotes = !inside_d_quotes;
 		if (*str == TK_S_QUOTE)
@@ -66,7 +73,9 @@ static size_t	get_word_len(char const *str, size_t *i)
 	while (str[*i] == TK_SPACE)
 		(*i)++;
 	len = 0;
-	if ((str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS) && str[*i + len] == str[*i + len + 1])
+	if (str[*i] == TK_PIPE)
+		return (1);
+	else if ((str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS) && str[*i + len] == str[*i + len + 1])
 	{
 		return (2);
 	}
@@ -107,7 +116,8 @@ char	**lex_split(char const *s)
 
 	if (!s || !ft_strlen(s))
 		return (NULL);
-	// printf("cout_words = %zu\n", count_words(s));
+	printf("s = %s\n", s);
+	printf("cout_words = %zu\n", count_words(s));
 	result = (char **)ft_calloc(count_words(s) + 1, sizeof(char *));
 	if (!result)
 		return (NULL);
@@ -123,7 +133,7 @@ char	**lex_split(char const *s)
 		{
 			result[j] = ft_substr(s, i, len);
 			// printf("result[%zu] = %s\n", j, s + i);
-			// printf("result[%zu] = %s\n", j, result[j]);
+			printf("result[%zu] = %s\n", j, result[j]);
 			if (!result[j])
 			{
 				return (free_till_n(result, j), NULL);

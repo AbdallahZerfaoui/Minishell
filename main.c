@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/18 13:32:01 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:25:59 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	i = 0;
 	while (current)
 	{
+		// printf("current index = %d -> %s\n", current->index, current->files->value);
 		if (access(current->cmd_array[0], X_OK) == 0)
 			cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 		else
@@ -111,7 +112,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 		// 	cmd_manager->cmds[i].fd_in = get_fd_in(current);
 		// 	cmd_manager->cmds[i].fd_out = get_fd_out(current);
 		// }
-		if (cmds->files
+		if (cmds->files && current->files
 			&& current->files->type == HEREDOC)
 		{
 			cmd_manager->cmds[i].fd_in = open(cmds->files->next->value, O_RDONLY);
@@ -187,12 +188,13 @@ static void	shell_loop(char **env)
 	is_interactive = isatty(fileno(stdin));
 	while (1)
 	{
-		line = read_and_validate_input(isatty(is_interactive));
+		line = read_and_validate_input(is_interactive);
 		if (ft_strcmp(line, "exit") == 0)
 			break ;
 		if (!line || line[0] == '\0')
 			continue ;
 		tokens = lexer(line);
+		// printf("line = %s\n", line);
 		tokens = expand(tokens, env);
 		cmds = parse(tokens);
 		cmd_manager = prepare_execution(cmds, env);
@@ -238,12 +240,16 @@ static void	shell_loop(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	// t_shell	*shell;
-	if (argc != 1 || *argv == NULL)
+	int	is_interactive;
+
+	is_interactive = 0;
+	printf("is_interactive = %d\n", is_interactive);
+	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	// init_shell(&shell, env);
 	shell_loop(env);
-	clear_history();
+	if (is_interactive)
+		clear_history();
 	main_cleanup();
 	return (0);
 }
