@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 20:19:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:19:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ int	unbalanced_quotes(const char *str)
 	return ((single_quote % 2) || (double_quote % 2));
 }
 
+void	init_shell(t_shell **shell, char **env)
+{
+	(*shell) = (t_shell *)ft_calloc(1, sizeof(t_shell));
+	if (!(*shell))
+		return ;
+	(*shell)->env = env;
+}
 // char	*read_and_validate_input(void)
 // {
 // 	char *line;

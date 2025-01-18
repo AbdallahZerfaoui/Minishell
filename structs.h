@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 19:41:30 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:09:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ typedef enum e_token_type // when use typedef and when only enum is enough
 	WORD,
 	PIPE,
 	INFILE,
-	OUTFILE
+	OUTFILE,
+	APPEND,
+	HEREDOC
 }						t_token_type;
 
 typedef struct s_token
@@ -93,6 +95,15 @@ typedef struct s_tree_node
 	struct s_tree_node	*children;
 	struct s_tree_node	*next_sibling;
 }						t_tree_node;
+
+typedef struct s_shell
+{
+	t_token				*tokens;
+	t_cmd_node			*cmds;
+	t_cmd_manager		*cmd_manager;
+	char				**env;
+	int					exit_status;
+}						t_shell;
 
 // typedef struct s_global_data
 // {

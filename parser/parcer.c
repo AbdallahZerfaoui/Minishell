@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/31 22:35:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:22:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_cmd_node	*parse(t_token *tokens)
 {
 	t_cmd_node	*head;
 	t_cmd_node	*new_node;
-	// t_token		*next_token;
 	t_token		*current_token;
 	t_token		*detached_token;
 	int			words_chain_len;
@@ -56,7 +55,6 @@ t_cmd_node	*parse(t_token *tokens)
 			if (!new_node)
 				return (NULL);
 			append_cmd_node(&head, &new_node);
-			// next_token = current_token->next;
 			current_token = current_token->next;
 		}
 		else if (current_token->type == WORD)
@@ -67,7 +65,9 @@ t_cmd_node	*parse(t_token *tokens)
 			add_cmd(&head, detached_token);
 		}
 		else if (current_token->type == INFILE
-			|| current_token->type == OUTFILE)
+			|| current_token->type == OUTFILE
+			|| current_token->type == APPEND
+			|| current_token->type == HEREDOC)
 		{
 			detached_token = current_token;
 			current_token = detach_token(detached_token, 2);

@@ -36,10 +36,10 @@ PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
 EXPANDER_SRC = $(wildcard expander/*.c)
-COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
+# COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(COLLECTOR_SRC)
+SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
@@ -54,13 +54,11 @@ NAME = minishell
 # Rules
 all: setup build
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB_FLAGS) $(LIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
-
 
 download_resources:
 	@if [ ! -d "./$(FOLDER_NAME)" ]; then \
@@ -80,7 +78,7 @@ setup: art download_resources libs
 build: $(NAME) success_message
 
 libs:
-	make re -C $(LIBS_DIR)
+	make -C $(LIBS_DIR)
 	@echo "${GREEN}Librarie $(LIBS) compiled successfully!${RESET}"
 
 collect_tester_garbage:
@@ -98,9 +96,7 @@ fclean: clean collect_tester_garbage
 		$(MAKE) fclean -C $(LIBS_DIR); \
 	fi
 
-	
-re: fclean setup build
-
+re: fclean all
 
 valgrind: re
 	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < valgrind_test.txt
@@ -124,4 +120,4 @@ art:
 	@echo "${RED}###       ### ########### ###    #### ########### ########  ###    ### ########## ########## ########## ${RESET}"
 	@echo "                                                               by The Greatest                          "
 
-.PHONY: all clean fclean re art lib valgrind cppcheck collect_tester_garbage success_message
+.PHONY: all clean fclean re art valgrind cppcheck collect_tester_garbage success_message setup build libs

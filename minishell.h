@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 20:12:32 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:20:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int					len_tokens_lst(t_token *tokens);
 void				free_tokens(t_token *head);
 void				free_cmds(t_cmd_node *head);
 int					unbalanced_quotes(const char *str);
+void				init_shell(t_shell **shell, char **env);
 
 // t_exe	*parse_line(char *line, char **env);
 

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 21:54:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 15:06:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ t_token_type	get_type(const char *str)
 {
 	if (str[0] == TK_PIPE)
 		return (PIPE);
+	else if (str[0] == TK_GREATER && str[1] == str[0])
+		return (APPEND);
+	else if (str[0] == TK_LESS && str[1] == str[0])
+		return (HEREDOC);
 	else if (str[0] == TK_LESS)
 		return (INFILE);
 	else if (str[0] == TK_GREATER)
@@ -58,7 +62,8 @@ t_token	*lexer(const char *line)
 	if (!line)
 		return (NULL);
 	splited_line = lex_split(line);
-	// printf("splited_line[0] = %s\n", splited_line[0]);
+	printf("splited_line[0] = %s\n", splited_line[0]);
+	printf("splited_line[1] = %s\n", splited_line[1]);
 	tokens = array2linked_list(splited_line);
 	free_all_split(splited_line);
 	return (tokens);
