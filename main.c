@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/08 15:51:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:32:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,12 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	return (cmd_manager);
 }
 
-char	*read_and_validate_input(void)
+char	*read_and_validate_input(int is_interactive)
 {
 	char	*line;
 	char	*trimmed_line;
 
-	if (isatty(fileno(stdin)))
+	if (is_interactive)
 	{
 		line = readline(MAGENTA "Minishell> " RESET);
 		line = ft_strtrim(line, " \n");
@@ -169,7 +169,8 @@ char	*read_and_validate_input(void)
 		printf(RED "Unbalanced quotes\n" RESET);
 		return ("");
 	}
-	add_history(line);
+	if (is_interactive)
+		add_history(line);
 	return (line);
 }
 
@@ -180,11 +181,13 @@ static void	shell_loop(char **env)
 	t_token			*tokens;
 	t_cmd_node		*cmds;
 	t_cmd_manager	*cmd_manager;
+	int				is_interactive;
 
 	gc_init_garbage_collector();
+	is_interactive = isatty(fileno(stdin));
 	while (1)
 	{
-		line = read_and_validate_input();
+		line = read_and_validate_input(isatty(is_interactive));
 		if (ft_strcmp(line, "exit") == 0)
 			break ;
 		if (!line || line[0] == '\0')
