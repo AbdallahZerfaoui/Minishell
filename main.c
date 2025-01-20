@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 12:46:07 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:59:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int	get_fd_out(t_cmd_node *node)
 	{
 		file = node->files->next;
 		fd_out = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out == -1)
+		{
+			perror("open error");
+			exit(OPEN_ERROR);
+		}
+	}
+	else if (node && node->files && node->files->type == APPEND)
+	{
+		file = node->files->next;
+		fd_out = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd_out == -1)
 		{
 			perror("open error");
