@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/18 19:16:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:11:44 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@
 static size_t	count_words(char const *str)
 {
 	size_t	len;
-	int		is_new_word;
+	int		is_new_word; // change it to inside_word
 	int		inside_s_quotes;
 	int		inside_d_quotes;
+	int		nbr_dollars;
 
 	len = 0;
 	is_new_word = 0;
 	inside_s_quotes = 0;
 	inside_d_quotes = 0;
+	nbr_dollars = 0;
 	while (*str)
 	{
 		if (*str == TK_PIPE)
@@ -52,12 +54,18 @@ static size_t	count_words(char const *str)
 			&& !inside_s_quotes && !inside_d_quotes)
 			&& !is_new_word)
 		{
-			is_new_word = 1;
 			len++;
+			is_new_word = 1;
 			// printf("str = %c\n", *str);
 		}
 		else if ((*str == TK_SPACE && !inside_s_quotes && !inside_d_quotes))
 			is_new_word = 0;
+		// else if (*str == TK_DOLLAR)
+		// {
+		// 	if (!is_new_word || !*(str + 1))  // Start of word or end of string
+		// 		len++;
+		// 	is_new_word = 0;  // Reset for next word
+		// }
 		str++;
 	}
 	return (len);
@@ -84,18 +92,26 @@ static size_t	get_word_len(char const *str, size_t *i)
 	{
 		return (1);
 	}
-	while ((str[*i + len] && str[*i + len] != TK_SPACE) || inside_s_quotes || inside_d_quotes)
+	while (str[*i + len])
 	{
 		if (str[*i + len] == TK_D_QUOTE && !inside_s_quotes)
 			inside_d_quotes = !inside_d_quotes;
 		if (str[*i + len] == TK_S_QUOTE && !inside_d_quotes)
 			inside_s_quotes = !inside_s_quotes;
-		if (!inside_s_quotes && !inside_d_quotes && (str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS))
-			break;
+		if (!inside_s_quotes && !inside_d_quotes)
+		{
+			if (str[*i + len] == TK_SPACE)
+				break ;
+			if (str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS)
+				break ;
+			// if (str[*i + len] == TK_DOLLAR && len > 0)
+			// 	break ;
+		}
 		len++;
 	}
 	return (len);
 }
+
 
 void	*free_till_n(char **result, size_t j)
 {

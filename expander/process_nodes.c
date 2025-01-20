@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 19:38:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:53:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ char *replace_var(char *str, char *var, char *value) // forbidden function
 	
 	if (!str)
 		return NULL;
-	if (!var || !value)
+	if (!var)
 		return ft_strdup(str);
+	if (!value)
+		value = strdup("");
     // Find the position of the variable in the string
     pos = strstr(str, var);
     if (!pos)
@@ -61,14 +63,20 @@ void	process_nodes(t_tree_node *root)
 	// is_skipped = 0;
 	// printf("root = %s\n", root->value);
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
+	if (dollar_sign && *(dollar_sign + 1) == '\0'
+		&& !root->children && !root->next_sibling) // handle the case of $ at the end of the string
+	{
+		root->can_expand = 0;
+	}
 	if (root->can_expand && !root->children
-		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\\\") == 0)
+		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\\\") == 0) // handle the case of \\ in the string
 	{
 		root->value = ft_strdup("\\");
 	}
 	else if (root->can_expand && !root->children
 		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\$") == 0)
 	{
+		// printf("im handling \\$\n");
 		root->value = ft_strdup("$");
 	}
 	else if (root->can_expand && ft_strcmp(root->value, "$?") == 0)
@@ -82,7 +90,7 @@ void	process_nodes(t_tree_node *root)
 		&& dollar_sign != NULL)
 	{
 		len = 0;
-		if (root->value[1] == '\0')
+		if (ft_strlen(root->value) == 1)
 		{
 			root->value = ft_strdup("");
 		}

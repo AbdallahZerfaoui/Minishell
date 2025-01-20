@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/18 19:15:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:46:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,20 @@ static void	shell_loop(char **env)
 		tokens = lexer(line);
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, env);
+		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
+		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens);
 		cmd_manager = prepare_execution(cmds, env);
 		if (!cmd_manager)
 			return ;
 		initialize_pipes(cmd_manager);
 		create_cmd_processes(cmd_manager);
+		// printf("command : %s\n", cmd_manager->cmds->path);
+		// printf("args : %s\n", cmd_manager->cmds->args[1]);
+		// printf("args : %s\n", cmd_manager->cmds->args[2]);
+		// printf("args : %s\n", cmd_manager->cmds->args[3]);
+		// printf("args : %s\n", cmd_manager->cmds->args[4]);
+		// printf("args : %s\n", cmd_manager->cmds->args[5]);
 		wait_for_children(cmd_manager->nbr_cmds);
 		close_pipes(cmd_manager);
 	}

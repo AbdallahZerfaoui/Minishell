@@ -57,7 +57,7 @@ t_tree_node	*create_tree_node(const char *value)
 t_tree_node	*get_last_child(t_tree_node *node)
 {
 	t_tree_node	*last;
-	
+
 	if (!node || !node->children)
 		return (NULL);
 	last = node->children;
@@ -76,7 +76,7 @@ t_tree_node	*get_last_child(t_tree_node *node)
 // 	return (last);
 // }
 
-void append_child(t_tree_node **head, t_tree_node *new_node)
+void	append_child(t_tree_node **head, t_tree_node *new_node)
 {
 	t_tree_node	*last;
 
@@ -110,7 +110,6 @@ int		get_depth(t_tree_node *root)
 	}
 	return (depth);
 }
-	
 
 // void	append_sibling(t_tree_node **head, t_tree_node *new_node)
 // {
@@ -180,9 +179,27 @@ int	count_quotes(char *word)
 	return (count);
 }
 
-int	is_expansion_done(char *word)
+int	count_dollars(char *word)
 {
-	if (count_quotes(word) == 0)
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	if (!word || *word == '\0')
+		return (0);
+	while (word[i])
+	{
+		if (word[i] == TK_DOLLAR)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	is_expansion_done(char *word) // im not sure that these are all the cases
+{
+	if (count_quotes(word) == 0 && count_dollars(word) == 0)
 		return (1);
 	else if (are_empty_quotes(word))
 		return (1);
@@ -334,6 +351,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 	else if (ft_strlen(word) >= 2 && word[0] == TK_BACK_SLASH
 		&& (word[1] == word[0] || word[1] == TK_DOLLAR))
 	{
+		// printf("case 2\n");
 		new_node = create_tree_node(ft_substr(word, 0, 2));
 		if (new_node)
 			append_child(&root, new_node);
@@ -343,12 +361,15 @@ t_tree_node	*build_word_tree(char *word, char **env)
 	}
 	else if (is_expansion_done(word))
 	{
+		// printf("case 3\n");
 		return (create_tree_node(word));
 	}
-	else if (count_quotes(word) == 0 && ft_strlen(word) > 0)
-	{
-		return (create_tree_node(word));
-	}
+	// else if (count_quotes(word) == 0 && ft_strlen(word) > 0)
+	// {
+	// 	// printf("case 4\n");
+	// 	return (create_tree_node(word));
+	// }
+	// printf("im here\n");
 	current_char = word;
 	while (*current_char != '\0')
 	{
@@ -399,6 +420,34 @@ t_tree_node	*build_word_tree(char *word, char **env)
 			if (*end_last_part == TK_D_QUOTE)
 				inside_d_quotes = !inside_d_quotes;
 		}
+		else if (*current_char == TK_DOLLAR) // $ case - add !inside_s_quotes 
+		{
+			// Check for $" or $' pattern
+			if (*(current_char + 1) == TK_D_QUOTE || *(current_char + 1) == TK_S_QUOTE)
+			{
+				current_char++; // Skip the $ and continue with quote handling
+				continue;
+			}
+			// printf("im here\n");
+			len = 0;
+			current_char++; // Move past $
+			while (current_char[len] && current_char[len] != TK_DOLLAR 
+				&& current_char[len] != TK_SPACE 
+				&& current_char[len] != TK_D_QUOTE 
+				&& current_char[len] != TK_S_QUOTE)
+				len++;
+			// Include $ in substring
+			sub_word = ft_substr(current_char - 1, 0, len + 1);
+			if (!sub_word)
+				exit(1);
+			if (ft_strcmp(sub_word, word) != 0)
+			{
+				new_node = build_word_tree(sub_word, env);
+				if (new_node)
+					append_child(&root, new_node);
+			}
+			current_char += len - 1;
+		}
 		else //normal word
 		{
 			len = 0;
@@ -424,7 +473,6 @@ t_tree_node	*build_word_tree(char *word, char **env)
 		}
 		current_char ++;
 	}
-	// print_tree(root, 0, 1);
 	return (root);
 }
 
