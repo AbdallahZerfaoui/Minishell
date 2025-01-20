@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 16:59:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:14:25 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,16 @@ int	get_fd_out(t_cmd_node *node)
 	{
 		file = node->files->next;
 		fd_out = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd_out == -1)
-		{
-			perror("open error");
-			exit(OPEN_ERROR);
-		}
 	}
 	else if (node && node->files && node->files->type == APPEND)
 	{
 		file = node->files->next;
 		fd_out = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd_out == -1)
-		{
-			perror("open error");
-			exit(OPEN_ERROR);
-		}
+	}
+	if (fd_out == -1)
+	{
+		perror("open error");
+		exit(OPEN_ERROR);
 	}
 	return (fd_out);
 }
@@ -111,11 +106,14 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	while (current)
 	{
 		// printf("current index = %d -> %s\n", current->index, current->files->value);
-		if (access(current->cmd_array[0], X_OK) == 0)
-			cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
-		else
-			cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
-		cmd_manager->cmds[i].args = current->cmd_array;
+		if (current->cmd_array && current->cmd_array[0])
+		{
+			if (access(current->cmd_array[0], X_OK) == 0)
+				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
+			else
+				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
+			cmd_manager->cmds[i].args = current->cmd_array;
+		}
 		// if (cmds->files
 		// 	&& (current->files->type == INFILE || current->files->type == OUTFILE))
 		// {
@@ -125,7 +123,20 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 		if (cmds->files && current->files
 			&& current->files->type == HEREDOC)
 		{
-			cmd_manager->cmds[i].fd_in = open(cmds->files->next->value, O_RDONLY);
+			if (current->files->next)
+				heredoc_loop(current->files->next->value); //this is the stop word for the heredoc
+			else
+			{
+				fprintf(stderr, "bash: syntax error\n");
+				// exit(HEREDOC_ERROR);
+			}
+			cmd_manager->cmds[i].fd_in = open("heredoc.txt", O_RDONLY);
+			if (cmd_manager->cmds[i].fd_in == -1)
+			{
+				perror("heredoc create error");
+				exit(OPEN_ERROR);
+			}
+			cmd_manager->cmds[i].fd_out = get_fd_out(current);
 		}
 		else
 		{
