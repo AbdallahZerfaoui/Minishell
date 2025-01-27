@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 21:14:25 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:16:10 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 	t_cmd_manager	*cmd_manager;
 	t_cmd_node		*current;
 	int				i;
+	char			*hd_filename;
 
 	cmd_manager = (t_cmd_manager *)ft_calloc(1, sizeof(t_cmd_manager));
 	if (!cmd_manager)
@@ -123,14 +124,15 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 		if (cmds->files && current->files
 			&& current->files->type == HEREDOC)
 		{
+			hd_filename = generate_heredoc_filename();
 			if (current->files->next)
-				heredoc_loop(current->files->next->value); //this is the stop word for the heredoc
+				heredoc_loop(current->files->next->value, hd_filename); //this is the stop word for the heredoc
 			else
 			{
 				fprintf(stderr, "bash: syntax error\n");
 				// exit(HEREDOC_ERROR);
 			}
-			cmd_manager->cmds[i].fd_in = open("heredoc.txt", O_RDONLY);
+			cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
 			if (cmd_manager->cmds[i].fd_in == -1)
 			{
 				perror("heredoc create error");

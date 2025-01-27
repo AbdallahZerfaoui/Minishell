@@ -6,18 +6,33 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 21:32:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:14:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_loop(char *stop_word)
+char	*generate_heredoc_filename(void)
+{
+	static int	i = 0;
+	char		*filename;
+	char		*tmp;
+
+	tmp = ft_itoa(i);
+	filename = ft_strjoin("tmp_", tmp);
+	filename = ft_strjoin(filename, "_heredoc.txt");
+	i++;
+	return (ft_strdup(filename));
+}
+
+void	heredoc_loop(char *stop_word, char *hd_filename)
 {
 	char	*line;
 	int		hd_fd;
+	// char	*hd_filename;
 
-	hd_fd = open(HEREDOC_FILE, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	// hd_filename = generate_heredoc_filename();
+	hd_fd = open(hd_filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (hd_fd == -1)
 	{
 		perror("pipe error");

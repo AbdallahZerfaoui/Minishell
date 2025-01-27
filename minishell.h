@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 21:32:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:13:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define CYAN "\x1b[36m"
 # define RESET "\x1b[0m"
 
-# define HEREDOC_FILE "heredoc.txt"
+# define HEREDOC_FILE "_heredoc.txt"
 
 
 // Lexer
@@ -87,7 +87,8 @@ int					unbalanced_quotes(const char *str);
 void				init_shell(t_shell **shell, char **env);
 
 // Heredoc
-void				heredoc_loop(char *stop_word);
+void				heredoc_loop(char *stop_word, char *hd_filename);
+char				*generate_heredoc_filename(void);
 
 // t_exe	*parse_line(char *line, char **env);
 
