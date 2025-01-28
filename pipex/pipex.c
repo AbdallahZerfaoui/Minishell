@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/28 17:31:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:48:59 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
 			if (ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
 				execute_builtins(cmd_manager->cmds[chd_nbr].path);
-			else if (execve(cmd_manager->cmds[chd_nbr].path,
+			if (execve(cmd_manager->cmds[chd_nbr].path,
 					cmd_manager->cmds[chd_nbr].args, cmd_manager->env) == -1)
 				exit(EXIT_FAILURE);
 		}
