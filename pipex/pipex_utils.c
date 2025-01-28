@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/06 19:49:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:19:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @return void
  * @exit if malloc fails
  */
-void	get_commands(char **argv, t_cmd_manager *cmd_manager)
+void	get_commands(char **argv, t_cmd_manager *cmd_manager) //??? is it used?
 {
 	int	i;
 

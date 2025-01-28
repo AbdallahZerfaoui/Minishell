@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/04 20:49:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:17:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,19 @@ char	**parse_env(char **env)
 	return (NULL);
 }
 
+int	is_builtin(char *cmd, char **builtins)
+{
+	int	i;
+
+	i = 0;
+	while (builtins[i])
+	{
+		if (ft_strcmp(builtins[i], cmd) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 /**
  * This function get the full path of a given command
  * @param cmd the command
@@ -78,8 +91,14 @@ char	*get_command_path(char *cmd, char **env)
 	char		**paths;
 	char		*full_path;
 	int			i;
+	static char	*builtins[] = {"pwd", "cd", NULL};
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
 			"/usr/sbin", "/sbin", NULL};
+
+	// printf("is builtin = %d\n", is_builtin(cmd, builtins));
+	// printf("path = %s\n", ft_strjoin("./builtins/", cmd));
+	if (is_builtin(cmd, builtins))
+		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);
 	if (!paths)
 		paths = default_paths;
@@ -89,12 +108,7 @@ char	*get_command_path(char *cmd, char **env)
 		full_path = join_paths(paths[i], cmd);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
-			// return (free_all(paths), full_path);
-		// free(full_path);
 		i++;
 	}
-	// free_all(paths);
-	// fprintf(stderr, "%s: command not found\n", cmd);
-	// exit(COMMAND_NOT_FOUND);
 	return (NULL);
 }

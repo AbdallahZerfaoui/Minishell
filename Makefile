@@ -36,10 +36,11 @@ PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
 EXPANDER_SRC = $(wildcard expander/*.c)
+BUILTINS_SRC = $(wildcard builtins/*.c)
 # COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC)
+SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(BUILTINS_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
@@ -60,18 +61,20 @@ $(NAME): $(OBJ) $(LIBS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# download_resources:
+# 	@if [ ! -d "./$(FOLDER_NAME)" ]; then \
+# 		echo "${GREEN}Downloading $(FOLDER_NAME) from GitHub...${RESET}"; \
+# 		mkdir -p $(LIBS_DIR); \
+# 		curl -L $(ZIP_URL) -o $(LIBS_DIR)/repo.zip; \
+# 		unzip $(LIBS_DIR)/repo.zip -d $(LIBS_DIR); \
+# 		mv $(LIBS_DIR)/minishell-lib-main/* $(LIBS_DIR)/; \
+# 		rm -rf $(LIBS_DIR)/minishell-lib-main $(LIBS_DIR)/repo.zip; \
+# 		echo "${GREEN}$(FOLDER_NAME) downloaded successfully!${RESET}"; \
+# 	else \
+# 		echo "${GREEN}$(FOLDER_NAME) already exists. Skipping download.${RESET}"; \
+# 	fi
 download_resources:
-	@if [ ! -d "./$(FOLDER_NAME)" ]; then \
-		echo "${GREEN}Downloading $(FOLDER_NAME) from GitHub...${RESET}"; \
-		mkdir -p $(LIBS_DIR); \
-		curl -L $(ZIP_URL) -o $(LIBS_DIR)/repo.zip; \
-		unzip $(LIBS_DIR)/repo.zip -d $(LIBS_DIR); \
-		mv $(LIBS_DIR)/minishell-lib-main/* $(LIBS_DIR)/; \
-		rm -rf $(LIBS_DIR)/minishell-lib-main $(LIBS_DIR)/repo.zip; \
-		echo "${GREEN}$(FOLDER_NAME) downloaded successfully!${RESET}"; \
-	else \
-		echo "${GREEN}$(FOLDER_NAME) already exists. Skipping download.${RESET}"; \
-	fi
+	git submodule update --init --remote --recursive
 
 setup: art download_resources libs
 

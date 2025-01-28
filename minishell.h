@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/27 19:13:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:31:42 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ void				init_shell(t_shell **shell, char **env);
 // Heredoc
 void				heredoc_loop(char *stop_word, char *hd_filename);
 char				*generate_heredoc_filename(void);
+
+// Builtins
+void				execute_builtins(char *path);
+int					pwd(void);
 
 // t_exe	*parse_line(char *line, char **env);
 
