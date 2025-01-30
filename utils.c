@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/18 14:46:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:59:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	unbalanced_quotes(const char *str)
 	}
 	return (is_single_quote || is_double_quote);
 }
+void	update_env_array(t_shell **shell)
+{
+	(*shell)->env = env_lst_to_array((*shell)->env_lst);
+}
 
 void	init_shell(t_shell **shell, char **env)
 {
@@ -44,6 +48,7 @@ void	init_shell(t_shell **shell, char **env)
 	if (!(*shell))
 		return ;
 	(*shell)->env = env;
+	(*shell)->env_lst = get_env_lst(env);
 }
 // char	*read_and_validate_input(void)
 // {

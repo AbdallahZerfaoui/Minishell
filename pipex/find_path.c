@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/28 17:17:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:23:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ char	*get_command_path(char *cmd, char **env)
 	char		**paths;
 	char		*full_path;
 	int			i;
-	static char	*builtins[] = {"pwd", "cd", NULL};
+	static char	*builtins[]
+		= {"pwd", "cd", "env", "exit", "echo", "unset", "export", NULL};
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
 			"/usr/sbin", "/sbin", NULL};
 
-	// printf("is builtin = %d\n", is_builtin(cmd, builtins));
-	// printf("path = %s\n", ft_strjoin("./builtins/", cmd));
 	if (is_builtin(cmd, builtins))
 		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);

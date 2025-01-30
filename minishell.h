@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/28 17:31:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:18:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,14 @@ void				heredoc_loop(char *stop_word, char *hd_filename);
 char				*generate_heredoc_filename(void);
 
 // Builtins
-void				execute_builtins(char *path);
+void				execute_builtins(char *path, t_shell *shell);
 int					pwd(void);
-
+t_env				*get_env_lst(char **env);
+char				*get_env(char **env);
+void				add_env_node(t_env **env_lst, char *entry);
+char				**env_lst_to_array(t_env *env_lst);
+void				update_env_array(t_shell **shell);
+void				print_env(t_shell *shell);
 // t_exe	*parse_line(char *line, char **env);
 
 #endif

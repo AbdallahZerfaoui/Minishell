@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/28 17:21:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:15:41 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	get_fd_out(t_cmd_node *node)
 	return (fd_out);
 }
 
-t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
+t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell *shell)
 {
 	t_cmd_manager	*cmd_manager;
 	t_cmd_node		*current;
@@ -112,7 +112,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 			if (access(current->cmd_array[0], X_OK) == 0)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else
-				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], env);
+				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], shell->env);
 			cmd_manager->cmds[i].args = current->cmd_array;
 		}
 		// if (cmds->files
@@ -153,7 +153,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, char **env)
 		current = current->next;
 		i++;
 	}
-	cmd_manager->env = env;
+	// cmd_manager->env = env;
+	cmd_manager->shell = shell;
 	cmd_manager->cmds_lst = cmds;
 	// cmd_manager->fd_in = -1;
 	// cmd_manager->fd_out = -1;
@@ -199,7 +200,7 @@ char	*read_and_validate_input(int is_interactive)
 }
 
 
-static void	shell_loop(char **env)
+static void	shell_loop(t_shell *shell)
 {
 	char			*line;
 	t_token			*tokens;
@@ -218,11 +219,11 @@ static void	shell_loop(char **env)
 			continue ;
 		tokens = lexer(line);
 		// printf("line = %s\n", line);
-		tokens = expand(tokens, env);
+		tokens = expand(tokens, shell->env);
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens);
-		cmd_manager = prepare_execution(cmds, env);
+		cmd_manager = prepare_execution(cmds, shell);
 		if (!cmd_manager)
 			return ;
 		initialize_pipes(cmd_manager);
@@ -271,14 +272,15 @@ static void	shell_loop(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	int	is_interactive;
+	int		is_interactive;
+	t_shell	*shell;
 
 	is_interactive = isatty(fileno(stdin));
 	// printf("is_interactive = %d\n", is_interactive);
 	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
-	// init_shell(&shell, env);
-	shell_loop(env);
+	init_shell(&shell, env);
+	shell_loop(shell);
 	if (is_interactive)
 		clear_history();
 	main_cleanup();

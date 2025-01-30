@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 16:46:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:15:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,6 @@ typedef struct s_command
 	int					fd_out; // magnific idea
 }						t_command;
 
-typedef struct s_cmd_manager
-{
-	int					nbr_cmds;
-	int					**pipes;
-	t_command			*cmds;
-	t_cmd_node			*cmds_lst;
-	pid_t				pid;
-	char				**env;
-}						t_cmd_manager;
 
 typedef struct env_data
 {
@@ -96,14 +87,34 @@ typedef struct s_tree_node
 	struct s_tree_node	*next_sibling;
 }						t_tree_node;
 
+typedef struct s_env
+{
+	char			**content;
+	int				export;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
+
 typedef struct s_shell
 {
 	t_token				*tokens;
 	t_cmd_node			*cmds;
-	t_cmd_manager		*cmd_manager;
+	// t_cmd_manager		*cmd_manager;
 	char				**env;
+	t_env				*env_lst;
 	int					exit_status;
 }						t_shell;
+
+typedef struct s_cmd_manager
+{
+	int					nbr_cmds;
+	int					**pipes;
+	t_command			*cmds;
+	t_cmd_node			*cmds_lst;
+	pid_t				pid;
+	// char				**env;
+	t_shell				*shell;
+}						t_cmd_manager;
 
 // typedef struct s_global_data
 // {

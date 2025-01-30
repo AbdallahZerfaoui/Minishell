@@ -6,13 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/28 18:56:24 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:17:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	execute_builtins(char *path)
+void	execute_builtins(char *path, t_shell *shell)
 {
 	if (ft_strstr(path, "pwd") != NULL)
 		pwd();
@@ -24,8 +24,8 @@ void	execute_builtins(char *path)
 	// 	export();
 	// else if (ft_strstr(path, "unset") != NULL)
 	// 	unset();
-	// else if (ft_strstr(path, "env") != NULL)
-	// 	env();
+	else if (ft_strstr(path, "env") != NULL)
+		print_env(shell);
 	else if (ft_strstr(path, "exit") != NULL) // strstr or strcmp??
 		exit(0);
 }
