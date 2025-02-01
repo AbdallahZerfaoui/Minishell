@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/30 12:18:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:16:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,13 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
 	{
+		// printf("cmd_manager->cmds[chd_nbr].path = %s\n", cmd_manager->cmds[chd_nbr].path);
+		if (cmd_manager->nbr_cmds == 1
+			&& cmd_manager->cmds[chd_nbr].path
+			&& ft_strstr(cmd_manager->cmds[chd_nbr].path, "exit") != NULL)
+		{
+			ft_exit(cmd_manager->cmds[chd_nbr].args, cmd_manager->shell);
+		}
 		cmd_manager->pid = fork();
 		if (cmd_manager->pid == -1)
 		{
@@ -108,7 +115,9 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 			else
 				handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
 			if (ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
-				execute_builtins(cmd_manager->cmds[chd_nbr].path, cmd_manager->shell);
+				execute_builtins(cmd_manager->cmds[chd_nbr].path,
+					cmd_manager->cmds[chd_nbr].args,
+					cmd_manager->shell);
 			if (execve(cmd_manager->cmds[chd_nbr].path,
 					cmd_manager->cmds[chd_nbr].args, cmd_manager->shell->env) == -1)
 				exit(EXIT_FAILURE);

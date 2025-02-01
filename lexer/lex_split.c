@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 13:11:44 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:51:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static size_t	count_words(char const *str)
 	int		is_new_word; // change it to inside_word
 	int		inside_s_quotes;
 	int		inside_d_quotes;
-	int		nbr_dollars;
+	// int		nbr_dollars;
 
 	len = 0;
 	is_new_word = 0;
 	inside_s_quotes = 0;
 	inside_d_quotes = 0;
-	nbr_dollars = 0;
+	// nbr_dollars = 0;
 	while (*str)
 	{
 		if (*str == TK_PIPE)

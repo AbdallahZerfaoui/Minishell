@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/30 12:09:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:55:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ t_env	*get_env_lst(char **env)
 
 void	print_env(t_shell *shell)
 {
-	char	*env;
 	int		i;
 
 	i = 0;
-	env = NULL;
 	while (shell->env[i])
 	{
 		printf("%s\n", shell->env[i]);

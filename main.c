@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/30 12:15:41 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:17:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,8 @@ static void	shell_loop(t_shell *shell)
 	while (1)
 	{
 		line = read_and_validate_input(is_interactive);
-		if (ft_strcmp(line, "exit") == 0)
-			break ;
+		// if (ft_strcmp(line, "exit") == 0)
+		// 	ft_exit(shell);
 		if (!line || line[0] == '\0')
 			continue ;
 		tokens = lexer(line);
