@@ -14,3 +14,4 @@ install:
 script:
   - make        # Compile your minishell
   - make valgrind
+  - ./minishell < tests/tests.txt
