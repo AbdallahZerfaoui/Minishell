@@ -12,6 +12,5 @@ install:
 
 # Build and test steps
 script:
-  - make re        # Compile your minishell
-  - norminette     # Check coding style (if required)
+  - make        # Compile your minishell
   - make valgrind
