@@ -8,6 +8,7 @@ compiler:
 install:
   - sudo apt-get update
   - sudo apt-get install -y libreadline-dev
+  - sudo apt-get install -y valgrind
 
 # Build and test steps
 script:
