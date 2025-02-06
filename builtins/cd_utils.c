@@ -6,16 +6,16 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 14:16:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:30:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_cd_error(t_shell *shell, char *dest)
+void	handle_cd_error(t_shell **shell, char *dest)
 {
-	printf("cd: %s: No such file or directory\n", dest);
-	shell->exit_status = 1;
+	printf("bash: cd: %s: No such file or directory\n", dest);
+	(*shell)->exit_status = 1;
 }
 
 void	update_pwd(t_shell **shell, char *old_pwd)

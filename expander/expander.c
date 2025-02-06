@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 17:04:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 14:08:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:55:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,24 @@
 // 	return (expanded);
 // }
 
-char	*expand_word(char *word, char **env)
+char	*expand_word(char *word, t_shell *shell)
 {
 	char		*expanded;
 	t_tree_node	*root;
 
 	expanded = NULL;
-	root = build_word_tree(word, env);
+	root = build_word_tree(word, shell->env);
 	if (!root)
 		return (NULL);
 	// print_tree(root, 0, 1);
-	process_nodes(root);
+	process_nodes(root, shell);
 	merge_tree_nodes(root, &expanded);
 	// printf("word = *%s*\n", word);
 	// printf("expanded = *%s*\n", expanded);
 	return (expanded);
 }
-
-t_token	*expand(t_token *tokens, char **env)
+//TODO: handle the / expension to fix the test 229 of mstest m b
+t_token	*expand(t_token *tokens, t_shell *shell)
 {
 	t_token	*head;
 	t_token	*new;
@@ -101,7 +101,7 @@ t_token	*expand(t_token *tokens, char **env)
 		if (tokens->type == WORD && tokens->need_expand)
 		{
 			// printf("value = %s\n", tokens->value);
-			new = create_token(expand_word(tokens->value, env), WORD);
+			new = create_token(expand_word(tokens->value, shell), WORD);
 			if (!new)
 				return (NULL);
 			append_token(&head, new);

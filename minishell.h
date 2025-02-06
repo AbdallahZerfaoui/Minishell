@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 21:00:11 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:56:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ t_token				*array2linked_list(char **array);
 void				free_all_split(char **split);
 
 // Expander
-t_token				*expand(t_token *tokens, char **env);
+t_token				*expand(t_token *tokens, t_shell *shell);
 // void				print_tree(t_tree_node *root, int depth);
 // void				print_tree(const t_tree_node *root, const char *prefix, bool is_last);
 // void				print_tree_wrapper(const t_tree_node *root);
 void				print_tree(t_tree_node *node, int depth, int is_last);
-void				process_nodes(t_tree_node *root);
+void				process_nodes(t_tree_node *root, t_shell *shell);
 void				merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node			*build_word_tree(char *word, char **env);
 
@@ -102,7 +102,7 @@ void				update_env_array(t_shell **shell);
 void				print_env(t_shell *shell);
 void				ft_exit(char *args[], t_shell *shell);
 t_env				*find_node_by_key(char *key, t_shell *shell);
-void				handle_cd_error(t_shell *shell, char *dest);
+void				handle_cd_error(t_shell **shell, char *dest);
 void				update_pwd(t_shell **shell, char *old_pwd);
 void				cd(char *args[], t_shell **shell);
 // t_exe	*parse_line(char *line, char **env);

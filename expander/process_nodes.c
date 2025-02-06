@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 13:53:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:57:11 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char *replace_var(char *str, char *var, char *value) // forbidden function
     return result;
 }
 
-void	process_nodes(t_tree_node *root)
+void	process_nodes(t_tree_node *root, t_shell *shell)
 {
 	char	*keyword;
 	char	*elem_to_replace;
@@ -83,7 +83,8 @@ void	process_nodes(t_tree_node *root)
 	{
 		// root->value = ft_itoa(g_data->exit_status);
 		// printf("exit_status = %s\n", root->value);
-		printf("%d\n", 0);
+		// printf("%d\n", 0);
+		root->value = ft_itoa(shell->exit_status);
 		// printf("exit_status_vo = %d\n", g_data->exit_status);
 	}
 	else if (root->can_expand && !root->children
@@ -123,6 +124,6 @@ void	process_nodes(t_tree_node *root)
 		if (!root->value)
 			root->value = ft_strdup("");
 	}
-	process_nodes(root->children);
-	process_nodes(root->next_sibling);
+	process_nodes(root->children, shell);
+	process_nodes(root->next_sibling, shell);
 }

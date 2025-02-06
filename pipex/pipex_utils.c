@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 21:17:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:47:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	get_commands(char **argv, t_cmd_manager *cmd_manager) //??? is it used?
 		// if (!cmd_manager->cmds[i].path)
 		// {
 		// 	g_data->exit_status = COMMAND_NOT_FOUND;
-		// 	printf("im here");	
 		// }
 		i++;
 	}
