@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 20:09:24 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:12:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	init_shell(t_shell **shell, char **env)
 	// 	return ;
 	(*shell)->env = env;
 	(*shell)->env_lst = get_env_lst(env);
+	(*shell)->exit_status = 0;
 }
 // char	*read_and_validate_input(void)
 // {

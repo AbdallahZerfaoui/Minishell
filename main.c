@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 15:53:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:15:16 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ char	*read_and_validate_input(int is_interactive)
 }
 
 
-static void	shell_loop(t_shell *shell)
+static void	shell_loop(t_shell **shell)
 {
 	char			*line;
 	t_token			*tokens;
@@ -219,11 +219,11 @@ static void	shell_loop(t_shell *shell)
 			continue ;
 		tokens = lexer(line);
 		// printf("line = %s\n", line);
-		tokens = expand(tokens, shell);
+		tokens = expand(tokens, *shell);
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens);
-		cmd_manager = prepare_execution(cmds, &shell);
+		cmd_manager = prepare_execution(cmds, shell);
 		if (!cmd_manager)
 			return ;
 		initialize_pipes(cmd_manager);
@@ -282,7 +282,7 @@ int	main(int argc, char **argv, char **env)
 	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	init_shell(&shell, env);
-	shell_loop(shell);
+	shell_loop(&shell);
 	if (is_interactive)
 		clear_history();
 	main_cleanup();
