@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 14:55:36 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:38:48 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,33 @@ t_env	*get_env_lst(char **env)
 	int		i;
 
 	i = 0;
-	env_lst = (t_env *)ft_calloc(1, sizeof(struct s_env));
-	if (!env_lst)
-		return (env_lst);
+	// env_lst = (t_env *)ft_calloc(1, sizeof(struct s_env));
+	// if (!env_lst)
+	// 	return (env_lst);
+	env_lst = NULL;
 	while (env[i])
 	{
+		// printf("im in get en lst\n");
 		add_env_node(&env_lst, env[i]);
+		// printf("env_lst->content[0] = %s\n", env_lst->content[0]);
 		i++;
 	}
+	add_env_node(&env_lst, NULL); // null terminated to know when to stop
+	// if (!env_lst)
+	// 	printf("env_lst is empty in get env lst\n");
 	return (env_lst);
 }
 
+/**
+ * @brief Print the environment variables
+ * @note This function is the main function for the 'env' builtin
+ */
 void	print_env(t_shell *shell)
 {
 	int		i;
 
 	i = 0;
+	update_env_array(&shell);
 	while (shell->env[i])
 	{
 		printf("%s\n", shell->env[i]);

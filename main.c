@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 15:17:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:13:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	get_fd_out(t_cmd_node *node)
 	return (fd_out);
 }
 
-t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell *shell)
+t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 {
 	t_cmd_manager	*cmd_manager;
 	t_cmd_node		*current;
@@ -112,7 +112,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell *shell)
 			if (access(current->cmd_array[0], X_OK) == 0)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else
-				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], shell->env);
+				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], (*shell)->env);
 			cmd_manager->cmds[i].args = current->cmd_array;
 		}
 		// if (cmds->files
@@ -223,11 +223,12 @@ static void	shell_loop(t_shell *shell)
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens);
-		cmd_manager = prepare_execution(cmds, shell);
+		cmd_manager = prepare_execution(cmds, &shell);
 		if (!cmd_manager)
 			return ;
 		initialize_pipes(cmd_manager);
 		create_cmd_processes(cmd_manager);
+		// print_env(shell); //TODO remove this line
 		// printf("command : %s\n", cmd_manager->cmds->path);
 		// printf("args : %s\n", cmd_manager->cmds->args[1]);
 		// printf("args : %s\n", cmd_manager->cmds->args[2]);
@@ -275,6 +276,7 @@ int	main(int argc, char **argv, char **env)
 	int		is_interactive;
 	t_shell	*shell;
 
+	shell = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	is_interactive = isatty(fileno(stdin));
 	// printf("is_interactive = %d\n", is_interactive);
 	if ((argc != 1 && is_interactive) || *argv == NULL)

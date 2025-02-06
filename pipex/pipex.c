@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 16:16:07 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:38:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,34 +93,41 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
 	{
-		// printf("cmd_manager->cmds[chd_nbr].path = %s\n", cmd_manager->cmds[chd_nbr].path);
 		if (cmd_manager->nbr_cmds == 1
 			&& cmd_manager->cmds[chd_nbr].path
-			&& ft_strstr(cmd_manager->cmds[chd_nbr].path, "exit") != NULL)
+			&& ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
 		{
-			ft_exit(cmd_manager->cmds[chd_nbr].args, cmd_manager->shell);
+			execute_builtins(cmd_manager->cmds[chd_nbr].path,
+				cmd_manager->cmds[chd_nbr].args,
+				cmd_manager->shell);
 		}
-		cmd_manager->pid = fork();
-		if (cmd_manager->pid == -1)
+		else
 		{
-			perror("fork error");
-			exit(FORK_ERROR);
-		}
-		if (cmd_manager->pid == 0) // 0 is the child
-		{
-			if (chd_nbr == 0)
-				handle_first_child(cmd_manager, chd_nbr);
-			else if (chd_nbr == cmd_manager->nbr_cmds - 1)
-				handle_last_child(cmd_manager, chd_nbr);
-			else
-				handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
-			if (ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
-				execute_builtins(cmd_manager->cmds[chd_nbr].path,
-					cmd_manager->cmds[chd_nbr].args,
-					cmd_manager->shell);
-			if (execve(cmd_manager->cmds[chd_nbr].path,
-					cmd_manager->cmds[chd_nbr].args, cmd_manager->shell->env) == -1)
-				exit(EXIT_FAILURE);
+			cmd_manager->pid = fork();
+			if (cmd_manager->pid == -1)
+			{
+				perror("fork error");
+				exit(FORK_ERROR);
+			}
+			if (cmd_manager->pid == 0) // 0 is the child
+			{
+				if (chd_nbr == 0)
+					handle_first_child(cmd_manager, chd_nbr);
+				else if (chd_nbr == cmd_manager->nbr_cmds - 1)
+					handle_last_child(cmd_manager, chd_nbr);
+				else
+					handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
+				if (ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
+				{
+					execute_builtins(cmd_manager->cmds[chd_nbr].path,
+						cmd_manager->cmds[chd_nbr].args,
+						cmd_manager->shell);
+					exit(EXIT_SUCCESS);
+				}
+				else if (execve(cmd_manager->cmds[chd_nbr].path,
+						cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
+					exit(EXIT_FAILURE);
+			}
 		}
 		chd_nbr++;
 	}

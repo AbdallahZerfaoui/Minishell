@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 16:00:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:11:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_tree_node
 
 typedef struct s_env
 {
-	char			**content;
+	char			**content; // contains two strings key and value
 	int				export;
 	struct s_env	*next;
 	struct s_env	*prev;
@@ -113,7 +113,7 @@ typedef struct s_cmd_manager
 	t_cmd_node			*cmds_lst;
 	pid_t				pid;
 	// char				**env;
-	t_shell				*shell;
+	t_shell				**shell;
 }						t_cmd_manager;
 
 // typedef struct s_global_data

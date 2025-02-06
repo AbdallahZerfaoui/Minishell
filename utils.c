@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/30 11:59:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:09:24 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	unbalanced_quotes(const char *str)
 	}
 	return (is_single_quote || is_double_quote);
 }
+/***
+ * @brief This function updates the env array
+ * @note this function is called after each change in the env_lst
+ */
 void	update_env_array(t_shell **shell)
 {
 	(*shell)->env = env_lst_to_array((*shell)->env_lst);
@@ -44,9 +48,9 @@ void	update_env_array(t_shell **shell)
 
 void	init_shell(t_shell **shell, char **env)
 {
-	(*shell) = (t_shell *)ft_calloc(1, sizeof(t_shell));
-	if (!(*shell))
-		return ;
+	// (*shell) = (t_shell *)ft_calloc(1, sizeof(t_shell));
+	// if (!(*shell))
+	// 	return ;
 	(*shell)->env = env;
 	(*shell)->env_lst = get_env_lst(env);
 }
