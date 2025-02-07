@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.c                                           :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/08 15:22:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:08:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*detach_token(t_token *target, int size)
 	return (current_updated);
 }
 
-t_cmd_node	*parse(t_token *tokens)
+t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 {
 	t_cmd_node	*head;
 	t_cmd_node	*new_node;
@@ -45,7 +45,7 @@ t_cmd_node	*parse(t_token *tokens)
 	head = create_cmd_node();
 	if (!head || !tokens)
 		return (NULL);
-	check_tokens(tokens);
+	check_tokens(tokens, shell);
 	current_token = tokens;
 	while (current_token)
 	{
@@ -75,8 +75,10 @@ t_cmd_node	*parse(t_token *tokens)
 		}
 		else
 		{
-			perror("Invalid token type");
-			exit(1);
+			// perror("Invalid token type");
+			(*shell)->exit_status = MISUSE_ERROR;
+			break ;
+			// exit(MISUSE_ERROR);
 		}
 	}
 	t_cmd_node	*last = get_last_node(head);
