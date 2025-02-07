@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 16:22:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:23:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_env				*find_node_by_key(char *key, t_shell *shell);
 void				handle_cd_error(t_shell **shell, char *args[]);
 void				update_pwd(t_shell **shell, char *old_pwd);
 void				cd(char *args[], t_shell **shell);
+void				ft_unset(char *args[], t_shell **shell);
 // t_exe	*parse_line(char *line, char **env);
 
 #endif

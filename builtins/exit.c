@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:37:49 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 16:39:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:47:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_exit(char *args[], t_shell *shell)
 		exit_code = 1;
 	else if (args[1] != NULL)
 		exit_code = ft_atoi(args[1]);
+	// printf("exit\n");
 	main_cleanup();
 	exit(exit_code);
 }

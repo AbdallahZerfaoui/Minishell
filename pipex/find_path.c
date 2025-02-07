@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/01 15:24:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:50:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*get_command_path(char *cmd, char **env)
 	char		*full_path;
 	int			i;
 	static char	*builtins[]
-		= {"pwd", "cd", "env", "exit", NULL};
+		= {"pwd", "cd", "env", "exit", "unset", NULL};
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
 			"/usr/sbin", "/sbin", NULL};
 

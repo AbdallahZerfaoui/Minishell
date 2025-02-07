@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 20:55:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:23:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	execute_builtins(char *path, char *args[], t_shell **shell)
 	}
 	// else if (ft_strstr(path, "export") != NULL)
 	// 	export();
-	// else if (ft_strstr(path, "unset") != NULL)
-	// 	unset();
+	else if (ft_strstr(path, "unset") != NULL)
+		ft_unset(args, shell);
 	else if (ft_strstr(path, "env") != NULL)
 		print_env(*shell);
 	else if (ft_strstr(path, "exit") != NULL) // strstr or strcmp??
