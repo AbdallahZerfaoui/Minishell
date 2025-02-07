@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 14:38:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:19:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				}
 				else if (execve(cmd_manager->cmds[chd_nbr].path,
 						cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
-					exit(EXIT_FAILURE);
+					exit(COMMAND_NOT_FOUND);
 			}
 		}
 		chd_nbr++;

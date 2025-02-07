@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 16:33:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:30:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define FORK_ERROR 127
 # define CHILD_PROCESS 0
 # define PIPE_ERROR 1
-# define OPEN_ERROR -1
+# define OPEN_ERROR 1
 // # define EXIT_FAILURE 0
 # define ARGUMENT_ERROR 1
 # define MALLOC_ERROR 1

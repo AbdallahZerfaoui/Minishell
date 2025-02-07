@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/29 16:52:09 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@
 // 	return (fd_out);
 // }
 
+void	check_fds(int fd_in, int fd_out, t_shell **shell)
+{
+	if (fd_in == -1 || fd_out == -1)
+	{
+		perror("open");
+		(*shell)->exit_status = OPEN_ERROR;
+		exit(OPEN_ERROR);
+	}
+}
+
 void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 {
 	int	fd_in;
@@ -70,8 +80,12 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 
 	fd_in = cmd_manager->cmds[chd_nbr].fd_in;
 	fd_out = cmd_manager->cmds[chd_nbr].fd_out;
+
+	//TODO maybe i should change the input of check_fds to take cmd_manager directly
+	check_fds(fd_in, fd_out, cmd_manager->shell);
 	// printf("fd_in = %d\n", fd_in);
 	// printf("fd_out = %d\n", fd_out);
+	
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);

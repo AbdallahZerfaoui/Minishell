@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 19:15:16 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:38:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_fd_in(t_cmd_node *node)
 		if (fd_in == -1)
 		{
 			perror("open error");
-			exit(OPEN_ERROR);
+			// exit(OPEN_ERROR);
 		}
 	}
 	return (fd_in);
