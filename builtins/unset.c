@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:12:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 15:48:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_unset(char *args[], t_shell **shell)
 	{
 		if (!is_valid_key(args[i]))
 		{
-			ft_putstr_fd(STDERR, "minishell: unset: not a valid identifier\n");
+			ft_putstr_fd(STDERR_FILENO, "bash: unset: not a valid identifier\n");
 			(*shell)->exit_status = 1;
 			i++;
 			continue;

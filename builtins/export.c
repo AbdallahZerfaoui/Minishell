@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 21:54:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	ft_export(char *args[], t_shell **shell)
 	{
 		if (ft_isalpha(args[i][0]) == 0 && args[i][0] != '_')
 		{
-			ft_putstr_fd(STDERR, "export: `");
-			ft_putstr_fd(STDERR, args[i]);
-			ft_putstr_fd(STDERR, "': not a valid identifier\n");
+			ft_putstr_fd(STDERR_FILENO, "export: `");
+			ft_putstr_fd(STDERR_FILENO, args[i]);
+			ft_putstr_fd(STDERR_FILENO, "': not a valid identifier\n");
 			(*shell)->exit_status = 1;
 			i++;
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 17:57:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	handle_cd_error(t_shell **shell, char *args[])
 		return ;
 
 	error_msg = "bash: cd: ";
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(STDERR_FILENO, error_msg);
 	if (args[2] != NULL)
 	{
 		error_msg = "too many arguments\n";
-		write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+		ft_putstr_fd(STDERR_FILENO, error_msg);
 		(*shell)->exit_status = 1;
 		return ;
 	}
-	write(STDERR_FILENO, args[1], ft_strlen(args[1]));
+	ft_putstr_fd(STDERR_FILENO, args[1]);
 	if (access(args[1], F_OK) == -1)
 		error_msg = ": No such file or directory\n";
 	else if (access(args[1], R_OK) == -1)
@@ -36,7 +36,7 @@ void	handle_cd_error(t_shell **shell, char *args[])
 	else
 		error_msg = ": Not a directory\n";
 
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(STDERR_FILENO, error_msg);
 	(*shell)->exit_status = 1;
 }
 

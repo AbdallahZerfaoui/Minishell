@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 14:41:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	cd(char *args[], t_shell **shell)
 		oldpwd_node = find_node_by_key("OLDPWD", (*shell));
 		if (!oldpwd_node || !oldpwd_node->content[1])
 		{
-			write(STDERR_FILENO, "bash: cd: OLDPWD not set\n", 24);
+			ft_putstr_fd(STDERR_FILENO, "bash: cd: OLDPWD not set\n");
 			(*shell)->exit_status = 1;
 			return ;
 		}

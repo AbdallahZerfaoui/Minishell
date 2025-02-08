@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 21:58:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 //     (*args)[j] = NULL; // Null-terminate the args array
 // }
-int	get_fd_in(t_cmd_node *node)
+int	get_fd_in(t_cmd_node *node, t_shell **shell)
 {
 	t_token	*file;
 	int		fd_in;
@@ -57,14 +57,16 @@ int	get_fd_in(t_cmd_node *node)
 		fd_in = open(file->value, O_RDONLY);
 		if (fd_in == -1)
 		{
-			perror("open error");
+			// perror("open error");
+			ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
+			(*shell)->exit_status = OPEN_ERROR;
 			// exit(OPEN_ERROR);
 		}
 	}
 	return (fd_in);
 }
 
-int	get_fd_out(t_cmd_node *node)
+int	get_fd_out(t_cmd_node *node, t_shell **shell)
 {
 	t_token	*file;
 	int		fd_out;
@@ -82,7 +84,8 @@ int	get_fd_out(t_cmd_node *node)
 	}
 	if (fd_out == -1)
 	{
-		perror("open error");
+		ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
+		(*shell)->exit_status = OPEN_ERROR;
 		exit(OPEN_ERROR);
 	}
 	return (fd_out);
@@ -129,21 +132,21 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 				heredoc_loop(current->files->next->value, hd_filename); //this is the stop word for the heredoc
 			else
 			{
-				fprintf(stderr, "bash: syntax error\n");
+				ft_putstr_fd(STDERR_FILENO, "bash: syntax error\n");
 				// exit(HEREDOC_ERROR);
 			}
 			cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
 			if (cmd_manager->cmds[i].fd_in == -1)
 			{
-				perror("heredoc create error");
-				exit(OPEN_ERROR);
+				ft_putstr_fd(STDERR_FILENO, "bash: heredoc create error");
+				exit(OPEN_ERROR); //TODO change this to a better error
 			}
-			cmd_manager->cmds[i].fd_out = get_fd_out(current);
+			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
 		}
 		else
 		{
-			cmd_manager->cmds[i].fd_in = get_fd_in(current);
-			cmd_manager->cmds[i].fd_out = get_fd_out(current);
+			cmd_manager->cmds[i].fd_in = get_fd_in(current, shell);
+			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
 		}
 		// if (cmds->files
 		// 	&& current->files->type == OUTFILE)

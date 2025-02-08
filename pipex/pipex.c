@@ -6,35 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 21:42:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:40:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "pipex.h"
 #include "../minishell.h"
 
-// static int	is_valid_command(const char *cmd)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	if (!cmd || !*cmd)
-// 		return (0);
-// 	if (ft_strchr(cmd, '/'))
-// 		return (1);
-
-// 	if (cmd[0] == '.' || cmd[0] == '/' || cmd[0] == '-'
-// 		|| cmd[0] == '=' || cmd[0] == '@')
-// 		return (0);
-
-// 	while (cmd[i])
-// 	{
-// 		if (!ft_isalnum(cmd[i]) && cmd[i] != '_' && cmd[i] != '-')
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 void	free_cmd_manager(t_cmd_manager *cmd_manager)
 {
@@ -116,14 +94,14 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
 	{
-		// if (!is_valid_command(cmd_manager->cmds[chd_nbr].path)) //TODO check if i need to improve the validation
-		// {
-		// 	printf("minishell: %s: command not found\n", cmd_manager->cmds[chd_nbr].path);
-		// 	(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
-		// 	// exit(COMMAND_NOT_FOUND);
-		// 	return ;
-		// }
-		// printf("command : %s\n", cmd_manager->cmds[chd_nbr].path);
+		// printf("path : %s\n", cmd_manager->cmds[chd_nbr].path);
+		if (cmd_manager->cmds[chd_nbr].path == NULL)
+		{
+			// printf("im here\n");
+			ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
+			(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+			return ;
+		}
 		if (cmd_manager->nbr_cmds == 1
 			&& cmd_manager->cmds[chd_nbr].path
 			&& ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
@@ -165,33 +143,3 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	}
 	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
 }
-
-/*
-* This function do the following:
-* 1. Check if the number of arguments is correct (4)
-* 2. Get the commands from the arguments
-* 3. Open the files, input and output
-* 4. Initialize the pipes
-* 5. Create the command processes which is the main part of the program
-* 6. Close the pipes after the processes are done
-* 7. Wait for the children to finish
-*@note: this function works with exactly 4 arguments
-*test 1: ./pipex infile "cat" "sort -r" "wc -l" outfile
-*test 2: ./pipex infile "grep a1" "wc -l" outfile
-*/
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_cmd_manager	cmd_manager;
-
-// 	handle_arguments(argc);
-// 	cmd_manager.env = env;
-// 	cmd_manager.nbr_cmds = argc - 3;
-// 	get_commands(argv, &cmd_manager);
-// 	open_files(argc, argv, &cmd_manager);
-// 	initialize_pipes(&cmd_manager);
-// create_cmd_processes(&cmd_manager);
-// 	close_pipes(&cmd_manager);
-// 	wait_for_children(cmd_manager.nbr_cmds);
-// 	// free_cmd_manager(&cmd_manager);
-// 	return (0);
-// }

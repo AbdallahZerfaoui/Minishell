@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:37:49 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 22:02:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	ft_exit(char *args[], t_shell **shell)
 	first_arg = expand_word(args[1], *shell); // case exit "+100"
 	if (!first_arg && args[1])
 	{
-		ft_putstr_fd(STDERR, "minishell: exit: numeric argument required\n");
+		ft_putstr_fd(STDERR_FILENO, "bash: exit: numeric argument required\n");
 		(*shell)->exit_status = 255;
 	}
 	else if (first_arg && !ft_isdigit(*first_arg) && !are_only_digits(first_arg + 1))
 	{
-		ft_putstr_fd(STDERR, "minishell: exit: numeric argument required\n");
+		ft_putstr_fd(STDERR_FILENO, "bash: exit: numeric argument required\n");
 		(*shell)->exit_status = 255;
 	}
 	else if (first_arg && ft_atoi(first_arg) == 0)
@@ -68,7 +68,7 @@ void	ft_exit(char *args[], t_shell **shell)
 	}
 	else if (len_args(args) > 2)
 	{
-		ft_putstr_fd(STDERR, "minishell: exit: too many arguments\n");
+		ft_putstr_fd(STDERR_FILENO, "bash: exit: too many arguments\n");
 		(*shell)->exit_status = 1;
 		return ;
 	}

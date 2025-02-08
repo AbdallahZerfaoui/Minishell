@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 21:48:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_exp_print(t_env	*env_lst)
 	current = env_lst;
 	if (!current)
 	{
-		ft_putstr_fd(STDERR, "no env found\n");
+		ft_putstr_fd(STDERR_FILENO, "no env found\n");
 		return ;
 	}
 	while (current)

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 20:53:13 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 23:21:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*get_command_path(char *cmd, char **env)
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
 			"/usr/sbin", "/sbin", NULL};
 
+	if (ft_isalpha(cmd[0]) == 0 || cmd[0] == '\0')
+		return (NULL);
 	if (is_builtin(cmd, builtins))
 		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);
