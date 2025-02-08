@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 20:38:48 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 21:48:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,37 @@ void	print_env(t_shell *shell)
 	{
 		printf("%s\n", shell->env[i]);
 		i++;
+	}
+}
+
+void	ft_exp_print(t_env	*env_lst)
+{
+	t_env	*current;
+
+	current = env_lst;
+	if (!current)
+	{
+		ft_putstr_fd(STDERR, "no env found\n");
+		return ;
+	}
+	while (current)
+	{
+		if (current->content[0])
+			printf("declare -x %s", current->content[0]);
+		if (current->content[1] && ft_strcmp(current->content[1], "") != 0)
+		{
+			printf("=\"%s\"\n", current->content[1]);
+		}
+		// else if (current->content[1] && ft_strcmp(current->content[1], "") == 0)
+		// {
+		// 	printf("\n");
+		// }
+		// else if (current->export == 0)
+		// {
+		// 	printf("=\"\"\n");
+		// }
+		else
+			printf("\n");
+		current = current->next;
 	}
 }

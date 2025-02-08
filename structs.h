@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 21:11:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:39:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ typedef struct s_shell
 {
 	t_token				*tokens;
 	t_cmd_node			*cmds;
-	// t_cmd_manager		*cmd_manager;
 	char				**env;
 	t_env				*env_lst;
 	int					exit_status;
@@ -115,14 +114,5 @@ typedef struct s_cmd_manager
 	// char				**env;
 	t_shell				**shell;
 }						t_cmd_manager;
-
-// typedef struct s_global_data
-// {
-// 	char				**env;
-// 	int					exit_status;
-// 	int					nb_pipe;
-// }						t_global_data;
-
-// static t_global_data			*g_data;
 
 #endif

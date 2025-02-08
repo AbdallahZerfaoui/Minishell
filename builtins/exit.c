@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:37:49 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 16:02:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:02:06 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exit(char *args[], t_shell **shell)
 		main_cleanup();
 		exit(MISUSE_ERROR);
 	}
-	(*shell)->exit_status = 0; //TODO check if it should be 1 or 0
+	// (*shell)->exit_status = 0; //TODO check if it should be 1 or 0
 	first_arg = expand_word(args[1], *shell); // case exit "+100"
 	if (!first_arg && args[1])
 	{
