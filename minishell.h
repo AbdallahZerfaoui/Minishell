@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 16:23:35 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:57:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				free_all_split(char **split);
 
 // Expander
 t_token				*expand(t_token *tokens, t_shell *shell);
+char				*expand_word(char *word, t_shell *shell);
 // void				print_tree(t_tree_node *root, int depth);
 // void				print_tree(const t_tree_node *root, const char *prefix, bool is_last);
 // void				print_tree_wrapper(const t_tree_node *root);
@@ -63,7 +64,7 @@ void				merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node			*build_word_tree(char *word, char **env);
 
 // Parser
-t_cmd_node			*parse(t_token *tokens);
+t_cmd_node			*parse(t_token *tokens, t_shell **shell);
 
 // Parser utils
 t_cmd_node			*create_cmd_node(void);
@@ -77,7 +78,7 @@ int					len_cmds_lst(t_cmd_node *cmds);
 t_cmd_node			*get_last_node(t_cmd_node *head);
 
 // Parser errors
-void				check_tokens(t_token *tokens);
+void				check_tokens(t_token *tokens, t_shell **shell);
 
 // Utils
 int					len_tokens_lst(t_token *tokens);
@@ -100,7 +101,8 @@ void				add_env_node(t_env **env_lst, char *entry);
 char				**env_lst_to_array(t_env *env_lst);
 void				update_env_array(t_shell **shell);
 void				print_env(t_shell *shell);
-void				ft_exit(char *args[], t_shell *shell);
+void				ft_exit(char *args[], t_shell **shell);
+int					len_args(char *args[]);
 t_env				*find_node_by_key(char *key, t_shell *shell);
 void				handle_cd_error(t_shell **shell, char *args[]);
 void				update_pwd(t_shell **shell, char *old_pwd);

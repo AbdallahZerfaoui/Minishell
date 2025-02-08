@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:23:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 15:43:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:43:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_pwd(void)
 	tmp = getcwd(cwd, sizeof(cwd));
 	if (!tmp)
 	{
-		perror("getcwd");
+		ft_putstr_fd(STDERR, "getcwd");
 		return (NULL);
 	}
 	return (ft_strdup(cwd));

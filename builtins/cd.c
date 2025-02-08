@@ -6,11 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 19:22:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:41:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+//TODO: case : cd $HOME/folder
 
 void	cd(char *args[], t_shell **shell)
 {

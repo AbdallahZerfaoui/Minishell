@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:30:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:35:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define MALLOC_ERROR 1
 # define COMMAND_NOT_FOUND 127
 # define HEREDOC_ERROR 1
+# define MISUSE_ERROR 2
+# define STDERR 2
 
 # include "../minishell.h"
 # include <fcntl.h>
