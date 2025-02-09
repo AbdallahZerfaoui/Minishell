@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:12:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 21:06:49 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	delete_node_by_key(t_shell **shell, char *key)
 	t_env	*next;
 
 	current = (*shell)->env_lst;
-	(*shell)->exit_status = 1;
+	// (*shell)->exit_status = 0;
 	while (current)
 	{
 		prev = current->prev;
@@ -72,7 +72,10 @@ void	ft_unset(char *args[], t_shell **shell)
 			continue;
 		}
 		else
+		{
+			(*shell)->exit_status = 0;
 			delete_node_by_key(shell, args[i]);
+		}
 		i++;
 	}
 }

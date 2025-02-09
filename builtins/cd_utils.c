@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:11:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	update_pwd(t_shell **shell, char *old_pwd)
 	t_env	*pwd_node;
 
 	pwd_node = find_node_by_key("PWD", *shell);
-	new_pwd = get_pwd();
+	new_pwd = get_pwd(shell);
 	tmp = ft_strjoin("OLDPWD=", old_pwd);
 	if (find_node_by_key("OLDPWD", *shell))
 	{

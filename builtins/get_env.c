@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:49:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void	print_env(t_shell *shell)
 	}
 }
 
+/***
+ * @brief This function is used when the user use export without any arguments
+ */
 void	ft_exp_print(t_env	*env_lst)
 {
 	t_env	*current;
@@ -92,7 +95,12 @@ void	ft_exp_print(t_env	*env_lst)
 	}
 	while (current)
 	{
-		if (current->content[0])
+		if (ft_strcmp(current->content[0], "_") == 0)
+		{
+			current = current->next;
+			continue ;
+		}
+		else if (current->content[0])
 			printf("declare -x %s", current->content[0]);
 		if (current->content[1] && ft_strcmp(current->content[1], "") != 0)
 		{

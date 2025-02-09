@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:53:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_export(char *args[], t_shell **shell)
 			ft_putstr_fd(STDERR_FILENO, "export: `");
 			ft_putstr_fd(STDERR_FILENO, args[i]);
 			ft_putstr_fd(STDERR_FILENO, "': not a valid identifier\n");
-			(*shell)->exit_status = 1;
+			(*shell)->exit_status = 2;
 			i++;
 			continue ;
 		}

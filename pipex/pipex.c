@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:40:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:09:53 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 			cmd_manager->pid = fork();
 			if (cmd_manager->pid == -1)
 			{
-				perror("fork error");
+				ft_putstr_fd(STDERR_FILENO, "bash: fork error\n");
 				exit(FORK_ERROR);
 			}
 			if (cmd_manager->pid == 0) // 0 is the child

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:37:49 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:20:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ void	ft_exit(char *args[], t_shell **shell)
 		main_cleanup();
 		exit(MISUSE_ERROR);
 	}
+	else if (len_args(args) > 2)
+	{
+		ft_putstr_fd(STDERR_FILENO, "bash: exit: too many arguments\n");
+		if (!ft_isdigit(args[1][0])) // case echo cd ..
+			(*shell)->exit_status = 255;
+		else
+			(*shell)->exit_status = 1;
+		return ;
+	}
 	// (*shell)->exit_status = 0; //TODO check if it should be 1 or 0
 	first_arg = expand_word(args[1], *shell); // case exit "+100"
 	if (!first_arg && args[1])
@@ -65,12 +74,6 @@ void	ft_exit(char *args[], t_shell **shell)
 			(*shell)->exit_status = 0;
 		else
 			(*shell)->exit_status = 255;
-	}
-	else if (len_args(args) > 2)
-	{
-		ft_putstr_fd(STDERR_FILENO, "bash: exit: too many arguments\n");
-		(*shell)->exit_status = 1;
-		return ;
 	}
 	else if (first_arg != NULL)
 		(*shell)->exit_status = ft_atoi(first_arg);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:10:54 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	cd(char *args[], t_shell **shell)
 	char	*destination;
 	t_env	*oldpwd_node;
 
-	old_pwd = get_pwd();
+	old_pwd = get_pwd(shell);
 	// home = find_node_by_key("HOME", shell);
 
 	destination = ft_strdup(args[1]);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:36:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/09 14:21:27 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,13 +231,6 @@ static void	shell_loop(t_shell **shell)
 			return ;
 		initialize_pipes(cmd_manager);
 		create_cmd_processes(cmd_manager);
-		// print_env(shell); //TODO remove this line
-		// printf("command : %s\n", cmd_manager->cmds->path);
-		// printf("args : %s\n", cmd_manager->cmds->args[1]);
-		// printf("args : %s\n", cmd_manager->cmds->args[2]);
-		// printf("args : %s\n", cmd_manager->cmds->args[3]);
-		// printf("args : %s\n", cmd_manager->cmds->args[4]);
-		// printf("args : %s\n", cmd_manager->cmds->args[5]);
 		wait_for_children(cmd_manager->nbr_cmds);
 		close_pipes(cmd_manager);
 	}
