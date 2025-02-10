@@ -6,14 +6,14 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:10:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:47:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//TODO: case : cd $HOME/folder
-
+//TODO: case : cd $PWD/folder
+//TODO: case : cd .. && cd $OLDPWD
 void	cd(char *args[], t_shell **shell)
 {
 	// t_env	*home;
@@ -56,9 +56,16 @@ void	cd(char *args[], t_shell **shell)
 		return ;
 	}
 	else if (args[1] && args[1][0] == TK_HYPHEN)
+	{
 		printf("%s\n", destination);
-	update_pwd(shell, old_pwd);
+	}
+	// else
+	// {
+	// 	(*shell)->exit_status = 0;
+	// }
+	update_pwds(shell, old_pwd);
 	// printf("PWD: %s\n", find_node_by_key("PWD", (*shell))->content[1]);
 	// printf("im here\n");
 	update_env_array(shell);
+	// (*shell)->env_lst = get_env_lst((*shell)->env);
 }

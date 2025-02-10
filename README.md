@@ -123,7 +123,7 @@ Here’s the classification from **easiest to hardest** for implementing shell b
    → Example code:  
      ```c
      if (chdir(path) != 0) perror("cd error");
-     else update_pwd_environment();
+     else update_pwds_environment();
      ```
 
 ---

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:03:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:06:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,16 @@ void				ft_exit(char *args[], t_shell **shell);
 int					len_args(char *args[]);
 t_env				*find_node_by_key(char *key, t_shell *shell);
 void				handle_cd_error(t_shell **shell, char *args[]);
-void				update_pwd(t_shell **shell, char *old_pwd);
+void				update_pwds(t_shell **shell, char *old_pwd);
 void				cd(char *args[], t_shell **shell);
 void				ft_unset(char *args[], t_shell **shell);
 t_env				*last_node(t_env *env_lst);
 // Export 
 void				ft_exp_print(t_env	*env_lst);
 void				ft_export(char *args[], t_shell **shell);
+// Echo
+void				ft_echo(char *args[], t_shell **shell);
+int					get_n_flag(char *args[]);
 // t_exe	*parse_line(char *line, char **env);
 
 #endif

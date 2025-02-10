@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 19:18:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:19:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 		root->can_expand = 0;
 		// printf("exit_status_vo = %d\n", g_data->exit_status);
 	}
+	else if (root->can_expand && ft_strcmp(root->value, "~") == 0)
+	{
+		root->value = ft_strdup(getenv("HOME")); //TODO use your own getenv
+	}			
 	else if (root->can_expand && !root->children
 		&& dollar_sign != NULL)
 	{

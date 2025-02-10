@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 14:21:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:22:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	t_cmd_node		*current;
 	int				i;
 	char			*hd_filename;
+	char			*custom_cmd_path;
 
 	cmd_manager = (t_cmd_manager *)ft_calloc(1, sizeof(t_cmd_manager));
 	if (!cmd_manager)
@@ -112,10 +113,11 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		// printf("current index = %d -> %s\n", current->index, current->files->value);
 		if (current->cmd_array && current->cmd_array[0])
 		{
-			if (access(current->cmd_array[0], X_OK) == 0)
+			custom_cmd_path = get_command_path(current->cmd_array[0], (*shell)->env);
+			if (access(current->cmd_array[0], X_OK) == 0 && !custom_cmd_path)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else
-				cmd_manager->cmds[i].path = get_command_path(current->cmd_array[0], (*shell)->env);
+				cmd_manager->cmds[i].path = custom_cmd_path;
 			cmd_manager->cmds[i].args = current->cmd_array;
 		}
 		// if (cmds->files

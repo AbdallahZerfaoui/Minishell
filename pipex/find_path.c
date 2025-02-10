@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 23:21:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:29:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,19 @@ char	**parse_env(char **env)
 	return (NULL);
 }
 
-int	is_builtin(char *cmd, char **builtins)
+int	is_builtin(char **cmd, char **builtins)
 {
 	int	i;
 
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strcmp(builtins[i], cmd) == 0)
+		// if (ft_strcmp(builtins[i], cmd) == 0)
+		if (ft_strstr(*cmd, builtins[i]) != NULL)
+		{
+			*cmd = ft_strdup(builtins[i]);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -92,13 +96,17 @@ char	*get_command_path(char *cmd, char **env)
 	char		*full_path;
 	int			i;
 	static char	*builtins[]
-		= {"pwd", "cd", "env", "exit", "unset", "export", NULL};
+		= {"pwd", "cd", "env", "exit", "unset", "export", "echo", NULL};
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
 			"/usr/sbin", "/sbin", NULL};
 
-	if (ft_isalpha(cmd[0]) == 0 || cmd[0] == '\0')
+	if ((ft_isalpha(cmd[0]) == 0 && cmd[0] != '/')
+		|| cmd[0] == '\0')
+	{
+		// printf("i will return NULL\n");
 		return (NULL);
-	if (is_builtin(cmd, builtins))
+	}
+	if (is_builtin(&cmd, builtins))
 		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);
 	if (!paths)

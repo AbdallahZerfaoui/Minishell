@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:00:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:05:53 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	execute_builtins(char *path, char *args[], t_shell **shell)
 {
 	if (ft_strstr(path, "pwd") != NULL)
 		pwd(shell);
-	// else if (ft_strstr(path, "echo") != NULL)
-	// 	echo();
+	else if (ft_strstr(path, "echo") != NULL)
+	{
+		// printf("im in echo\n");
+		ft_echo(args, shell);
+	}
 	else if (ft_strstr(path, "cd") != NULL)
 	{
 		cd(args, shell);
