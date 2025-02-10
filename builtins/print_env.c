@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 20:49:17 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:58:10 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	print_env(t_shell *shell)
 	int		i;
 
 	i = 0;
-	update_env_array(&shell);
+	update_env_array(&shell); //TODO should we update the env array here?
 	while (shell->env[i])
 	{
 		printf("%s\n", shell->env[i]);

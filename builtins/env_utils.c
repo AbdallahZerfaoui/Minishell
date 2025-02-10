@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/05 20:24:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:14:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,23 @@ void	add_env_node(t_env **env_lst, char *entry)
 	last = last_node(*env_lst);
 	last->next = new;
 	new->prev = last;
+}
+
+/**
+ * @brief Get the value of an environment variable
+ * it uses the linked list to get the value of the key
+ * @note This function is used by the expander
+ */
+char	*ft_getenv(char *key, t_shell *shell)
+{
+	t_env	*current;
+
+	current = shell->env_lst;
+	while (current)
+	{
+		if (ft_strcmp(current->content[0], key) == 0)
+			return (current->content[1]);
+		current = current->next;
+	}
+	return (NULL);
 }

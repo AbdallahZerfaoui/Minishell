@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:12:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 21:06:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:53:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,22 @@ void	ft_unset(char *args[], t_shell **shell)
 	{
 		if (!is_valid_key(args[i]))
 		{
-			ft_putstr_fd(STDERR_FILENO, "bash: unset: not a valid identifier\n");
+			ft_putstr_fd(STDERR_FILENO,
+				"bash: unset: not a valid identifier\n");
 			(*shell)->exit_status = 1;
 			i++;
-			continue;
+			continue ;
 		}
 		else
 		{
 			(*shell)->exit_status = 0;
 			delete_node_by_key(shell, args[i]);
+			// update_env_array(shell);
+			// (*shell)->env_lst = get_env_lst((*shell)->env);
 		}
+		// print_env(*shell);
+		// for (t_env *tmp = (*shell)->env_lst; tmp; tmp = tmp->next)
+		// 	printf("key = %s\n", tmp->content[0]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 17:19:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:12:16 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 	}
 	else if (root->can_expand && ft_strcmp(root->value, "~") == 0)
 	{
-		root->value = ft_strdup(getenv("HOME")); //TODO use your own getenv
+		root->value = ft_strdup(ft_getenv("HOME", shell)); //TODO use your own getenv
 	}			
 	else if (root->can_expand && !root->children
 		&& dollar_sign != NULL)
@@ -116,7 +116,7 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 			keyword = elem_to_replace + 1;
 		// printf("keyword = %s\n", keyword);
 		// old_value = root->value;
-		root->value = replace_var(root->value, elem_to_replace, getenv(keyword));
+		root->value = replace_var(root->value, elem_to_replace, ft_getenv(keyword, shell));
 		if (!root->value)
 			root->value = ft_strdup("");
 		// printf("im here\n");

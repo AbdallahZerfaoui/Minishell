@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 18:22:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:15:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ static void	shell_loop(t_shell **shell)
 			continue ;
 		tokens = lexer(line);
 		// printf("line = %s\n", line);
-		tokens = expand(tokens, *shell);
+		tokens = expand(tokens, shell);
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens, shell);
@@ -235,6 +235,9 @@ static void	shell_loop(t_shell **shell)
 		create_cmd_processes(cmd_manager);
 		wait_for_children(cmd_manager->nbr_cmds);
 		close_pipes(cmd_manager);
+// print_env(*shell);
+// for (t_env *tmp = (*shell)->env_lst; tmp; tmp = tmp->next)
+// 	printf("key = %s\n", tmp->content[0]);
 	}
 }
 

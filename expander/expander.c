@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 17:04:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 15:55:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:48:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ char	*expand_word(char *word, t_shell *shell)
 	// printf("expanded = *%s*\n", expanded);
 	return (expanded);
 }
+
 //TODO: handle the / expension to fix the test 229 of mstest m b
-t_token	*expand(t_token *tokens, t_shell *shell)
+t_token	*expand(t_token *tokens, t_shell **shell)
 {
 	t_token	*head;
 	t_token	*new;
@@ -101,7 +102,7 @@ t_token	*expand(t_token *tokens, t_shell *shell)
 		if (tokens->type == WORD && tokens->need_expand)
 		{
 			// printf("value = %s\n", tokens->value);
-			new = create_token(expand_word(tokens->value, shell), WORD);
+			new = create_token(expand_word(tokens->value, *shell), WORD);
 			if (!new)
 				return (NULL);
 			append_token(&head, new);

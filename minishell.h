@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 19:06:01 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:14:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_token				*array2linked_list(char **array);
 void				free_all_split(char **split);
 
 // Expander
-t_token				*expand(t_token *tokens, t_shell *shell);
+t_token				*expand(t_token *tokens, t_shell **shell);
 char				*expand_word(char *word, t_shell *shell);
 // void				print_tree(t_tree_node *root, int depth);
 // void				print_tree(const t_tree_node *root, const char *prefix, bool is_last);
@@ -96,6 +96,7 @@ void				execute_builtins(char *path, char *args[], t_shell **shell);
 char				*get_pwd(t_shell **shell);
 int					pwd(t_shell **shell);
 t_env				*get_env_lst(char **env);
+char				*ft_getenv(char *key, t_shell *shell);
 char				*get_env(char **env);
 void				add_env_node(t_env **env_lst, char *entry);
 char				**env_lst_to_array(t_env *env_lst);
