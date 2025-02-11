@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 20:58:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:15:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ char	**env_lst_to_array(t_env *env_lst)
 	tmp = env_lst;
 	while (tmp)
 	{
-		env_array[i] = ft_strjoin(tmp->content[0], "=");
-		env_array[i] = ft_strjoin(env_array[i], tmp->content[1]);
+		// env_array[i] = ft_strjoin(tmp->content[0], "=");
+		// env_array[i] = ft_strjoin(env_array[i], tmp->content[1]);
+		env_array[i] = ft_strjoin_all(tmp->content[0], "=", tmp->content[1], NULL);
 		i++;
 		tmp = tmp->next;
 	}
@@ -72,7 +73,9 @@ void	print_env(t_shell *shell)
 	int		i;
 
 	i = 0;
-	update_env_array(&shell); //TODO should we update the env array here?
+	if (!shell->env)
+		return ;
+	// update_env_array(&shell); //TODO should we update the env array here?
 	while (shell->env[i])
 	{
 		printf("%s\n", shell->env[i]);

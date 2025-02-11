@@ -129,7 +129,7 @@ int		get_depth(t_tree_node *root)
 // 	new_node->parent = last->parent;
 // }
 
-int are_empty_quotes(const char *word)
+int	are_empty_quotes(const char *word)
 {
 	if (ft_strlen(word) == 2
 	&& (word[0] == TK_D_QUOTE || word[0] == TK_S_QUOTE)
@@ -329,7 +329,7 @@ int	is_expansion_done(char *word) // im not sure that these are all the cases
 /***
  * @note be careful this function is recursive
  */
-t_tree_node	*build_word_tree(char *word, char **env)
+t_tree_node	*build_word_tree(char *word, t_shell *shell)
 {
 	char *current_char;
 	char *end_last_part;
@@ -355,7 +355,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 		new_node = create_tree_node(ft_substr(word, 0, 2));
 		if (new_node)
 			append_child(&root, new_node);
-		new_node = build_word_tree(word + 2, env);
+		new_node = build_word_tree(word + 2, shell);
 		if (new_node)
 			append_child(&root, new_node);
 	}
@@ -371,7 +371,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 	// }
 	// printf("im here\n");
 	current_char = word;
-	while (*current_char != '\0')
+	while (current_char && *current_char != '\0')
 	{
 		if (*current_char == TK_D_QUOTE)
 		{
@@ -392,7 +392,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 			{
 				// printf("sub_word = *%s*\n", sub_word);
 				// new_node = create_tree_node(sub_word);
-				new_node = build_word_tree(sub_word, env);
+				new_node = build_word_tree(sub_word, shell);
 				if (new_node)
 				{
 					append_child(&root, new_node);
@@ -422,6 +422,13 @@ t_tree_node	*build_word_tree(char *word, char **env)
 		}
 		else if (*current_char == TK_DOLLAR) // $ case - add !inside_s_quotes 
 		{
+			if (ft_strchr(current_char, TK_SLASH) != NULL) // TODO clean this hell - it is the case $HOME/Desktop
+			{
+				int len_until_slash = ft_strchr(current_char, TK_SLASH) - current_char;
+				sub_word = ft_substr(current_char, 0, len_until_slash);
+				current_char = ft_strjoin(ft_getenv(sub_word + 1, shell), ft_strchr(current_char, TK_SLASH));
+				continue ;
+			}
 			// Check for $" or $' pattern
 			if (*(current_char + 1) == TK_D_QUOTE || *(current_char + 1) == TK_S_QUOTE)
 			{
@@ -442,7 +449,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 				exit(1);
 			if (ft_strcmp(sub_word, word) != 0)
 			{
-				new_node = build_word_tree(sub_word, env);
+				new_node = build_word_tree(sub_word, shell);
 				if (new_node)
 					append_child(&root, new_node);
 			}
@@ -464,7 +471,7 @@ t_tree_node	*build_word_tree(char *word, char **env)
 			// printf("sub_word = %s word %s len = %d\n", sub_word, word, len);
 			if (ft_strcmp(sub_word, word) != 0)
 			{
-				new_node = build_word_tree(sub_word, env);
+				new_node = build_word_tree(sub_word, shell);
 				if (new_node)
 					append_child(&root, new_node);
 			}

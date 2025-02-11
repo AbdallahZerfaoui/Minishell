@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 16:41:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:38:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	handle_cd_error(t_shell **shell, char *args[])
 	}
 	ft_putstr_fd(STDERR_FILENO, args[1]);
 	if (access(args[1], F_OK) == -1)
+	{
 		error_msg = ": No such file or directory\n";
+	}
 	else if (access(args[1], R_OK) == -1)
 		error_msg = ": Permission denied\n";
 	else
@@ -39,6 +41,7 @@ void	handle_cd_error(t_shell **shell, char *args[])
 	ft_putstr_fd(STDERR_FILENO, error_msg);
 	(*shell)->exit_status = 1;
 }
+
 // TODO check if i need to update shell at the end of the fucntion
 void	update_pwds(t_shell **shell, char *old_pwd)
 {

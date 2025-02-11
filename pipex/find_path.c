@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 19:29:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:12:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 char	*join_paths(const char *dir, const char *cmd)
 {
 	char	*full_path;
-	char	*tmp;
+	// char	*tmp;
 
-	tmp = ft_strjoin(dir, "/");
-	if (!tmp)
-		return (perror("Error"), NULL);
-	full_path = ft_strjoin(tmp, cmd);
+	// tmp = ft_strjoin(dir, "/");
+	// if (!tmp)
+	// 	return (perror("Error"), NULL);
+	// full_path = ft_strjoin(tmp, cmd);
+	full_path = ft_strjoin_all((char *)dir, "/", cmd, NULL);
 	// free(tmp);
 	if (!full_path)
 		return (perror("Error"), NULL);

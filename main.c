@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:15:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:41:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ static void	shell_loop(t_shell **shell)
 		if (!line || line[0] == '\0')
 			continue ;
 		tokens = lexer(line);
+		// check_tokens(tokens, shell);
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)

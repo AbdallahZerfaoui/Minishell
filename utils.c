@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 19:29:53 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:56:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	unbalanced_quotes(const char *str)
 void	update_env_array(t_shell **shell)
 {
 	(*shell)->env = env_lst_to_array((*shell)->env_lst);
+	// print_env(*shell);
 }
 
 void	init_shell(t_shell **shell, char **env)

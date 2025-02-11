@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/02 17:03:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:40:54 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ int	count_expansion_chars(const char *str) // need improvement
 	return (count);
 }
 
+/***
+ * @brief This function creates a token
+ * if the flag_expansion is -1, it will count the expansion chars
+ * if the flag_expansion is 1 or more, it will set the need_expand to 1
+ * if the flag_expansion is 0, it will set the need_expand to 0
+ */
 t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*new;
@@ -53,7 +59,10 @@ t_token	*create_token(char *value, t_token_type type)
 		return (NULL);
 	new->value = ft_strdup(value);
 	new->type = type;
+	// if (flag_expansion == -1)
 	new->need_expand = count_expansion_chars(value);
+	// else
+	// 	new->need_expand = (flag_expansion >= 1);
 	return (new);
 }
 

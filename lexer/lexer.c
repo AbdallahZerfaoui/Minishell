@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/20 13:12:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:43:06 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,12 @@ t_token	*array2linked_list(char **array)
 	t_token			*new;
 	size_t			i;
 	t_token_type	type;
+	// t_token_type	prev_type;
+	// int				is_command;
 
 	i = 0;
 	head = NULL;
+	// prev_type = PIPE;
 	while (array[i])
 	{
 		type = get_type(array[i]);
@@ -44,9 +47,14 @@ t_token	*array2linked_list(char **array)
 		new = create_token(array[i], type);
 		if (!new)
 			return (NULL);
+		// if (prev_type == PIPE)
+		// 	new->need_expand = 0;
 		// printf("value = %s\n", new->value);
 		append_token(&head, new);
 		i++;
+		// prev_type = type;
+		// if (array[i-1])
+		// 	is_command = (get_type(array[i-1]) == PIPE);
 	}
 	return (head);
 }

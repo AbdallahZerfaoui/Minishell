@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/27 19:14:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:23:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*generate_heredoc_filename(void)
 	tmp = ft_itoa(i);
 	filename = ft_strjoin("tmp_", tmp);
 	filename = ft_strjoin(filename, "_heredoc.txt");
+	// filename = ft_strjoin_all("tmp_", tmp, "_heredoc.txt", NULL);
 	i++;
 	return (ft_strdup(filename));
 }

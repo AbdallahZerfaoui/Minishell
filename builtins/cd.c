@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 16:47:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:36:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cd(char *args[], t_shell **shell)
 	if (args[1] && args[1][0] == TK_TILDE)
 	{
 		args[2] = NULL;
-		destination = ft_strjoin(getenv("HOME"), args[1] + 1);
+		destination = ft_strjoin(ft_getenv("HOME", *shell), args[1] + 1);
 	}
 	else if (args[1] && args[1][0] == TK_HYPHEN)
 	{
@@ -45,13 +45,14 @@ void	cd(char *args[], t_shell **shell)
 		//TODO segfault builtin tests line 328 or 333
 	}
 	else if (!args[1])
-		destination = getenv("HOME");
+		destination = ft_getenv("HOME", *shell);
 	// destination = ft_strjoin_gnl("./", args[1]);
 	// // printf("destination: %s\n", destination);
 	// if (!args[1])
 	// 	destination = getenv("HOME");
 	if (chdir(destination) != 0)
 	{
+		// printf("%s\n", args[1]);
 		handle_cd_error(shell, args);
 		return ;
 	}

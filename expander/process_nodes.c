@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:12:16 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:28:37 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 		// printf("exit_status = %s\n", root->value);
 		// printf("%d\n", 0);
 		root->value = ft_itoa(shell->exit_status);
+		// printf("expantion of $? = %s\n", root->value);
 		root->can_expand = 0;
 		// printf("exit_status_vo = %d\n", g_data->exit_status);
 	}

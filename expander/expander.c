@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 17:04:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 20:48:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:08:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*expand_word(char *word, t_shell *shell)
 	t_tree_node	*root;
 
 	expanded = NULL;
-	root = build_word_tree(word, shell->env);
+	root = build_word_tree(word, shell);
 	if (!root)
 		return (NULL);
 	// print_tree(root, 0, 1);

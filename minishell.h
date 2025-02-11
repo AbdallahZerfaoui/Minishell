@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:14:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:36:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
@@ -61,7 +62,7 @@ char				*expand_word(char *word, t_shell *shell);
 void				print_tree(t_tree_node *node, int depth, int is_last);
 void				process_nodes(t_tree_node *root, t_shell *shell);
 void				merge_tree_nodes(t_tree_node *root, char **expanded);
-t_tree_node			*build_word_tree(char *word, char **env);
+t_tree_node			*build_word_tree(char *word, t_shell *shell);
 
 // Parser
 t_cmd_node			*parse(t_token *tokens, t_shell **shell);

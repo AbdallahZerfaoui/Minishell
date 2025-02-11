@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/08 20:39:09 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:57:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ enum					e_token
 	TK_GREATER = '>',
 	TK_TILDE = '~',
 	TK_BACK_SLASH = '\\',
-	TK_NULL = '\0'
+	TK_SLASH = '/',
+	TK_NULL_CHAR = '\0'
 };
 
 typedef enum e_token_type // when use typedef and when only enum is enough

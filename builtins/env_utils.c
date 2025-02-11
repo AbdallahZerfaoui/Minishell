@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:14:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:18:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*ft_getenv(char *key, t_shell *shell)
 {
 	t_env	*current;
 
+	if (!key || !shell)
+		return (NULL);
 	current = shell->env_lst;
 	while (current)
 	{
