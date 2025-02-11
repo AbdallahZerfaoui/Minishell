@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 15:36:41 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:01:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	set_export_value_to_one(t_env **env_lst)
 void	ft_export(char *args[], t_shell **shell)
 {
 	int		i;
+	char	**content;
 
 	if (!args[1])
 	{
@@ -32,7 +33,8 @@ void	ft_export(char *args[], t_shell **shell)
 	i = 1;
 	while (args[i])
 	{
-		args[i] = ft_strtrim(args[i], "\"");
+		content = ft_split(args[i], '=');
+		// args[i] = ft_strtrim(args[i], "\"");
 		if (ft_isalpha(args[i][0]) == 0 && args[i][0] != '_')
 		{
 			ft_putstr_fd(STDERR_FILENO, "bash: export: `");
@@ -42,11 +44,20 @@ void	ft_export(char *args[], t_shell **shell)
 			i++;
 			continue ;
 		}
-		if (ft_strchr(args[i], '=') == NULL)
+		if (ft_strchr(args[i], '=') == NULL && is_valid_key(content[0]))
 		{
 			// args[i] = ft_strjoin(args[i], "="); // TODO are we adding args[i] to the env_lst? test 390
 			add_env_node(&(*shell)->env_lst, args[i]);
 			// (*shell)->exit_status = 0;
+			i++;
+			continue ; //TODO fix this shit
+		}
+		else if (!is_valid_key(content[0]))
+		{
+			ft_putstr_fd(STDERR_FILENO, "bash: export: `");
+			ft_putstr_fd(STDERR_FILENO, args[i]);
+			ft_putstr_fd(STDERR_FILENO, "': not a valid identifier\n");
+			(*shell)->exit_status = 1;
 			i++;
 			continue ;
 		}
@@ -56,9 +67,5 @@ void	ft_export(char *args[], t_shell **shell)
 		i++;
 	}
 	update_env_array(shell);
-
-// print_env(*shell);
-// for (t_env *tmp = (*shell)->env_lst; tmp; tmp = tmp->next)
-// 	printf("key = %s\n", tmp->content[0]);
 }
 

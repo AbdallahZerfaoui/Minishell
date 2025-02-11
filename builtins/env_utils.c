@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 22:18:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:53:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ t_env	*last_node(t_env *env_lst)
 		last = last->next;
 	return (last);
 }
+
+// int	is_valid_key(char *key)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (key[i])
+// 	{
+// 		if (ft_isalnum(key[i]) == 0 && key[i] != '_')
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 /**
  * @brief Add a new node to the env_lst
  * step 1: allocate memory for the new node

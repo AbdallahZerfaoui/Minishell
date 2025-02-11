@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:09:53 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:32:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,21 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				}
 				else if (execve(cmd_manager->cmds[chd_nbr].path,
 						cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
-					exit(COMMAND_NOT_FOUND);
+				{
+					if (errno == ENOENT) 
+					{
+						// printf("im here\n");
+						// (*(cmd_manager->shell))->exit_status = ARGUMENT_ERROR;
+						// printf("exit status_pipex = %d\n", (*(cmd_manager->shell))->exit_status);
+						exit(ARGUMENT_ERROR);
+					}
+					else
+					{
+						// printf("im here in else\n");
+						// (*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+						exit(COMMAND_NOT_FOUND);
+					}
+				}
 			}
 		}
 		chd_nbr++;

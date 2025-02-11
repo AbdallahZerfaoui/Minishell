@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 19:41:01 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:30:11 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ static void	shell_loop(t_shell **shell)
 			return ;
 		initialize_pipes(cmd_manager);
 		create_cmd_processes(cmd_manager);
+		// printf("exit_status = %d\n", (*shell)->exit_status);
 		wait_for_children(cmd_manager->nbr_cmds);
 		close_pipes(cmd_manager);
 // print_env(*shell);
