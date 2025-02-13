@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 14:55:25 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:08:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ char	*get_command_path(char *cmd, char **env)
 		// printf("i will return NULL\n");
 		return (NULL);
 	}
-	if (is_builtin(&cmd, builtins))
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
+	else if (is_builtin(&cmd, builtins))
 		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);
 	if (!paths)

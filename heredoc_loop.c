@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 14:23:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:34:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,28 @@ void	heredoc_loop(char *stop_word, char *hd_filename)
 		return ;
 	}
 	line = NULL;
+	// while (true)
+	// {
+	// 	line = readline("heredoc>");
+	// 	if (!line || !ft_strcmp(line, stop_word))
+	// 		break ;
+	// 	write(hd_fd, line, ft_strlen(line));
+	// 	write(hd_fd, "\n", 1);
+	// }
 	while (true)
 	{
-		line = readline("heredoc> ");
-		if (!line || !ft_strcmp(line, stop_word))
+		ft_putstr_fd(STDOUT_FILENO, "heredoc> ");
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
 			break ;
+		size_t len = ft_strlen(line); //TODO check this later
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		// Compare the stripped line with stop_word
+		if (!ft_strcmp(line, stop_word))
+		{
+			break ;
+		}
 		write(hd_fd, line, ft_strlen(line));
 		write(hd_fd, "\n", 1);
 	}
