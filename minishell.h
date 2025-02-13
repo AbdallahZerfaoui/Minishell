@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 20:47:28 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 22:58:48 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,13 @@ void				free_tokens(t_token *head);
 void				free_cmds(t_cmd_node *head);
 int					unbalanced_quotes(const char *str);
 void				init_shell(t_shell **shell, char **env);
+int					count_quotes(char *word);
 
 // Heredoc
-void				heredoc_loop(char *stop_word, char *hd_filename);
+void				heredoc_loop(t_heredoc *heredoc);
 char				*generate_heredoc_filename(void);
+char				*hd_expand_word(char *word, t_shell *shell);
+int					set_heredoc_expansion_flag(t_token *tokens);
 
 // Builtins
 void				execute_builtins(char *path, char *args[], t_shell **shell);

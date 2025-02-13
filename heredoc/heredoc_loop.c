@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 17:34:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:00:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*generate_heredoc_filename(void)
 {
@@ -26,14 +26,15 @@ char	*generate_heredoc_filename(void)
 	return (ft_strdup(filename));
 }
 
-void	heredoc_loop(char *stop_word, char *hd_filename)
+void	heredoc_loop(t_heredoc *heredoc)
 {
 	char	*line;
 	int		hd_fd;
+	size_t	len;
 	// char	*hd_filename;
 
 	// hd_filename = generate_heredoc_filename();
-	hd_fd = open(hd_filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	hd_fd = open(heredoc->filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (hd_fd == -1)
 	{
 		perror("pipe error");
@@ -50,18 +51,20 @@ void	heredoc_loop(char *stop_word, char *hd_filename)
 	// }
 	while (true)
 	{
-		ft_putstr_fd(STDOUT_FILENO, "heredoc> ");
+		ft_putstr_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		size_t len = ft_strlen(line); //TODO check this later
+		len = ft_strlen(line); //TODO check this later
 		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0';
 		// Compare the stripped line with stop_word
-		if (!ft_strcmp(line, stop_word))
+		if (!ft_strcmp(line, heredoc->stop_word))
 		{
 			break ;
 		}
+		if ((*(heredoc->shell))->hd_must_expand)
+			line = hd_expand_word(line, *(heredoc->shell));
 		write(hd_fd, line, ft_strlen(line));
 		write(hd_fd, "\n", 1);
 	}

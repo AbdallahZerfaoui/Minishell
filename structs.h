@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:57:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 22:52:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_shell
 	char				**env;
 	t_env				*env_lst;
 	int					exit_status;
+	int					hd_must_expand;
 }						t_shell;
 
 typedef struct s_cmd_manager
@@ -115,5 +116,12 @@ typedef struct s_cmd_manager
 	// char				**env;
 	t_shell				**shell;
 }						t_cmd_manager;
+
+typedef struct s_heredoc
+{
+	char				*stop_word;
+	char				*filename;
+	t_shell				**shell;
+}						t_heredoc;
 
 #endif

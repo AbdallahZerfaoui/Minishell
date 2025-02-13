@@ -163,8 +163,8 @@ int	are_empty_quotes(const char *word)
 
 int	count_quotes(char *word)
 {
-	int count;
-	int i;
+	int	count;
+	int	i;
 
 	count = 0;
 	i = 0;

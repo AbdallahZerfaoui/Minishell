@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 17:32:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:05:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,20 @@ int	get_fd_out(t_cmd_node *node, t_shell **shell)
 	return (fd_out);
 }
 
+t_heredoc	*init_heredoc_struct(char *stop_word, char *hd_filename, t_shell **shell)
+{
+	t_heredoc	*heredoc;
+
+	heredoc = (t_heredoc *)ft_calloc(1, sizeof(t_heredoc));
+	if (!heredoc)
+		return (NULL);
+	// printf("stop_word = %s\n", stop_word);
+	heredoc->stop_word = ft_strdup(expand_word(stop_word, *shell));
+	heredoc->filename = ft_strdup(hd_filename);
+	heredoc->shell = shell;
+	return (heredoc);
+}
+
 t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 {
 	t_cmd_manager	*cmd_manager;
@@ -104,6 +118,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	int				i;
 	char			*hd_filename;
 	char			*custom_cmd_path;
+	t_heredoc		*heredoc;
 
 	cmd_manager = (t_cmd_manager *)ft_calloc(1, sizeof(t_cmd_manager));
 	if (!cmd_manager)
@@ -137,7 +152,11 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		{
 			hd_filename = generate_heredoc_filename();
 			if (current->files->next)
-				heredoc_loop(current->files->next->value, hd_filename); //this is the stop word for the heredoc
+			{
+				heredoc = init_heredoc_struct
+					(current->files->next->value, hd_filename, shell);
+				heredoc_loop(heredoc); //this is the stop word for the heredoc
+			}
 			else
 			{
 				ft_putstr_fd(STDERR_FILENO, "bash: syntax error\n");
@@ -179,7 +198,6 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	cmd_manager->cmds_lst = cmds;
 	// cmd_manager->fd_in = -1;
 	// cmd_manager->fd_out = -1;
-	
 	return (cmd_manager);
 }
 
@@ -240,6 +258,8 @@ static void	shell_loop(t_shell **shell)
 		if (!line || line[0] == '\0')
 			continue ;
 		tokens = lexer(line);
+		(*shell)->hd_must_expand = set_heredoc_expansion_flag(tokens);
+		// printf("hd_must_expand = %d\n", (*shell)->hd_must_expand);
 		// check_tokens(tokens, shell);
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
