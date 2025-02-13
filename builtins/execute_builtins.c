@@ -6,32 +6,72 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:15:35 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:59:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static char	*get_cmd_name(const char *path)
+{
+	char	*slash;
+
+	slash = strrchr(path, '/');
+	if (slash)
+		return (get_cmd_name(slash + 1));
+	return ((char *)path);
+}
+
 void	execute_builtins(char *path, char *args[], t_shell **shell)
 {
-	if (ft_strstr(path, "pwd") != NULL)
+	char	*cmd_name;
+
+	cmd_name = get_cmd_name(path);
+	if (ft_strcmp(cmd_name, "pwd") == 0)
 		pwd(shell);
-	else if (ft_strstr(path, "echo") != NULL)
-	{
-		// printf("im in echo\n");
+	else if (ft_strcmp(cmd_name, "echo") == 0)
 		ft_echo(args, shell);
-	}
-	else if (ft_strstr(path, "cd") != NULL)
-	{
+	else if (ft_strcmp(cmd_name, "cd") == 0)
 		cd(args, shell);
-		// print_env(shell);
-	}
-	else if (ft_strstr(path, "export") != NULL)
+	else if (ft_strcmp(cmd_name, "export") == 0)
 		ft_export(args, shell);
-	else if (ft_strstr(path, "unset") != NULL)
+	else if (ft_strcmp(cmd_name, "unset") == 0)
 		ft_unset(args, shell);
-	else if (ft_strstr(path, "env") != NULL)
+	else if (ft_strcmp(cmd_name, "env") == 0)
 		print_env(*shell);
-	else if (ft_strstr(path, "exit") != NULL) // strstr or strcmp??
+	else if (ft_strcmp(cmd_name, "exit") == 0)
 		ft_exit(args, shell);
+	else
+	{
+		ft_putstr_fd(STDERR_FILENO, "bash: :command not found\n");
+		(*shell)->exit_status = COMMAND_NOT_FOUND;
+	}
 }
+
+// void	execute_builtins(char *path, char *args[], t_shell **shell)
+// {
+// 	// char	*cmd_name;
+
+// 	// cmd_name = get_cmd_name(path);
+// 	// printf("path = %s\n", path);
+// 	if (ft_strstr(path, "pwd") != NULL)
+// 		pwd(shell);
+// 	else if (ft_strstr(path, "echo") != NULL)
+// 	{
+// 		// printf("im in echo\n");
+// 		ft_echo(args, shell);
+// 	}
+// 	else if (ft_strstr(path, "cd") != NULL)
+// 	{
+// 		cd(args, shell);
+// 		// print_env(shell);
+// 	}
+// 	else if (ft_strstr(path, "export") != NULL)
+// 		ft_export(args, shell);
+// 	else if (ft_strstr(path, "unset") != NULL)
+// 		ft_unset(args, shell);
+// 	else if (ft_strstr(path, "env") != NULL)
+// 		print_env(*shell);
+// 	else if (ft_strstr(path, "exit") != NULL) // strstr or strcmp??
+// 		ft_exit(args, shell);
+// }

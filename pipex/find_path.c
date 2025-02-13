@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 17:12:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:55:25 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ char	**parse_env(char **env)
 	return (NULL);
 }
 
+/**
+ * This function checks if a command is a builtin
+ * it has a loose definition of builtin
+ * it means that EechoE and PPPpwd are considered builtins
+ * the final check is done in the execute_builtins function
+ */
 int	is_builtin(char **cmd, char **builtins)
 {
 	int	i;
@@ -76,7 +82,7 @@ int	is_builtin(char **cmd, char **builtins)
 		// if (ft_strcmp(builtins[i], cmd) == 0)
 		if (ft_strstr(*cmd, builtins[i]) != NULL)
 		{
-			*cmd = ft_strdup(builtins[i]);
+			// *cmd = ft_strdup(builtins[i]);
 			return (1);
 		}
 		i++;
