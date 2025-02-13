@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 22:28:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:27:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 	// is_skipped = 0;
 	// printf("root = %s\n", root->value);
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
-	if (dollar_sign && *(dollar_sign + 1) == '\0'
+	if (dollar_sign 
+		&& *(dollar_sign + 1) == '\0'
 		&& !root->children && !root->next_sibling) // handle the case of $ at the end of the string
 	{
+		// printf("im here in process nodes\n");
 		root->can_expand = 0;
 	}
 	if (root->can_expand && !root->children
@@ -97,10 +99,14 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 		&& dollar_sign != NULL)
 	{
 		len = 0;
-		if (ft_strlen(root->value) == 1)
+		if (ft_strlen(root->value) == 1) // the case i have a $ sign alone
 		{
-			root->value = ft_strdup("");
+			// root->value = ft_strdup("");
+			root->can_expand = 0;
+			dollar_sign = NULL;
 		}
+			// printf("im here : *%s*\n", root->value);
+			// printf("%d", root->can_expand);
 		// keyword = root->value + 1;
 		tmp_char = dollar_sign;
 		while (tmp_char != NULL && *tmp_char != '\0'
