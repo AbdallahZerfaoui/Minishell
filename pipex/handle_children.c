@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 17:48:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 22:30:27 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
+	// set the pid of the last child
+	cmd_manager->pid = getpid();
 }
 
 void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr)

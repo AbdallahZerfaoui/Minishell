@@ -98,18 +98,18 @@ void	append_child(t_tree_node **head, t_tree_node *new_node)
 	new_node->parent = last->parent;
 }
 
-int		get_depth(t_tree_node *root)
-{
-	int	depth;
+// int		get_depth(t_tree_node *root)
+// {
+// 	int	depth;
 
-	depth = 0;
-	while (root)
-	{
-		depth++;
-		root = root->children;
-	}
-	return (depth);
-}
+// 	depth = 0;
+// 	while (root)
+// 	{
+// 		depth++;
+// 		root = root->children;
+// 	}
+// 	return (depth);
+// }
 
 // void	append_sibling(t_tree_node **head, t_tree_node *new_node)
 // {

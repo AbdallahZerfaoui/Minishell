@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:09:32 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:05:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void			get_commands(char **argv, t_cmd_manager *cmd_manager);
 void			handle_arguments(int argc);
 void			initialize_pipes(t_cmd_manager *cmd_manager);
 void			open_files(int argc, char **argv, t_cmd_manager *cmd_manager);
-void			wait_for_children(int nbr_cmds);
+void			wait_for_children(t_cmd_manager *cmd_manager);
 void			close_pipes(t_cmd_manager *cmd_manager);
 
 // Handle children

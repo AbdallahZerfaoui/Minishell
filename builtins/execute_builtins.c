@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 14:59:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:10:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*get_cmd_name(const char *path)
 {
 	char	*slash;
 
-	slash = strrchr(path, '/');
+	slash = ft_strchr(path, '/');
 	if (slash)
 		return (get_cmd_name(slash + 1));
 	return ((char *)path);
@@ -27,6 +27,8 @@ void	execute_builtins(char *path, char *args[], t_shell **shell)
 	char	*cmd_name;
 
 	cmd_name = get_cmd_name(path);
+	// printf("path = %s\n", path);
+	// printf("cmd_name = %s\n", cmd_name);
 	if (ft_strcmp(cmd_name, "pwd") == 0)
 		pwd(shell);
 	else if (ft_strcmp(cmd_name, "echo") == 0)

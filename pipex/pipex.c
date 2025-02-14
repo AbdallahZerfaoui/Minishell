@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 16:10:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 23:30:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 #include "../minishell.h"
 
 
-void	free_cmd_manager(t_cmd_manager *cmd_manager)
-{
-	int	i;
+// void	free_cmd_manager(t_cmd_manager *cmd_manager)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < cmd_manager->nbr_cmds)
-	{
-		free_all(cmd_manager->cmds[i].args);
-		free(cmd_manager->cmds[i].path);
-		i++;
-	}
-	free(cmd_manager->cmds);
-	i = 0;
-	while (i < cmd_manager->nbr_cmds - 1)
-	{
-		free(cmd_manager->pipes[i]);
-		i++;
-	}
-	free(cmd_manager->pipes);
-}
+// 	i = 0;
+// 	while (i < cmd_manager->nbr_cmds)
+// 	{
+// 		free_all(cmd_manager->cmds[i].args);
+// 		free(cmd_manager->cmds[i].path);
+// 		i++;
+// 	}
+// 	free(cmd_manager->cmds);
+// 	i = 0;
+// 	while (i < cmd_manager->nbr_cmds - 1)
+// 	{
+// 		free(cmd_manager->pipes[i]);
+// 		i++;
+// 	}
+// 	free(cmd_manager->pipes);
+// }
 
 /**
  * This function closes the unused pipes
@@ -94,65 +94,100 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
 	{
-		// printf("path : %s\n", cmd_manager->cmds[chd_nbr].path);
-		if (cmd_manager->cmds[chd_nbr].path == NULL)
+		if (cmd_manager->nbr_cmds == 1)
 		{
-			// printf("im here\n");
-			ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
-			(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
-			return ;
-		}
-		if (cmd_manager->nbr_cmds == 1
-			&& cmd_manager->cmds[chd_nbr].path
-			&& ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
-		{
-			execute_builtins(cmd_manager->cmds[chd_nbr].path,
-				cmd_manager->cmds[chd_nbr].args,
-				cmd_manager->shell);
-		}
-		else
-		{
-			cmd_manager->pid = fork();
-			if (cmd_manager->pid == -1)
+			if (cmd_manager->cmds[chd_nbr].path == NULL)
 			{
-				ft_putstr_fd(STDERR_FILENO, "bash: fork error\n");
-				exit(FORK_ERROR);
+				// printf("im here\n");
+				ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
+				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+				break ;
 			}
-			if (cmd_manager->pid == 0) // 0 is the child
+			else if (cmd_manager->cmds[chd_nbr].fd_in == -1)
 			{
-				if (chd_nbr == 0)
-					handle_first_child(cmd_manager, chd_nbr);
-				else if (chd_nbr == cmd_manager->nbr_cmds - 1)
-					handle_last_child(cmd_manager, chd_nbr);
-				else
-					handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
-				// printf("command : %c\n", cmd_manager->cmds[chd_nbr].path[0]);
-				if (ft_strstr(cmd_manager->cmds[chd_nbr].path, "builtins") != NULL)
-				{
-					execute_builtins(cmd_manager->cmds[chd_nbr].path,
-						cmd_manager->cmds[chd_nbr].args,
-						cmd_manager->shell);
-					exit(EXIT_SUCCESS);
-				}
-				else if (execve(cmd_manager->cmds[chd_nbr].path,
-						cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
-				{
-					if (errno == ENOENT) 
-					{
-						// printf("im here\n");
-						// (*(cmd_manager->shell))->exit_status = ARGUMENT_ERROR;
-						// printf("exit status_pipex = %d\n", (*(cmd_manager->shell))->exit_status);
-						exit(ARGUMENT_ERROR);
-					}
-					else
-					{
-						// printf("im here in else\n");
-						// (*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
-						exit(COMMAND_NOT_FOUND);
-					}
-				}
+				ft_putstr_fd(STDERR_FILENO, "bash: :No such file or directory\n");
+				(*(cmd_manager->shell))->exit_status = OPEN_ERROR;
+				break ;
+			}
+			else if (cmd_manager->cmds[chd_nbr].path
+				&& is_builtin(cmd_manager->cmds[chd_nbr].path))
+			{
+				execute_builtins(cmd_manager->cmds[chd_nbr].path,
+					cmd_manager->cmds[chd_nbr].args,
+					cmd_manager->shell);
+				chd_nbr++;
+				continue ;
 			}
 		}
+		// else if (cmd_manager->nbr_cmds == 1
+		// 	&& cmd_manager->cmds[chd_nbr].path)
+		// {
+		// 	if (execve(cmd_manager->cmds[chd_nbr].path,
+		// 				cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
+		// 	{
+		// 		(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+		// 	}
+		// }
+		// else
+		// {
+		cmd_manager->pid = fork();
+		if (cmd_manager->pid == -1)
+		{
+			ft_putstr_fd(STDERR_FILENO, "bash: fork error\n");
+			exit(FORK_ERROR);
+		}
+		if (cmd_manager->pid == 0) // 0 is the child
+		{
+			if (chd_nbr == 0)
+				handle_first_child(cmd_manager, chd_nbr);
+			else if (chd_nbr == cmd_manager->nbr_cmds - 1)
+				handle_last_child(cmd_manager, chd_nbr);
+			else
+				handle_mid_children(cmd_manager, chd_nbr);
+				// handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
+			// printf("command : %c\n", cmd_manager->cmds[chd_nbr].path[0]);
+			// printf("command : %s\n", cmd_manager->cmds[chd_nbr].path);
+			//handle the case fd_in == -1
+			if (cmd_manager->cmds[chd_nbr].path == NULL)
+			{
+				ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
+				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+				exit(COMMAND_NOT_FOUND);
+			}
+			else if (cmd_manager->cmds[chd_nbr].fd_in == -1)
+			{
+				ft_putstr_fd(STDERR_FILENO, "bash: :No such file or directory\n");
+				(*(cmd_manager->shell))->exit_status = OPEN_ERROR;
+				exit(OPEN_ERROR);
+			}
+			else if (is_builtin(cmd_manager->cmds[chd_nbr].path))
+			{
+				execute_builtins(cmd_manager->cmds[chd_nbr].path,
+					cmd_manager->cmds[chd_nbr].args,
+					cmd_manager->shell);
+				exit(EXIT_SUCCESS);
+			}
+			else if (execve(cmd_manager->cmds[chd_nbr].path,
+					cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
+			{
+				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+				exit(COMMAND_NOT_FOUND);
+				// if (errno == ENOENT)  //TODO should i keep this??
+				// {
+				// 	// printf("im here\n");
+				// 	(*(cmd_manager->shell))->exit_status = ARGUMENT_ERROR;
+				// 	// printf("exit status_pipex = %d\n", (*(cmd_manager->shell))->exit_status);
+				// 	exit(ARGUMENT_ERROR);
+				// }
+				// else
+				// {
+				// 	// printf("im here in else\n");
+				// 	(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
+				// 	exit(COMMAND_NOT_FOUND);
+				// }
+			}
+		}
+		// }
 		chd_nbr++;
 	}
 	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);

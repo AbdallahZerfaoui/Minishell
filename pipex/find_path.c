@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 18:08:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:20:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,7 @@ char	**parse_env(char **env)
 	return (NULL);
 }
 
-/**
- * This function checks if a command is a builtin
- * it has a loose definition of builtin
- * it means that EechoE and PPPpwd are considered builtins
- * the final check is done in the execute_builtins function
- */
-int	is_builtin(char **cmd, char **builtins)
-{
-	int	i;
 
-	i = 0;
-	while (builtins[i])
-	{
-		// if (ft_strcmp(builtins[i], cmd) == 0)
-		if (ft_strstr(*cmd, builtins[i]) != NULL)
-		{
-			// *cmd = ft_strdup(builtins[i]);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
 /**
  * This function get the full path of a given command
  * @param cmd the command
@@ -102,10 +80,9 @@ char	*get_command_path(char *cmd, char **env)
 	char		**paths;
 	char		*full_path;
 	int			i;
-	static char	*builtins[]
-		= {"pwd", "cd", "env", "exit", "unset", "export", "echo", NULL};
+
 	static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
-			"/usr/sbin", "/sbin", NULL};
+			"/usr/sbin", "/sbin", NULL}; //TODO remove this because it's not needed
 
 	if ((ft_isalpha(cmd[0]) == 0 && cmd[0] != '/')
 		|| cmd[0] == '\0')
@@ -113,10 +90,13 @@ char	*get_command_path(char *cmd, char **env)
 		// printf("i will return NULL\n");
 		return (NULL);
 	}
-	if (access(cmd, X_OK) == 0)
+	// if (access(cmd, X_OK) == 0)
+	// 	return (ft_strdup(cmd));
+	// else if (is_builtin(&cmd, builtins))
+	// 	return (ft_strjoin("./builtins/", cmd));
+	if (is_builtin(cmd)
+		|| access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
-	else if (is_builtin(&cmd, builtins))
-		return (ft_strjoin("./builtins/", cmd));
 	paths = parse_env(env);
 	if (!paths)
 		paths = default_paths;

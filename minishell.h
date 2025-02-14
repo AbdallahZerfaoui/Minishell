@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 22:58:48 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:21:37 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void				cd(char *args[], t_shell **shell);
 void				ft_unset(char *args[], t_shell **shell);
 int					is_valid_key(char *key);
 t_env				*last_node(t_env *env_lst);
+int					is_builtin(char *cmd);
+
 // Export 
 void				ft_exp_print(t_env	*env_lst);
 void				ft_export(char *args[], t_shell **shell);

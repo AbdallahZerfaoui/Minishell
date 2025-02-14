@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/06 15:47:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 22:28:54 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,49 @@
  * @return void
  * @exit if malloc fails
  */
-void	get_commands(char **argv, t_cmd_manager *cmd_manager) //??? is it used?
+// void	get_commands(char **argv, t_cmd_manager *cmd_manager) //??? is it used?
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds,
+// 			sizeof(t_command));
+// 	if (!cmd_manager->cmds)
+// 		exit(EXIT_FAILURE);
+// 	while (i < cmd_manager->nbr_cmds)
+// 	{
+// 		cmd_manager->cmds[i].args = ft_split(argv[i + 2], ' ');
+// 		cmd_manager->cmds[i].path = get_command_path(cmd_manager->cmds[i].args[0],
+// 				(*(cmd_manager->shell))->env);
+// 		// if (!cmd_manager->cmds[i].path)
+// 		// {
+// 		// 	g_data->exit_status = COMMAND_NOT_FOUND;
+// 		// }
+// 		i++;
+// 	}
+// }
+
+/**
+ * This function checks if a command is a builtin
+ */
+int	is_builtin(char *cmd)
 {
-	int	i;
+	static char	*builtins[]
+		= {"pwd", "cd", "env", "exit", "unset", "export", "echo", NULL};
+	int			i;
 
 	i = 0;
-	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds,
-			sizeof(t_command));
-	if (!cmd_manager->cmds)
-		exit(EXIT_FAILURE);
-	while (i < cmd_manager->nbr_cmds)
+	while (builtins[i])
 	{
-		cmd_manager->cmds[i].args = ft_split(argv[i + 2], ' ');
-		cmd_manager->cmds[i].path = get_command_path(cmd_manager->cmds[i].args[0],
-				(*(cmd_manager->shell))->env);
-		// if (!cmd_manager->cmds[i].path)
-		// {
-		// 	g_data->exit_status = COMMAND_NOT_FOUND;
-		// }
+		// if (ft_strcmp(builtins[i], cmd) == 0)
+		if (ft_strcmp(cmd, builtins[i]) == 0)
+		{
+			// *cmd = ft_strdup(builtins[i]);
+			return (1);
+		}
 		i++;
 	}
+	return (0);
 }
 
 void	initialize_pipes(t_cmd_manager *cmd_manager)
@@ -88,17 +111,37 @@ void	initialize_pipes(t_cmd_manager *cmd_manager)
  * @note every wait() call will wait till one child is done
  * after nbr_cmds calls to wait() all the children will be done
  */
-void	wait_for_children(int nbr_cmds)
+void    wait_for_children(t_cmd_manager *cmd_manager)
 {
-	int	i;
+    int     status;
+    int     i;
+	pid_t   last_pid;
 
-	i = 0;
-	while (i < nbr_cmds)
-	{
-		wait(NULL);
-		i++;
-	}
+    i = 0;
+	last_pid = cmd_manager->pid;
+	waitpid(last_pid, &status, 0);
+    (*(cmd_manager->shell))->exit_status = status >> 8 & 0xFF;
+    while (i < cmd_manager->nbr_cmds - 1)
+    {
+        waitpid(-1, &status, 0);
+        // if (i == cmd_manager->nbr_cmds - 1)  // Store exit status of last command
+        //     (*(cmd_manager->shell))->exit_status = (status >> 8 & 0xFF);
+        i++;
+    }
 }
+// void	wait_for_children(int nbr_cmds)
+// {
+// 	int	i;
+// 	int	nbr_cmds;
+
+// 	i = 0;
+// 	nbr_cmds = cmd_manager->nbr_cmds;
+// 	while (i < nbr_cmds)
+// 	{
+// 		wait(NULL);
+// 		i++;
+// 	}
+// }
 // void	wait_for_children(int nbr_cmds)
 // {
 // 	int		status;

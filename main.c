@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 23:05:09 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/14 23:21:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,9 @@ int	get_fd_in(t_cmd_node *node, t_shell **shell)
 	if (node && node->files && node->files->type == INFILE)
 	{
 		file = node->files->next;
+		if (access(file->value, F_OK) == -1)
+			return (-1);
 		fd_in = open(file->value, O_RDONLY);
-		// if (fd_in == -1)
-		// {
-		// 	// perror("open error");
-		// 	ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
-		// 	(*shell)->exit_status = OPEN_ERROR;
-		// 	// exit(OPEN_ERROR);
-		// }
 	}
 	return (fd_in);
 }
@@ -84,16 +79,6 @@ int	get_fd_out(t_cmd_node *node, t_shell **shell)
 		file = node->files->next;
 		fd_out = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
-	// else if (node && node->files && node->files->type == HEREDOC)
-	// {
-	// 	fd_out = STDIN_FILENO;
-	// }
-	// if (fd_out == -1)
-	// {
-	// 	ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
-	// 	(*shell)->exit_status = OPEN_ERROR;
-	// 	// exit(OPEN_ERROR);
-	// }
 	return (fd_out);
 }
 
@@ -134,7 +119,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		// printf("current index = %d -> %s\n", current->index, current->files->value);
 		if (current->cmd_array && current->cmd_array[0])
 		{
-			custom_cmd_path = get_command_path(current->cmd_array[0], (*shell)->env);
+			custom_cmd_path = get_command_path(current->cmd_array[0], (*shell)->env); //TODO get command already does this check
 			if (access(current->cmd_array[0], X_OK) == 0 && !custom_cmd_path)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else
@@ -164,26 +149,26 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 				// exit(HEREDOC_ERROR);
 			}
 			cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
-			if (cmd_manager->cmds[i].fd_in == -1)
-			{
-				ft_putstr_fd(STDERR_FILENO, "bash: heredoc create error");
-				(*shell)->exit_status = OPEN_ERROR;
-				exit(OPEN_ERROR); //TODO change this to a better error
-			}
+			// if (cmd_manager->cmds[i].fd_in == -1)
+			// {
+			// 	ft_putstr_fd(STDERR_FILENO, "bash: heredoc create error");
+			// 	(*shell)->exit_status = OPEN_ERROR;
+			// 	exit(OPEN_ERROR); //TODO change this to a better error
+			// }
 			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
 		}
 		else
 		{
 			cmd_manager->cmds[i].fd_in = get_fd_in(current, shell);
 			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
-			if (cmd_manager->cmds[i].fd_in == -1
-				|| cmd_manager->cmds[i].fd_out == -1)
-			{
-				ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
-				(*shell)->exit_status = OPEN_ERROR;
-				return (NULL);
-				// return (NULL);
-			}
+			// if (cmd_manager->cmds[i].fd_in == -1
+			// 	|| cmd_manager->cmds[i].fd_out == -1)
+			// {
+			// 	ft_putstr_fd(STDERR_FILENO, "No such file or directory\n");
+			// 	(*shell)->exit_status = OPEN_ERROR;
+			// 	return (NULL);
+			// 	// return (NULL);
+			// }
 		}
 		// if (cmds->files
 		// 	&& current->files->type == OUTFILE)
@@ -272,7 +257,11 @@ static void	shell_loop(t_shell **shell)
 		initialize_pipes(cmd_manager);
 		create_cmd_processes(cmd_manager);
 		// printf("exit_status = %d\n", (*shell)->exit_status);
-		wait_for_children(cmd_manager->nbr_cmds);
+		if (cmd_manager->nbr_cmds > 1)
+			wait_for_children(cmd_manager);
+		else
+			wait(NULL);
+		// wait_for_children(cmd_manager);
 		close_pipes(cmd_manager);
 // print_env(*shell);
 // for (t_env *tmp = (*shell)->env_lst; tmp; tmp = tmp->next)

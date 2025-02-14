@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 14:27:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:21:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,10 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 	char	*tmp_char;
 	char	*dollar_sign;
 	int		len;
-	// int		is_skipped;
-	// char	*old_value;
 
 	if (!root)
 		return ;
 	keyword = NULL;
-	// is_skipped = 0;
-	// printf("root = %s\n", root->value);
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
 	if (dollar_sign 
 		&& *(dollar_sign + 1) == '\0'
