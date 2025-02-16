@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 19:21:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:22:50 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int					len_cmds_lst(t_cmd_node *cmds);
 t_cmd_node			*get_last_node(t_cmd_node *head);
 
 // Parser errors
-void				check_tokens(t_token *tokens, t_shell **shell);
+int					check_tokens(t_token *tokens, t_shell **shell);
 
 // Utils
 int					len_tokens_lst(t_token *tokens);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 19:17:07 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:22:19 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
                 hd_filename = generate_heredoc_filename();
                 heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
                 heredoc_loop(heredoc);
-                cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
+                // cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
 				cmd_manager->cmds[i].hd_filename = ft_strdup(hd_filename);
 				// printf("fd_in = %d\n", cmd_manager->cmds[i].fd_in);
                 // unlink(hd_filename);  // Delete temp file after opening
@@ -321,7 +321,8 @@ static void	shell_loop(t_shell **shell)
 		tokens = lexer(line);
 		(*shell)->hd_must_expand = set_heredoc_expansion_flag(tokens);
 		// printf("hd_must_expand = %d\n", (*shell)->hd_must_expand);
-		// check_tokens(tokens, shell);
+		if (check_tokens(tokens, shell) != 0)
+			continue ;
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)

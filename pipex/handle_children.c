@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/15 19:56:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:01:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,19 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 // dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
 // close(cmd_manager->pipes[chd_nbr - 1][0]);
 	// Check for heredoc first
-    if (cmd_manager->cmds[chd_nbr].fd_in > 0)
+	if (cmd_manager->cmds[chd_nbr].hd_filename != NULL 
+	&& cmd_manager->cmds[chd_nbr].hd_filename[0] != '\0')
+    {
+        int hd_fd = open(cmd_manager->cmds[chd_nbr].hd_filename, O_RDONLY);
+        if (hd_fd < 0)
+        {
+            perror("open hd_filename");
+            exit(EXIT_FAILURE);
+        }
+        dup2(hd_fd, STDIN_FILENO);
+        close(hd_fd);
+    }
+    else if (cmd_manager->cmds[chd_nbr].fd_in > 0)
     {
         dup2(cmd_manager->cmds[chd_nbr].fd_in, STDIN_FILENO);
         close(cmd_manager->cmds[chd_nbr].fd_in);
@@ -160,6 +172,9 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
+	// printf("fd_in = %d\n", cmd_manager->cmds[chd_nbr].fd_in);
+	// printf("fd_out = %d\n", cmd_manager->cmds[chd_nbr].fd_out);
+	// printf("hd_filename = %s\n", cmd_manager->cmds[chd_nbr].hd_filename);
 	// set the pid of the last child
 	cmd_manager->pid = getpid();
 }

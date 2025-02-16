@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 18:30:23 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:17:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 	head = create_cmd_node();
 	if (!head || !tokens)
 		return (NULL);
-	check_tokens(tokens, shell);
+	// check_tokens(tokens, shell);
 	current_token = tokens;
 	while (current_token)
 	{
