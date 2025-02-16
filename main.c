@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:09:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:44:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,17 @@ static void	shell_loop(t_shell **shell)
 		if (cmd_manager->nbr_cmds > 1)
 			wait_for_children(cmd_manager);
 		else
-			wait(NULL);
+		{
+			int	status = 0; //dont let this be uninitialized
+			wait(&status);
+			// status = status >> 8 & 0xFF;
+			// if (WIFEXITED(status))
+			if ((*shell)->exit_status == 0)
+				(*shell)->exit_status = status >> 8 & 0xFF;
+			// (*shell)->exit_status = status >> 8 & 0xFF;
+			// else
+			// 	(*shell)->exit_status = 17;
+		}
 			// waitpid(cmd_manager->pid, &(*shell)->exit_status, 0);
 		// wait_for_children(cmd_manager);
 		close_pipes(cmd_manager);

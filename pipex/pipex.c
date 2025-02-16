@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 23:30:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:47:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		if (cmd_manager->pid == -1)
 		{
 			ft_putstr_fd(STDERR_FILENO, "bash: fork error\n");
+			(*(cmd_manager->shell))->exit_status = FORK_ERROR;
 			exit(FORK_ERROR);
 		}
 		if (cmd_manager->pid == 0) // 0 is the child
@@ -171,7 +172,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 					cmd_manager->cmds[chd_nbr].args, (*(cmd_manager->shell))->env) == -1)
 			{
 				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
-				exit(COMMAND_NOT_FOUND);
+				// exit(COMMAND_NOT_FOUND);
 				// if (errno == ENOENT)  //TODO should i keep this??
 				// {
 				// 	// printf("im here\n");
@@ -185,6 +186,11 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				// 	(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
 				// 	exit(COMMAND_NOT_FOUND);
 				// }
+			}
+			else //TODO should i keep this??
+			{
+				(*(cmd_manager->shell))->exit_status = 0;
+				// exit(EXIT_SUCCESS);
 			}
 		}
 		// }
