@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 21:05:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:15:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define CHILD_PROCESS 0
 # define PIPE_ERROR 1
 # define OPEN_ERROR 1
-// # define EXIT_FAILURE 0
+# define COMMAND_NOT_EXECUTABLE 126
 # define ARGUMENT_ERROR 1
 # define MALLOC_ERROR 1
 # define COMMAND_NOT_FOUND 127

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 21:22:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:09:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,13 +321,15 @@ static void	shell_loop(t_shell **shell)
 		tokens = lexer(line);
 		(*shell)->hd_must_expand = set_heredoc_expansion_flag(tokens);
 		// printf("hd_must_expand = %d\n", (*shell)->hd_must_expand);
-		if (check_tokens(tokens, shell) != 0)
-			continue ;
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
+		if (check_tokens(tokens, shell) != 0)
+			continue ;
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
 		cmds = parse(tokens, shell);
+		if (check_cmds(cmds, shell) != 0)
+			continue ;
 		cmd_manager = prepare_execution(cmds, shell);
 		if (!cmd_manager)
 			continue ;
