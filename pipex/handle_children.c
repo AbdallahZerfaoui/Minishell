@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 22:30:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:56:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	check_fds(fd_in, fd_out, cmd_manager->shell);
 	// printf("fd_in = %d\n", fd_in);
 	// printf("fd_out = %d\n", fd_out);
-	
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -97,22 +96,38 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 		close(cmd_manager->pipes[chd_nbr][1]);
 		close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
 	}
-	// dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
-	// close(cmd_manager->pipes[chd_nbr][1]);
-	// close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
 	if (fd_out != STDOUT_FILENO)
 	{
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
-	// printf("fd_in = %d\n", fd_in);
-	// printf("fd_out = %d\n", fd_out);
-	// if (fd_out != STDOUT_FILENO)
-	// {
-	// 	dup2(fd_out, STDOUT_FILENO);
-	// 	close(fd_out);
-	// }
 }
+// void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
+// {
+//     int fd_in = cmd_manager->cmds[chd_nbr].fd_in;
+//     int fd_out = cmd_manager->cmds[chd_nbr].fd_out;
+
+//     close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
+
+//     // Handle input
+//     if (fd_in != STDIN_FILENO)
+//     {
+//         dup2(fd_in, STDIN_FILENO);
+//         close(fd_in);
+//     }
+
+//     // Handle output
+//     if (fd_out != STDOUT_FILENO)
+//     {
+//         dup2(fd_out, STDOUT_FILENO);
+//         close(fd_out);
+//     }
+//     else if (cmd_manager->nbr_cmds > 1)
+//     {
+//         dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
+//         close(cmd_manager->pipes[chd_nbr][1]);
+//     }
+// }
 
 void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 {
@@ -124,8 +139,20 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	// printf("fd_in = %d\n", fd_in);
 	// printf("fd_out = %d\n", fd_out);
 	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
-	dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
-	close(cmd_manager->pipes[chd_nbr - 1][0]);
+	// if (cmd_manager->cmds[chd_nbr].fd_in == -1)
+// dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
+// close(cmd_manager->pipes[chd_nbr - 1][0]);
+	// Check for heredoc first
+    if (cmd_manager->cmds[chd_nbr].fd_in > 0)
+    {
+        dup2(cmd_manager->cmds[chd_nbr].fd_in, STDIN_FILENO);
+        close(cmd_manager->cmds[chd_nbr].fd_in);
+    }
+    else
+    {
+        dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
+        close(cmd_manager->pipes[chd_nbr - 1][0]);
+    }
 	// printf("fd_in = %d\n", fd_in);
 	// printf("fd_out = %d\n", fd_out);
 	if (fd_out != STDOUT_FILENO)
@@ -137,11 +164,42 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	cmd_manager->pid = getpid();
 }
 
-void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr)
+// void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr)
+// {
+// 	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
+// 	dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
+// 	close(cmd_manager->pipes[chd_nbr - 1][0]);
+// 	dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
+// 	close(cmd_manager->pipes[chd_nbr][1]);
+// }
+
+void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr) //TODO fix this shit NOW
 {
-	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
-	dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
-	close(cmd_manager->pipes[chd_nbr - 1][0]);
-	dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
-	close(cmd_manager->pipes[chd_nbr][1]);
+    int fd_out = cmd_manager->cmds[chd_nbr].fd_out;
+
+    close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
+    
+    // Handle input
+    if (cmd_manager->cmds[chd_nbr].fd_in > 0)
+    {
+        dup2(cmd_manager->cmds[chd_nbr].fd_in, STDIN_FILENO);
+        close(cmd_manager->cmds[chd_nbr].fd_in);
+    }
+    else
+    {
+        dup2(cmd_manager->pipes[chd_nbr - 1][0], STDIN_FILENO);
+        close(cmd_manager->pipes[chd_nbr - 1][0]);
+    }
+    
+    // Handle output
+    if (fd_out != STDOUT_FILENO)
+    {
+        dup2(fd_out, STDOUT_FILENO);
+        close(fd_out);
+    }
+    else
+    {
+        dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
+        close(cmd_manager->pipes[chd_nbr][1]);
+    }
 }

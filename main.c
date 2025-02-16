@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 23:21:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:26:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,38 +47,85 @@
 // }
 int	get_fd_in(t_cmd_node *node, t_shell **shell)
 {
-	t_token	*file;
+	// t_token	*file;
+	t_token	*current;
 	int		fd_in;
 
 	(void)shell; //TODO remove this
 	fd_in = STDIN_FILENO;
-	if (node && node->files && node->files->type == INFILE)
-	{
-		file = node->files->next;
-		if (access(file->value, F_OK) == -1)
-			return (-1);
-		fd_in = open(file->value, O_RDONLY);
-	}
+	current = node->files;
+	// if (node && node->files && node->files->type == INFILE)
+	// {
+	// 	file = node->files->next;
+	// 	if (access(file->value, F_OK) == -1)
+	// 		return (-1);
+	// 	fd_in = open(file->value, O_RDONLY);
+	// }
+	while (current && current->next)
+    {
+        if (current->type == INFILE)
+        {
+            if (fd_in != STDIN_FILENO || fd_in != -1)
+                close(fd_in);
+            if (access(current->next->value, F_OK) == -1)
+                return (-1);
+            fd_in = open(current->next->value, O_RDONLY);
+        }
+        current = current->next->next;
+		printf("current->value = %s\n", current->value);
+    }
 	return (fd_in);
 }
 
 int	get_fd_out(t_cmd_node *node, t_shell **shell)
 {
-	t_token	*file;
+	// t_token	*file;
+	t_token	*current;
 	int		fd_out;
+	
 
 	(void)shell; //TODO remove this
 	fd_out = STDOUT_FILENO;
-	if (node && node->files && node->files->type == OUTFILE)
-	{
-		file = node->files->next;
-		fd_out = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	}
-	else if (node && node->files && node->files->type == APPEND)
-	{
-		file = node->files->next;
-		fd_out = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	}
+	current = node->files;
+	// while (current)
+	// {
+	// 	printf("current->value = %s\n", current->value);
+	// 	current = current->next;
+	// }
+	// if (node && node->files && node->files->type == OUTFILE)
+	// {
+	// 	file = node->files->next;
+	// 	fd_out = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	// }
+	// else if (node && node->files && node->files->type == APPEND)
+	// {
+	// 	file = node->files->next;
+	// 	fd_out = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	// }
+	while (current && current->next)
+    {
+        if (current->type == OUTFILE)
+        {
+// if (current->prev)
+// printf("current->prev->value = %s\n", current->prev->value);
+// printf("current->value = %s\n", current->value);
+// printf("current->next->value = %s\n", current->next->value);
+            if (fd_out != STDOUT_FILENO && fd_out != -1)
+                close(fd_out);
+            fd_out = open(current->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        }
+        else if (current->type == APPEND)
+        {
+// if (current->prev)
+// printf("current->prev->value = %s\n", current->prev->value);
+// printf("current->value = %s\n", current->value);
+// printf("current->next->value = %s\n", current->next->value);
+            if (fd_out != STDOUT_FILENO && fd_out != -1)
+                close(fd_out);
+            fd_out = open(current->next->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+        }
+        current = current->next;
+    }
 	return (fd_out);
 }
 
@@ -104,6 +151,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	char			*hd_filename;
 	char			*custom_cmd_path;
 	t_heredoc		*heredoc;
+	t_token			*file;
 
 	cmd_manager = (t_cmd_manager *)ft_calloc(1, sizeof(t_cmd_manager));
 	if (!cmd_manager)
@@ -112,6 +160,29 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds, sizeof(t_command));
 	if (!cmd_manager->cmds)
 		return (NULL);
+	current = cmds;
+	i = 0;
+	while (current)
+    {
+        file = current->files;
+        while (file)
+        {
+            if (file->type == HEREDOC && file->next)
+            {
+                hd_filename = generate_heredoc_filename();
+                heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
+                heredoc_loop(heredoc);
+                cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
+				cmd_manager->cmds[i].hd_filename = ft_strdup(hd_filename);
+				// printf("fd_in = %d\n", cmd_manager->cmds[i].fd_in);
+                // unlink(hd_filename);  // Delete temp file after opening
+                // free(hd_filename);
+            }
+            file = file->next;
+        }
+        i++;
+        current = current->next;
+    }
 	current = cmds;
 	i = 0;
 	while (current)
@@ -132,35 +203,37 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		// 	cmd_manager->cmds[i].fd_in = get_fd_in(current);
 		// 	cmd_manager->cmds[i].fd_out = get_fd_out(current);
 		// }
-		if (cmds->files && current->files
-			&& current->files->type == HEREDOC)
-		{
-			hd_filename = generate_heredoc_filename();
-			if (current->files->next)
-			{
-				heredoc = init_heredoc_struct
-					(current->files->next->value, hd_filename, shell);
-				heredoc_loop(heredoc); //this is the stop word for the heredoc
-			}
-			else
-			{
-				ft_putstr_fd(STDERR_FILENO, "bash: syntax error\n");
-				// (*shell)->exit_status = HEREDOC_ERROR;
-				// exit(HEREDOC_ERROR);
-			}
-			cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
-			// if (cmd_manager->cmds[i].fd_in == -1)
+		// if (current->files && current->files
+		// 	&& current->files->type == HEREDOC)
+		// {
+			// hd_filename = generate_heredoc_filename();
+			// if (current->files->next)
 			// {
-			// 	ft_putstr_fd(STDERR_FILENO, "bash: heredoc create error");
-			// 	(*shell)->exit_status = OPEN_ERROR;
-			// 	exit(OPEN_ERROR); //TODO change this to a better error
+			// 	heredoc = init_heredoc_struct
+			// 		(current->files->next->value, hd_filename, shell);
+			// 	heredoc_loop(heredoc); //this is the stop word for the heredoc
 			// }
-			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
-		}
-		else
-		{
+			// else
+			// {
+			// 	ft_putstr_fd(STDERR_FILENO, "bash: syntax error\n");
+			// 	return (NULL);
+			// 	// (*shell)->exit_status = HEREDOC_ERROR;
+			// 	// exit(HEREDOC_ERROR);
+			// }
+			// cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
+			// // if (cmd_manager->cmds[i].fd_in == -1)
+			// // {
+			// // 	ft_putstr_fd(STDERR_FILENO, "bash: heredoc create error");
+			// // 	(*shell)->exit_status = OPEN_ERROR;
+			// // 	exit(OPEN_ERROR); //TODO change this to a better error
+			// // }
+			// cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
+		// }
+		// else
+		// {
+		if (cmd_manager->cmds[i].fd_in == -1)
 			cmd_manager->cmds[i].fd_in = get_fd_in(current, shell);
-			cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
+		cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
 			// if (cmd_manager->cmds[i].fd_in == -1
 			// 	|| cmd_manager->cmds[i].fd_out == -1)
 			// {
@@ -169,12 +242,14 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 			// 	return (NULL);
 			// 	// return (NULL);
 			// }
-		}
+		// }
 		// if (cmds->files
 		// 	&& current->files->type == OUTFILE)
 		// {
 		// cmd_manager->cmds[i].fd_out = get_fd_out(current);
 		// }
+		// if (current->files)
+		// 	printf("type = %d\n", current->files->type);
 		current = current->next;
 		i++;
 	}
@@ -261,6 +336,7 @@ static void	shell_loop(t_shell **shell)
 			wait_for_children(cmd_manager);
 		else
 			wait(NULL);
+			// waitpid(cmd_manager->pid, &(*shell)->exit_status, 0);
 		// wait_for_children(cmd_manager);
 		close_pipes(cmd_manager);
 // print_env(*shell);

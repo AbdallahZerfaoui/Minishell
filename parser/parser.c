@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/07 21:08:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:30:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 		{
 			detached_token = current_token;
 			current_token = detach_token(detached_token, 2);
+// printf("*'%s'->'%s'\n", detached_token->value, detached_token->next->value);
 			add_file(&head, detached_token);
 		}
 		else
@@ -87,6 +88,11 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 		return (NULL);
 	// free_tokens(last->cmd);
 	last->cmd = NULL;
+// while (head->files)
+// {
+// 	printf("file = %s\n", head->files->value);
+// 	head->files = head->files->next;
+// }
 	return (head);
 }
 

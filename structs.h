@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 22:29:53 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:51:27 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_command
 	char				**args;
 	int					fd_in;
 	int					fd_out; // magnific idea
+	char				*hd_filename;
 }						t_command;
 
 

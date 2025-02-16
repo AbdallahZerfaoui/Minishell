@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 17:40:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:22:37 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	append_token(t_token **head, t_token *new_token)
 	last = get_last_token(*head);
 	last->next = new_token;
 	new_token->prev = last;
-	new_token->next = NULL;
+	// new_token->next = NULL;
+	
 }
 void free_if_not_in_gc(char *str)
 {
