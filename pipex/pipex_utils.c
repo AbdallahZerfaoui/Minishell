@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 18:27:46 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 18:26:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:02:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void    wait_for_children(t_cmd_manager *cmd_manager)
     (*(cmd_manager->shell))->exit_status = status >> 8 & 0xFF; //TODO understand it
     while (i < cmd_manager->nbr_cmds - 1)
     {
-        waitpid(-1, &status, 0);
+        // waitpid(-1, &status, 0);
+		wait(&status);
         // if (i == cmd_manager->nbr_cmds - 1)  // Store exit status of last command
         //     (*(cmd_manager->shell))->exit_status = (status >> 8 & 0xFF);
         i++;

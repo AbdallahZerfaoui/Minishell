@@ -75,8 +75,8 @@ $(NAME): $(OBJ) $(LIBS)
 # 		echo "${GREEN}$(FOLDER_NAME) already exists. Skipping download.${RESET}"; \
 # 	fi
 download_resources:
-	git submodule update --init --remote --recursive
-
+	git submodule update --init --remote --recursive 
+#be careful with this command it doesnt update if you delete the folder
 setup: art download_resources libs
 
 build: $(NAME) success_message

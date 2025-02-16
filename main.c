@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 18:26:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:17:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ int	get_fd_in(t_cmd_node *node, t_shell **shell)
     {
         if (current->type == INFILE)
         {
-            if (fd_in != STDIN_FILENO || fd_in != -1)
+            if (fd_in != STDIN_FILENO)
                 close(fd_in);
             if (access(current->next->value, F_OK) == -1)
                 return (-1);
             fd_in = open(current->next->value, O_RDONLY);
         }
         current = current->next->next;
-		printf("current->value = %s\n", current->value);
+		// printf("current->value = %s\n", current->value);
     }
 	return (fd_in);
 }
@@ -231,8 +231,9 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		// }
 		// else
 		// {
-		if (cmd_manager->cmds[i].fd_in == -1)
-			cmd_manager->cmds[i].fd_in = get_fd_in(current, shell);
+		// if (cmd_manager->cmds[i].fd_in == -1)
+		cmd_manager->cmds[i].fd_in = get_fd_in(current, shell);
+		// printf("cmd_manager->cmds[i].fd_in = %d\n", cmd_manager->cmds[i].fd_in);
 		cmd_manager->cmds[i].fd_out = get_fd_out(current, shell);
 			// if (cmd_manager->cmds[i].fd_in == -1
 			// 	|| cmd_manager->cmds[i].fd_out == -1)

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/12 21:24:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:30:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static size_t	get_word_len(char const *str, size_t *i)
 			if (str[*i + len] == TK_SPACE)
 				break ;
 			if (str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS)
+				break ;
+			if (str[*i + len] == TK_PIPE)
 				break ;
 		}
 		len++;
