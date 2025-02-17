@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 23:21:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:20:50 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,13 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 		// printf("im handling \\$\n");
 		root->value = ft_strdup("$");
 	}
-	else if (root->can_expand && ft_strcmp(root->value, "$?") == 0)
+	else if (root->can_expand && ft_strstr(root->value, "$?"))
 	{
 		// root->value = ft_itoa(g_data->exit_status);
 		// printf("exit_status = %s\n", root->value);
 		// printf("%d\n", 0);
-		root->value = ft_itoa(shell->exit_status);
+		// root->value = ft_itoa(shell->exit_status);
+		root->value = replace_var(root->value, "$?", ft_itoa(shell->exit_status));
 		// printf("expantion of $? = %s\n", root->value);
 		root->can_expand = 0;
 		// printf("exit_status_vo = %d\n", g_data->exit_status);
