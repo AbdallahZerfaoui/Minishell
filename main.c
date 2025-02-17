@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 18:20:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:15:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
                 heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
                 heredoc_loop(heredoc);
                 // cmd_manager->cmds[i].fd_in = open(hd_filename, O_RDONLY);
-				cmd_manager->cmds[i].hd_filename = ft_strdup(hd_filename);
+				// cmd_manager->cmds[i].hd_filename = ft_strdup(hd_filename);
+				cmd_manager->cmds[i].hd_filename = heredoc->filename;
 				// printf("fd_in = %d\n", cmd_manager->cmds[i].fd_in);
                 // unlink(hd_filename);  // Delete temp file after opening
                 // free(hd_filename);
@@ -330,10 +331,10 @@ static void	shell_loop(t_shell **shell)
 		// printf("hd_must_expand = %d\n", (*shell)->hd_must_expand);
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
-		if (check_tokens(tokens, shell) != 0)
-			continue ;
 		tokens = handle_standalone_redirections(tokens, shell);
 		if (!tokens)
+			continue ;
+		if (check_tokens(tokens, shell) != 0)
 			continue ;
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);
