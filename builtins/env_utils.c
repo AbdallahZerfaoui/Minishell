@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 20:53:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:43:10 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	add_env_node(t_env **env_lst, char *entry)
 	last = last_node(*env_lst);
 	last->next = new;
 	new->prev = last;
+}
+
+void	update_env_node(t_env *node, char *new_value)
+{
+	node->content[1] = ft_strdup(new_value);
 }
 
 /**

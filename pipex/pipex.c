@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:47:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:09:19 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				handle_last_child(cmd_manager, chd_nbr);
 			else
 				handle_mid_children(cmd_manager, chd_nbr);
-				// handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
+			// handle_mid_children(cmd_manager, chd_nbr && cmd_manager->nbr_cmds > 2);
 			// printf("command : %c\n", cmd_manager->cmds[chd_nbr].path[0]);
 			// printf("command : %s\n", cmd_manager->cmds[chd_nbr].path);
 			//handle the case fd_in == -1
@@ -187,7 +187,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				// 	exit(COMMAND_NOT_FOUND);
 				// }
 			}
-			else //TODO should i keep this??
+			else//TODO should i keep this??
 			{
 				(*(cmd_manager->shell))->exit_status = 0;
 				// exit(EXIT_SUCCESS);

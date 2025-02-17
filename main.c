@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:44:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:20:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,13 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
                 // unlink(hd_filename);  // Delete temp file after opening
                 // free(hd_filename);
             }
+			// else if (file->type == INFILE && file->next
+			// 	&& current->cmd == NULL)
+			// {
+			// 	int tmp_fd = open(file->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			// 	close(tmp_fd);
+			// 	cmds = current->next;
+			// }
             file = file->next;
         }
         i++;
@@ -324,6 +331,9 @@ static void	shell_loop(t_shell **shell)
 		// printf("line = %s\n", line);
 		tokens = expand(tokens, shell);
 		if (check_tokens(tokens, shell) != 0)
+			continue ;
+		tokens = handle_standalone_redirections(tokens, shell);
+		if (!tokens)
 			continue ;
 		// for (t_token *tmp = tokens; tmp; tmp = tmp->next)
 		// 	printf("value = *%s*\n", tmp->value);

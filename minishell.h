@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:08:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:38:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void				free_cmds(t_cmd_node *head);
 int					unbalanced_quotes(const char *str);
 void				init_shell(t_shell **shell, char **env);
 int					count_quotes(char *word);
+t_token				*handle_standalone_redirections(t_token *tokens, t_shell **shell);
 
 // Heredoc
 void				heredoc_loop(t_heredoc *heredoc);
@@ -105,6 +106,7 @@ t_env				*get_env_lst(char **env);
 char				*ft_getenv(char *key, t_shell *shell);
 char				*get_env(char **env);
 void				add_env_node(t_env **env_lst, char *entry);
+void				update_env_node(t_env *node, char *new_value);
 char				**env_lst_to_array(t_env *env_lst);
 void				update_env_array(t_shell **shell);
 void				print_env(t_shell *shell);

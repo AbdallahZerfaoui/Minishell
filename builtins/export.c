@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 21:01:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:49:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,19 @@ void	ft_export(char *args[], t_shell **shell)
 			i++;
 			continue ;
 		}
-		add_env_node(&(*shell)->env_lst, args[i]);
+t_env *existing = find_node_by_key(content[0], *shell);
+if (existing)
+{
+    // Update the value.
+    update_env_node(existing, content[1]); // update_env_node internally handles freeing previous value.
+	update_env_array(shell); //TODO should i update the linked list too??
+}
+else
+{
+    // Add the new variable.
+    add_env_node(&(*shell)->env_lst, args[i]);
+}
+		// add_env_node(&(*shell)->env_lst, args[i]);
 		// (*shell)->exit_status = 0;
 		set_export_value_to_one(&(*shell)->env_lst); //TODO do i need to set export to 1?
 		i++;

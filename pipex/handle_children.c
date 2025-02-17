@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 21:01:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:17:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,19 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-	if (cmd_manager->nbr_cmds > 1)
+	if (cmd_manager->cmds[chd_nbr].hd_filename != NULL 
+	&& cmd_manager->cmds[chd_nbr].hd_filename[0] != '\0')
+    {
+        int hd_fd = open(cmd_manager->cmds[chd_nbr].hd_filename, O_RDONLY);
+        if (hd_fd < 0)
+        {
+            perror("open hd_filename");
+            exit(EXIT_FAILURE);
+        }
+        dup2(hd_fd, STDIN_FILENO);
+        close(hd_fd);
+    }
+	else if (cmd_manager->nbr_cmds > 1)
 	{
 		dup2(cmd_manager->pipes[chd_nbr][1], STDOUT_FILENO);
 		close(cmd_manager->pipes[chd_nbr][1]);
