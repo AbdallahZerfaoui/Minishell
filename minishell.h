@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 17:38:35 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:23:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "minishell-lib/includes/libft.h"
 # include "minishell-lib/includes/get_next_line.h"
 # include "minishell-lib/includes/garbage_collector.h"
-// # include "minishell_backup.h"
+# include "signals/signals.h" //TODO replace it
 # include "pipex/pipex.h"
 # include <errno.h>
 # include <fcntl.h>
@@ -30,7 +30,8 @@
 # include <termios.h>
 # include <unistd.h>
 # include <stdarg.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
+
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
@@ -107,14 +108,20 @@ char				*ft_getenv(char *key, t_shell *shell);
 char				*get_env(char **env);
 void				add_env_node(t_env **env_lst, char *entry);
 void				update_env_node(t_env *node, char *new_value);
+void				update_shlvl(t_shell **shell);
 char				**env_lst_to_array(t_env *env_lst);
 void				update_env_array(t_shell **shell);
 void				print_env(t_shell *shell);
+int					handle_too_many_arguments(char *args[], t_shell *shell);
+void				handle_exit_error_message(t_shell **shell, char *message);
+void				validate_exit_argument(char *arg, t_shell **shell);
 void				ft_exit(char *args[], t_shell **shell);
+int					are_only_digits(char *str);
 int					len_args(char *args[]);
 t_env				*find_node_by_key(char *key, t_shell *shell);
 void				handle_cd_error(t_shell **shell, char *args[]);
 void				update_pwds(t_shell **shell, char *old_pwd);
+char				*get_cd_destination(char *args[], t_shell **shell);
 void				cd(char *args[], t_shell **shell);
 void				ft_unset(char *args[], t_shell **shell);
 int					is_valid_key(char *key);

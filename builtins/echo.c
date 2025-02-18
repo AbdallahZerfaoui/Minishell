@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:01:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/14 18:11:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:33:48 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	ft_echo(char *args[], t_shell **shell)
 
 	n_flag = get_n_flag(args);
 	i = n_flag;
-	// if (n_flag > 1)
-	// 	i += 1;
 	while (args[i])
 	{
 		printf("%s", args[i]);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 21:38:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:29:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,21 @@ void	handle_cd_error(t_shell **shell, char *args[])
 
 	if (!shell || !*shell)
 		return ;
-
 	error_msg = "bash: cd: ";
-	ft_putstr_fd(STDERR_FILENO, error_msg);
 	if (args[2] != NULL)
 	{
-		error_msg = "too many arguments\n";
+		error_msg = ft_strjoin(error_msg, "too many arguments\n");
 		ft_putstr_fd(STDERR_FILENO, error_msg);
 		(*shell)->exit_status = 1;
 		return ;
 	}
-	ft_putstr_fd(STDERR_FILENO, args[1]);
+	error_msg = ft_strjoin(error_msg, args[1]);
 	if (access(args[1], F_OK) == -1)
-	{
-		error_msg = ": No such file or directory\n";
-	}
+		error_msg = ft_strjoin(error_msg, ": No such file or directory\n");
 	else if (access(args[1], R_OK) == -1)
-		error_msg = ": Permission denied\n";
+		error_msg = ft_strjoin(error_msg, ": Permission denied\n");
 	else
-		error_msg = ": Not a directory\n";
-
+		error_msg = ft_strjoin(error_msg, ": Not a directory\n");
 	ft_putstr_fd(STDERR_FILENO, error_msg);
 	(*shell)->exit_status = 1;
 }
@@ -59,14 +54,34 @@ void	update_pwds(t_shell **shell, char *old_pwd)
 	}
 	else
 		add_env_node(&((*shell)->env_lst), tmp);
-	// add_env_node(&((*shell)->env_lst), tmp);
-	// printf("new_pwd 2 : %s\n", new_pwd);
 	pwd_node->content[1] = ft_strdup(new_pwd);
 	// update_env_array(shell);
-	// (*shell)->env_lst = get_env_lst((*shell)->env);
-	// tmp = ft_strjoin("PWD=", new_pwd);
-	// add_env_node(&shell->env_lst, tmp);
-	// free(new_pwd);
-	// print_env(shell);
 }
 
+char	*get_cd_destination(char *args[], t_shell **shell)
+{
+	char	*destination;
+	t_env	*oldpwd_node;
+
+	if (!args[1])
+		return (ft_getenv("HOME", *shell));
+	if (args[1][0] == TK_TILDE)
+	{
+		args[2] = NULL;
+		destination = ft_strjoin(ft_getenv("HOME", *shell), args[1] + 1);
+		return (destination);
+	}
+	if (args[1][0] == TK_HYPHEN)
+	{
+		oldpwd_node = find_node_by_key("OLDPWD", (*shell));
+		if (!oldpwd_node || !oldpwd_node->content[1])
+		{
+			ft_putstr_fd(STDERR_FILENO, "bash: cd: OLDPWD not set\n");
+			(*shell)->exit_status = 1;
+			return (NULL);
+		}
+		destination = ft_strdup(oldpwd_node->content[1]);
+		return (destination);
+	}
+	return (ft_strdup(args[1]));
+}
