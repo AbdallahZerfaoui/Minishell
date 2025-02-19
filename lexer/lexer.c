@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 19:30:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:18:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,17 @@ t_token	*array2linked_list(char **array)
 	t_token			*new;
 	size_t			i;
 	t_token_type	type;
-	// t_token_type	prev_type;
-	// int				is_command;
 
 	i = 0;
 	head = NULL;
-	// prev_type = PIPE;
 	while (array[i])
 	{
 		type = get_type(array[i]);
-		// printf("array[%zu] = %s\n", i, array[i]);
 		new = create_token(array[i], type);
 		if (!new)
 			return (NULL);
-		// if (prev_type == PIPE)
-		// 	new->need_expand = 0;
-		// printf("value = %s\n", new->value);
 		append_token(&head, new);
 		i++;
-		// prev_type = type;
-		// if (array[i-1])
-		// 	is_command = (get_type(array[i-1]) == PIPE);
 	}
 	return (head);
 }
@@ -70,32 +60,8 @@ t_token	*lexer(const char *line)
 	if (!line)
 		return (NULL);
 	splited_line = lex_split(line);
-	// int i = 0;
-	// while (splited_line[i])
-	// {
-	// 	printf("splited_line[%d] = %s\n", i, splited_line[i]);
-	// 	i++;
-	// }
-	// printf("splited_line[%d] = %s\n", i, splited_line[i]);
 	tokens = array2linked_list(splited_line);
 	free_all_split(splited_line);
 	return (tokens);
 }
 
-// int main(void)
-// {
-// 	t_token	*tokens;
-// 	// char	*line = "cat<\"input file\">\"output file\" | <\"cat\">file | <ls -la | grep \".txt\" | sort | wc -l > output.txt";
-// 	// char *line = "ls -la << grep \".txt\" >> sort | wc -l > output.txt";
-// 	// char *line = "<ls -la | grep \".txt\" | sort | wc -l > output.txt";
-// 	char *line = "cd | ls -al | wc -l> test.txt";
-
-// 	tokens = lexer(line);
-// 	while (tokens)
-// 	{
-// 		printf("value = %s	-	", tokens->value);
-// 		printf("type = %d\n", tokens->type);
-// 		tokens = tokens->next;
-// 	}
-// 	return (0);
-// }

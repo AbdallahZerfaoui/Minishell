@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 19:30:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:29:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static size_t	count_words(char const *str)
 			is_new_word = 0;
 		}
 		else if ((*str != TK_SPACE
-			&& !inside_s_quotes && !inside_d_quotes)
+				&& !inside_s_quotes && !inside_d_quotes)
 			&& !is_new_word)
 		{
 			len++;
@@ -74,7 +74,8 @@ static size_t	get_word_len(char const *str, size_t *i)
 	len = 0;
 	if (str[*i] == TK_PIPE)
 		return (1);
-	else if ((str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS) && str[*i + len] == str[*i + len + 1])
+	else if ((str[*i + len] == TK_GREATER || str[*i + len] == TK_LESS)
+		&& str[*i + len] == str[*i + len + 1])
 	{
 		return (2);
 	}
@@ -100,18 +101,6 @@ static size_t	get_word_len(char const *str, size_t *i)
 		len++;
 	}
 	return (len);
-}
-
-
-void	*free_till_n(char **result, size_t j)
-{
-	while (j > 0 && result[j])
-	{
-		j--;
-		free(result[j]);
-	}
-	free(result);
-	return (NULL);
 }
 
 char	**lex_split(char const *s)

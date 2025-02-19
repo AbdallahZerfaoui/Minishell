@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 16:22:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:33:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,86 +40,4 @@ int	count_expansion_chars(const char *str) // need improvement
 			i++;
 	}
 	return (count);
-}
-
-/***
- * @brief This function creates a token
- * if the flag_expansion is -1, it will count the expansion chars
- * if the flag_expansion is 1 or more, it will set the need_expand to 1
- * if the flag_expansion is 0, it will set the need_expand to 0
- */
-t_token	*create_token(char *value, t_token_type type)
-{
-	t_token	*new;
-
-	if (!value)
-		return (NULL);
-	new = (t_token *)ft_calloc(1, sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->value = ft_strdup(value);
-	new->type = type;
-	// if (flag_expansion == -1)
-	new->need_expand = count_expansion_chars(value);
-	// else
-	// 	new->need_expand = (flag_expansion >= 1);
-	return (new);
-}
-
-t_token	*get_last_token(t_token *token)
-{
-	while (token->next)
-		token = token->next;
-	return (token);
-}
-
-void	append_token(t_token **head, t_token *new_token)
-{
-	t_token	*last;
-
-	if (!*head)
-	{
-		*head = new_token;
-		return ;
-	}
-	last = get_last_token(*head);
-	last->next = new_token;
-	new_token->prev = last;
-	// new_token->next = NULL;
-	
-}
-void free_if_not_in_gc(char *str)
-{
-	t_garbage_collector	*gc;
-	t_gc_node			*current;
-	size_t				i;
-
-	if (!str)
-		return ;
-	i = 0;
-	gc = get_gc();
-	current = gc->head;
-	while (current && i < gc->size)
-	{
-		if (current->pointer == str)
-			return ;
-		current = current->next;
-		i++;
-	}
-	free(str);
-}
-
-void	free_all_split(char **split)
-{
-	int		i;
-
-	i = 0;
-	while (split[i])
-	{
-		// free(split[i]);
-		free_if_not_in_gc(split[i]);
-		i++;
-	}
-	// free(split);
-	free_if_not_in_gc((char *)split);
 }
