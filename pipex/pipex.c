@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 19:54:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:25:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		else if (cmd_manager->nbr_cmds == 1)
 		{
 			waitpid(cmd_manager->pid, &status, 0);
+			if (WIFEXITED(status))
+				(*(cmd_manager->shell))->exit_status = status >> 8 & 0xFF;
 			setup_signals();
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 19:47:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:20:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,10 +321,11 @@ static void	shell_loop(t_shell **shell)
 	int				is_interactive;
 
 	gc_init_garbage_collector();
+	update_shlvl(shell);
 	is_interactive = isatty(fileno(stdin));
 	while (1)
 	{
-setup_signals();
+		setup_signals();
 		line = read_and_validate_input(is_interactive);
 		// if (ft_strcmp(line, "exit") == 0)
 		// 	ft_exit(shell);
@@ -421,7 +422,7 @@ int	main(int argc, char **argv, char **env)
 	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	init_shell(&shell, env);
-	update_shlvl(&shell);
+	// update_shlvl(&shell);
 	shell_loop(&shell);
 	if (is_interactive)
 		clear_history();

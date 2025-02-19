@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 21:39:38 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:04:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 char	**env_lst_to_array(t_env *env_lst)
 {
-	t_env	*tmp;
+	t_env	*node;
 	char	**env_array;
 	int		i;
 
 	i = 0;
-	tmp = env_lst;
-	while (tmp)
+	node = env_lst;
+	while (node)
 	{
 		i++;
-		tmp = tmp->next;
+		node = node->next;
 	}
 	env_array = (char **)ft_calloc(i + 1, sizeof(char *));
 	if (!env_array)
 		return (NULL);
 	i = 0;
-	tmp = env_lst;
-	while (tmp)
+	node = env_lst;
+	while (node)
 	{
 		env_array[i] = ft_strjoin_all
-			(tmp->content[0], "=", tmp->content[1], NULL);
+			(node->content[0], "=", node->content[1], NULL);
 		i++;
-		tmp = tmp->next;
+		node = node->next;
 	}
 	return (env_array);
 }

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 22:16:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:27:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	unbalanced_quotes(const char *str)
  */
 void	update_env_array(t_shell **shell)
 {
-	if ((*shell)->env)
+	if ((*shell)->env) //TODO are you sure about this?
 		(*shell)->env = NULL;
 	(*shell)->env = env_lst_to_array((*shell)->env_lst);
 	// print_env(*shell);

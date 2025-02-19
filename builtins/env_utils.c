@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 16:43:10 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:09:09 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ t_env	*last_node(t_env *env_lst)
 	return (last);
 }
 
-// int	is_valid_key(char *key)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (key[i])
-// 	{
-// 		if (ft_isalnum(key[i]) == 0 && key[i] != '_')
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 /**
  * @brief Add a new node to the env_lst
  * step 1: allocate memory for the new node
@@ -66,10 +53,6 @@ void	add_env_node(t_env **env_lst, char *entry)
 	new->prev = last;
 }
 
-void	update_env_node(t_env *node, char *new_value)
-{
-	node->content[1] = ft_strdup(new_value);
-}
 
 /**
  * @brief Get the value of an environment variable
@@ -90,4 +73,24 @@ char	*ft_getenv(char *key, t_shell *shell)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	update_env_node(t_env *node, char *new_value)
+{
+	node->content[1] = ft_strdup(new_value);
+}
+
+void	update_shlvl(t_shell **shell)
+{
+	t_env	*shlvl;
+	int		new_lvl;
+	char	*new_lvl_str;
+
+	shlvl = find_node_by_key("SHLVL", *shell);
+	if (!shlvl)
+		return ;
+	new_lvl = ft_atoi(shlvl->content[1]) + 1;
+	new_lvl_str = ft_itoa(new_lvl);
+	update_env_node(shlvl, new_lvl_str);
+	update_env_array(shell); //TODO you must update this to make it work
 }
