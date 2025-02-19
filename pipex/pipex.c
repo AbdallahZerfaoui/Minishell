@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 19:53:29 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:54:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	close_pipes(t_cmd_manager *cmd_manager)
 void	create_cmd_processes(t_cmd_manager *cmd_manager)
 {
 	int	chd_nbr;
+	int	status;
 
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
@@ -141,7 +142,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		}
 		if (cmd_manager->pid == 0) // 0 is the child
 		{
-			// default_child_signals();
+			default_signals();
 			if (chd_nbr == 0)
 				handle_first_child(cmd_manager, chd_nbr);
 			else if (chd_nbr == cmd_manager->nbr_cmds - 1)
@@ -196,8 +197,30 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 				// exit(EXIT_SUCCESS);
 			}
 		}
-		// }
+		else if (cmd_manager->nbr_cmds == 1)
+		{
+			waitpid(cmd_manager->pid, &status, 0);
+			setup_signals();
+		}
+		else
+		{
+			setup_signals();
+		}
 		chd_nbr++;
 	}
+// if (cmd_manager->nbr_cmds > 1)
+// 	wait_for_children(cmd_manager);
+// else
+// {
+// 	int	status = 0; //dont let this be uninitialized
+// 	wait(&status);
+// 	// status = status >> 8 & 0xFF;
+// 	// if (WIFEXITED(status))
+// 	if ((*(cmd_manager->shell))->exit_status == 0)
+// 		(*(cmd_manager->shell))->exit_status = status >> 8 & 0xFF;
+// 	// (*shell)->exit_status = status >> 8 & 0xFF;
+// 	// else
+// 	// 	(*shell)->exit_status = 17;
+// }
 	close_unused_pipes(cmd_manager->pipes, cmd_manager->nbr_cmds, chd_nbr);
 }
