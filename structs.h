@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/15 16:51:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:18:52 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ typedef struct s_cmd_manager
 	t_command			*cmds;
 	t_cmd_node			*cmds_lst;
 	pid_t				pid;
-	// char				**env;
 	t_shell				**shell;
 }						t_cmd_manager;
 

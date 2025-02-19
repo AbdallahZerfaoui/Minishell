@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:15:35 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:28:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 // # define STDERR_FILENO 2
 
 # include "../minishell.h"
+// # include "../structs.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

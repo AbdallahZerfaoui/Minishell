@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 18:17:29 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:49:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 
 	fd_in = cmd_manager->cmds[chd_nbr].fd_in;
 	fd_out = cmd_manager->cmds[chd_nbr].fd_out;
-
 	//TODO maybe i should change the input of check_fds to take cmd_manager directly
 	check_fds(fd_in, fd_out, cmd_manager->shell);
 	// printf("fd_in = %d\n", fd_in);

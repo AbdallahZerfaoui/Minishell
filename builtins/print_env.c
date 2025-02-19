@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/11 14:15:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:39:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ char	**env_lst_to_array(t_env *env_lst)
 	tmp = env_lst;
 	while (tmp)
 	{
-		// env_array[i] = ft_strjoin(tmp->content[0], "=");
-		// env_array[i] = ft_strjoin(env_array[i], tmp->content[1]);
-		env_array[i] = ft_strjoin_all(tmp->content[0], "=", tmp->content[1], NULL);
+		env_array[i] = ft_strjoin_all
+			(tmp->content[0], "=", tmp->content[1], NULL);
 		i++;
 		tmp = tmp->next;
 	}
@@ -47,20 +46,13 @@ t_env	*get_env_lst(char **env)
 	int		i;
 
 	i = 0;
-	// env_lst = (t_env *)ft_calloc(1, sizeof(struct s_env));
-	// if (!env_lst)
-	// 	return (env_lst);
 	env_lst = NULL;
 	while (env[i])
 	{
-		// printf("im in get en lst\n");
 		add_env_node(&env_lst, env[i]);
-		// printf("env_lst->content[0] = %s\n", env_lst->content[0]);
 		i++;
 	}
-	add_env_node(&env_lst, NULL); // null terminated to know when to stop
-	// if (!env_lst)
-	// 	printf("env_lst is empty in get env lst\n");
+	add_env_node(&env_lst, NULL);
 	return (env_lst);
 }
 
@@ -109,14 +101,6 @@ void	ft_exp_print(t_env	*env_lst)
 		{
 			printf("=\"%s\"\n", current->content[1]);
 		}
-		// else if (current->content[1] && ft_strcmp(current->content[1], "") == 0)
-		// {
-		// 	printf("\n");
-		// }
-		// else if (current->export == 0)
-		// {
-		// 	printf("=\"\"\n");
-		// }
 		else
 			printf("\n");
 		current = current->next;

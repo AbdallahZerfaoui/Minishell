@@ -435,6 +435,17 @@ t_tree_node	*build_word_tree(char *word, t_shell *shell)
 				current_char++; // Skip the $ and continue with quote handling
 				continue;
 			}
+			// else if (*(current_char + 1) == TK_SLASH)
+			// {
+			// 	sub_word = ft_strdup(current_char);
+			// 	new_node = create_tree_node(sub_word);
+			// 	if (new_node)
+			// 	{
+			// 		new_node->can_expand = 0; // we dont want to expand this
+			// 		append_child(&root, new_node);
+			// 	}
+			// 	current_char = NULL;
+			// }
 			// printf("im here\n");
 			len = 0;
 			current_char++; // Move past $

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:23:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/09 23:02:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:37:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*get_pwd(t_shell **shell)
 int	pwd(t_shell **shell)
 {
 	char	*cwd;
-	// char	*tmp;
 
 	cwd = get_pwd(shell);
 	if (!cwd)

@@ -6,24 +6,31 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 16:49:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:15:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	set_export_value_to_one(t_env **env_lst)
-{
-	t_env	*last;
-
-	last = last_node(*env_lst);
-	last->export = 1;
-}
-
+/***
+ * @param this function emulate the export command in bash
+ * @param args the arguments passed to the export command
+ * @param shell the shell structure
+ * how it works:
+ * 1. if no arguments are passed, it prints the environment variables
+ * 2. if arguments are passed, it checks if the argument is a valid identifier
+ * 3. if the argument is a valid identifier,
+ * it checks if the argument contains an equal sign
+ * 4. if the argument contains an equal sign,
+ * it splits the argument into key and value
+ * 5. if the key is already in the environment variables, it updates the value
+ * 6. if the key is not in the environment variables,
+ * it adds the key and value to the environment variables
+ * 7. if the key is not a valid identifier, it prints an error message
+ */
 void	ft_export(char *args[], t_shell **shell)
 {
 	int		i;
-	char	**content;
 
 	if (!args[1])
 	{
@@ -33,49 +40,7 @@ void	ft_export(char *args[], t_shell **shell)
 	i = 1;
 	while (args[i])
 	{
-		content = ft_split(args[i], '=');
-		// args[i] = ft_strtrim(args[i], "\"");
-		if (ft_isalpha(args[i][0]) == 0 && args[i][0] != '_')
-		{
-			ft_putstr_fd(STDERR_FILENO, "bash: export: `");
-			ft_putstr_fd(STDERR_FILENO, args[i]);
-			ft_putstr_fd(STDERR_FILENO, "': not a valid identifier\n");
-			(*shell)->exit_status = 1;
-			i++;
-			continue ;
-		}
-		if (ft_strchr(args[i], '=') == NULL && is_valid_key(content[0]))
-		{
-			// args[i] = ft_strjoin(args[i], "="); // TODO are we adding args[i] to the env_lst? test 390
-			add_env_node(&(*shell)->env_lst, args[i]);
-			// (*shell)->exit_status = 0;
-			i++;
-			continue ; //TODO fix this shit
-		}
-		else if (!is_valid_key(content[0]))
-		{
-			ft_putstr_fd(STDERR_FILENO, "bash: export: `");
-			ft_putstr_fd(STDERR_FILENO, args[i]);
-			ft_putstr_fd(STDERR_FILENO, "': not a valid identifier\n");
-			(*shell)->exit_status = 1;
-			i++;
-			continue ;
-		}
-t_env *existing = find_node_by_key(content[0], *shell);
-if (existing)
-{
-    // Update the value.
-    update_env_node(existing, content[1]); // update_env_node internally handles freeing previous value.
-	update_env_array(shell); //TODO should i update the linked list too??
-}
-else
-{
-    // Add the new variable.
-    add_env_node(&(*shell)->env_lst, args[i]);
-}
-		// add_env_node(&(*shell)->env_lst, args[i]);
-		// (*shell)->exit_status = 0;
-		set_export_value_to_one(&(*shell)->env_lst); //TODO do i need to set export to 1?
+		process_export_argument(args[i], shell);
 		i++;
 	}
 	update_env_array(shell);

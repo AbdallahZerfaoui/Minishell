@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 19:53:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:52:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	heredoc_loop(t_heredoc *heredoc)
 	// char	*hd_filename;
 
 	// hd_filename = generate_heredoc_filename();
+	// heredoc_signals();
 	hd_fd = open(heredoc->filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (hd_fd == -1)
 	{

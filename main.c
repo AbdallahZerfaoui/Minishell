@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 20:15:14 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:46:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 // void	init_g(char **envp, char *input)
 // {
@@ -169,6 +170,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
         {
             if (file->type == HEREDOC && file->next)
             {
+				// ignore_signals();
                 hd_filename = generate_heredoc_filename();
                 heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
                 heredoc_loop(heredoc);
@@ -274,30 +276,32 @@ char	*read_and_validate_input(int is_interactive)
 {
 	char	*line;
 	char	*trimmed_line;
+	g_waiting_for_input = 1;
 
 	if (is_interactive)
 	{
 		line = readline(MAGENTA "Minishell> " RESET);
 		line = ft_strtrim(line, " \n");
 		if (!line)
-			return ("");
+			return (NULL);
 	}
 	else
 	{
 		line = get_next_line(fileno(stdin));
-		if (!line || line[0] == '\0')
-			return ("exit");
+		if (!line)
+			return ("exit"); //TODO improve this shit
 		trimmed_line = ft_strtrim(line, "\n");
 		if (!trimmed_line)
 			return ("exit");
 		line = trimmed_line;
 	}
+	g_waiting_for_input = 0;
 	if (!line)
 		return (NULL);
-	if (ft_strcmp(line, "exit") == 0)
-		return ("exit"); //is it the right way to handle exit?
-	if (line[0] == '\0')
-		return ("");
+	// if (ft_strcmp(line, "exit") == 0)
+	// 	return ("exit"); //is it the right way to handle exit?
+	// if (line[0] == '\0')
+	// 	return ("");
 	if (unbalanced_quotes(line))
 	{
 		printf(RED "Unbalanced quotes\n" RESET);
@@ -307,7 +311,6 @@ char	*read_and_validate_input(int is_interactive)
 		add_history(line);
 	return (line);
 }
-
 
 static void	shell_loop(t_shell **shell)
 {
@@ -321,10 +324,16 @@ static void	shell_loop(t_shell **shell)
 	is_interactive = isatty(fileno(stdin));
 	while (1)
 	{
+setup_signals();
 		line = read_and_validate_input(is_interactive);
 		// if (ft_strcmp(line, "exit") == 0)
 		// 	ft_exit(shell);
-		if (!line || line[0] == '\0')
+		// if (line[0] == '\0')
+		// 	printf("line = %s\n", line);
+		// printf("ctrl_c_pressed = %d\n", ctrl_c_pressed);
+		if (line == NULL)
+			break ;
+		else if (line[0] == '\0')
 			continue ;
 		tokens = lexer(line);
 		(*shell)->hd_must_expand = set_heredoc_expansion_flag(tokens);
@@ -412,6 +421,7 @@ int	main(int argc, char **argv, char **env)
 	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	init_shell(&shell, env);
+	update_shlvl(&shell);
 	shell_loop(&shell);
 	if (is_interactive)
 		clear_history();

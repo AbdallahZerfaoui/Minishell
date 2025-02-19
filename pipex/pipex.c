@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 16:09:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:53:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 	chd_nbr = 0;
 	while (chd_nbr < cmd_manager->nbr_cmds)
 	{
+		// ignore_signals();
 		if (cmd_manager->nbr_cmds == 1)
 		{
 			if (cmd_manager->cmds[chd_nbr].path == NULL)
@@ -130,6 +131,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		// }
 		// else
 		// {
+		// default_child_signals();
 		cmd_manager->pid = fork();
 		if (cmd_manager->pid == -1)
 		{
@@ -139,6 +141,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		}
 		if (cmd_manager->pid == 0) // 0 is the child
 		{
+			// default_child_signals();
 			if (chd_nbr == 0)
 				handle_first_child(cmd_manager, chd_nbr);
 			else if (chd_nbr == cmd_manager->nbr_cmds - 1)
