@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 13:18:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:14:48 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ char	*generate_heredoc_filename(void)
 	return (ft_strdup(filename));
 }
 
+/***
+ * this function will loop to get the heredoc
+ * and write it to a file
+ * the file will be used as input for the command
+ * @note we need the length of the line to remove the \n
+ */
 void	heredoc_loop(t_heredoc *heredoc)
 {
 	char	*line;
@@ -37,20 +43,15 @@ void	heredoc_loop(t_heredoc *heredoc)
 		ft_putstr_fd(STDERR_FILENO, "bash: Failed to open heredoc file\n");
 		return ;
 	}
-	line = NULL;
 	while (true)
 	{
-		ft_putstr_fd(STDOUT_FILENO, "> ");
+		ft_putstr_fd(STDOUT_FILENO, "heredoc> ");
 		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			break ;
-		len = ft_strlen(line); //TODO check this later
+		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0';
-		if (!ft_strcmp(line, heredoc->stop_word))
-		{
+		if (!line || !ft_strcmp(line, heredoc->stop_word))
 			break ;
-		}
 		if ((*(heredoc->shell))->hd_must_expand)
 			line = hd_expand_word(line, *(heredoc->shell));
 		write(hd_fd, line, ft_strlen(line));

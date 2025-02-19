@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 13:31:28 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:35:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_token		*get_last_token(t_token *token);
 void		append_token(t_token **head, t_token *new_token);
 char		**lex_split(const char *str);
 t_token		*array2linked_list(char **array);
-void		free_all_split(char **split);
+// void		free_all_split(char **split);
+int			count_expansion_chars(const char *str);
 
 // Expander
 t_token		*expand(t_token *tokens, t_shell **shell);
@@ -81,8 +82,6 @@ int			check_cmds(t_cmd_node *cmds, t_shell **shell);
 
 // Utils
 int			len_tokens_lst(t_token *tokens);
-void		free_tokens(t_token *head);
-void		free_cmds(t_cmd_node *head);
 int			unbalanced_quotes(const char *str);
 void		init_shell(t_shell **shell, char **env);
 int			count_quotes(char *word);
@@ -134,6 +133,13 @@ void		ft_export(char *args[], t_shell **shell);
 // Echo
 void		ft_echo(char *args[], t_shell **shell);
 int			get_n_flag(char *args[]);
+
+//Memory
+void		*free_till_n(char **result, size_t j);
+void		free_if_not_in_gc(char *str);
+void		free_all_split(char **split);
+void		free_tokens(t_token *head);
+void		free_cmds(t_cmd_node *head);
 // t_exe	*parse_line(char *line, char **env);
 
 #endif
