@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 21:07:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/13 23:07:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:30:37 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 //  * and returns 1 if the string was modified
 //  * and 0 if it wasn't
 //  */
-
-static int	count_segments(const char *str)
+int	count_segments(const char *str)
 {
 	int		i;
 	int		segments;
@@ -33,51 +32,6 @@ static int	count_segments(const char *str)
 		i++;
 	}
 	return (segments);
-}
-
-/**
- * i will create a heredoc split that splits only on spaces and $ signe and quotes
- * it keeps the separators in the array
- */
-static char	**ft_split_heredoc(const char *str)
-{
-	char	**split;
-	int		i;
-	int		j;
-	int		start;
-	int		end;
-	int		segments;
-
-	i = 0;
-	j = 0;
-	start = 0;
-	end = 0;
-	segments = count_segments(str);
-	split = (char **)ft_calloc(segments + 1, sizeof(char *));
-	if (!split)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == TK_SPACE
-			|| str[i] == TK_S_QUOTE || str[i] == TK_D_QUOTE)
-		{
-			split[j] = ft_substr(str, i, 1);
-			i++;
-		}
-		else if (str[i] == TK_DOLLAR)
-		{
-			start = i;
-			i++;
-			while (str[i] && str[i] != TK_SPACE && str[i] != TK_DOLLAR
-				&& str[i] != TK_S_QUOTE && str[i] != TK_D_QUOTE)
-				i++;
-			end = i;
-			split[j] = ft_substr(str, start, end - start);
-		}
-		j++;
-	}
-	split[j + 1] = NULL;
-	return (split);
 }
 
 char	*hd_expand_word(char *word, t_shell *shell)

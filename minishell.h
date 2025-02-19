@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 13:13:30 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:31:28 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void		heredoc_loop(t_heredoc *heredoc);
 char		*generate_heredoc_filename(void);
 char		*hd_expand_word(char *word, t_shell *shell);
 int			set_heredoc_expansion_flag(t_token *tokens);
+char		**ft_split_heredoc(const char *str);
+int			count_segments(const char *str);
 
 // Builtins
 void		execute_builtins(char *path, char *args[], t_shell **shell);
