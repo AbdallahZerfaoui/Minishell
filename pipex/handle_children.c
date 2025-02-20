@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 19:49:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:50:41 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	&& cmd_manager->cmds[chd_nbr].hd_filename[0] != '\0')
     {
         int hd_fd = open(cmd_manager->cmds[chd_nbr].hd_filename, O_RDONLY);
+		unlink(cmd_manager->cmds[chd_nbr].hd_filename);
         if (hd_fd < 0)
         {
             perror("open hd_filename");
@@ -158,6 +159,7 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	&& cmd_manager->cmds[chd_nbr].hd_filename[0] != '\0')
     {
         int hd_fd = open(cmd_manager->cmds[chd_nbr].hd_filename, O_RDONLY);
+		unlink(cmd_manager->cmds[chd_nbr].hd_filename);
         if (hd_fd < 0)
         {
             perror("open hd_filename");

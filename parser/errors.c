@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:51:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/16 23:16:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:32:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 int	check_tokens(t_token *tokens, t_shell **shell)
 {
 	t_token		*current;
-	// struct stat	sb;
-	// char		*expanded;
 
 	current = tokens;
 	while (current)
 	{
-		// expanded = expand_word(current->value, *shell);
 		if (current->type == PIPE
-			&& (!current->next || !current->prev || current->next->type != WORD || current->prev->type != WORD))
+			&& (!current->next || !current->prev
+				|| current->next->type != WORD || current->prev->type != WORD))
 		{
 			ft_putstr_fd(STDERR_FILENO,
 				"bash: syntax error near unexpected token `|'\n");
@@ -58,34 +56,6 @@ int	check_tokens(t_token *tokens, t_shell **shell)
 			(*shell)->exit_status = MISUSE_ERROR;
 			return (MISUSE_ERROR);
 		}
-		// else if ((stat(current->value, &sb) == 0 && S_ISDIR(sb.st_mode)))
-		// {
-		// 	ft_putstr_fd(STDERR_FILENO, "bash: ");
-		// 	ft_putstr_fd(STDERR_FILENO, current->value);
-		// 	ft_putstr_fd(STDERR_FILENO, ": is a directory\n");
-		// 	(*shell)->exit_status = 126;
-		// 	return (126);
-		// }
-		// else if ((stat(expanded, &sb) == 0 && S_ISDIR(sb.st_mode)))
-		// {
-		// 	ft_putstr_fd(STDERR_FILENO, "bash: ");
-		// 	ft_putstr_fd(STDERR_FILENO, expanded);
-		// 	ft_putstr_fd(STDERR_FILENO, ": is a directory\n");
-		// 	(*shell)->exit_status = 126;
-		// 	return (126);
-		// }
-		// else if (ft_strcmp(current->value, ".") == 0)
-		// {
-		// 	ft_putstr_fd(STDERR_FILENO, "bash: .: filename argument required\n");
-		// 	(*shell)->exit_status = COMMAND_NOT_FOUND;
-		// 	return (COMMAND_NOT_FOUND);
-		// }
-		// else if (ft_strcmp(current->value, "..") == 0)
-		// {
-		// 	ft_putstr_fd(STDERR_FILENO, "bash: ..: command not found\n");
-		// 	(*shell)->exit_status = COMMAND_NOT_FOUND;
-		// 	return (COMMAND_NOT_FOUND);
-		// }
 		current = current->next;
 	}
 	return (0);

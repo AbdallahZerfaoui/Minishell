@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:35:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:40:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_token		*lexer(const char *line);
 t_token		*create_token(char *value, t_token_type type);
 t_token		*get_last_token(t_token *token);
 void		append_token(t_token **head, t_token *new_token);
+void		remove_token(t_token **head, t_token *token);
 char		**lex_split(const char *str);
 t_token		*array2linked_list(char **array);
 // void		free_all_split(char **split);

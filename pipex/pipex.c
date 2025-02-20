@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:25:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:54:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,16 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		// ignore_signals();
 		if (cmd_manager->nbr_cmds == 1)
 		{
-			if (cmd_manager->cmds[chd_nbr].path == NULL)
+			if (cmd_manager->cmds[chd_nbr].path == NULL
+				&& cmd_manager->cmds[chd_nbr].fd_in > 2)
 			{
-				// printf("im here\n");
-				ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
+				break ;
+			}
+			else if (cmd_manager->cmds[chd_nbr].path == NULL)
+			{
+				ft_putstr_fd(STDERR_FILENO, "bash:");
+				ft_putstr_fd(STDERR_FILENO, cmd_manager->cmds[chd_nbr].args[0]);
+				ft_putstr_fd(STDERR_FILENO, ": command not found\n");
 				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
 				break ;
 			}
@@ -153,9 +159,20 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 			// printf("command : %c\n", cmd_manager->cmds[chd_nbr].path[0]);
 			// printf("command : %s\n", cmd_manager->cmds[chd_nbr].path);
 			//handle the case fd_in == -1
+			if (cmd_manager->cmds[chd_nbr].path == NULL
+				&& cmd_manager->cmds[chd_nbr].fd_in > 2)
+			{
+				// cmd_manager->cmds[chd_nbr].fd_in = 1;
+				// chd_nbr++;
+				// continue ;
+				exit(EXIT_SUCCESS);
+			}
 			if (cmd_manager->cmds[chd_nbr].path == NULL)
 			{
-				ft_putstr_fd(STDERR_FILENO, "bash: : command not found\n");
+				// printf("command : %s\n", cmd_manager->cmds[chd_nbr].args[0]);
+				ft_putstr_fd(STDERR_FILENO, "bash:");
+				ft_putstr_fd(STDERR_FILENO, cmd_manager->cmds[chd_nbr].args[0]);
+				ft_putstr_fd(STDERR_FILENO, ": command not found\n");
 				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
 				exit(COMMAND_NOT_FOUND);
 			}

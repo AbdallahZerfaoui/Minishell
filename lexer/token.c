@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:24:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:24:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:39:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,28 @@ void	append_token(t_token **head, t_token *new_token)
 	last = get_last_token(*head);
 	last->next = new_token;
 	new_token->prev = last;
+}
+
+void	remove_token(t_token **head, t_token *token)
+{
+	t_token	*current;
+
+	if (!*head || !token)
+		return ;
+	if (*head == token)
+	{
+		*head = token->next;
+		if (*head)
+			(*head)->prev = NULL;
+		return ;
+	}
+	current = *head;
+	while (current && current->next != token)
+		current = current->next;
+	if (current)
+	{
+		current->next = token->next;
+		if (token->next)
+			token->next->prev = current;
+	}
 }

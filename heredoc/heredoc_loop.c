@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:14:48 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:13:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	heredoc_loop(t_heredoc *heredoc)
 	}
 	while (true)
 	{
-		ft_putstr_fd(STDOUT_FILENO, "heredoc> ");
+		ft_putstr_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
