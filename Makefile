@@ -29,9 +29,10 @@ LIBS = minishell-lib.a
 GITHUB_REPO = https://github.com/AbdallahZerfaoui/minishell-lib
 FOLDER_NAME = minishell-lib
 LIBS_DIR = minishell-lib
-ZIP_URL = $(GITHUB_REPO)/archive/main.zip
+# ZIP_URL = $(GITHUB_REPO)/archive/main.zip
 # EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
 # GNL_SRC = $(wildcard GetNextLine/*.c)
+MAIN_SRC = $(wildcard main/*.c)
 PIEPX_SRC = $(wildcard pipex/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
@@ -42,7 +43,7 @@ SIGNALS_SRC = $(wildcard signals/*.c)
 # COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
 # SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
+SRC = $(wildcard *.c) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

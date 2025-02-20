@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 12:28:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 22:08:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,14 @@
 # define COMMAND_NOT_FOUND 127
 # define HEREDOC_ERROR 1
 # define MISUSE_ERROR 2
-// # define STDERR_FILENO 2
 
 # include "../minishell.h"
-// # include "../structs.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-// typedef struct s_command
-// {
-// 	char		*path;
-// 	char		**args;
-// }				t_command;
-
-// typedef struct s_cmd_manager
-// {
-// 	int			nbr_cmds;
-// 	int			**pipes;
-// 	int			fd_in;
-// 	int			fd_out;
-// 	t_command	*cmds;
-// 	pid_t		pid;
-// 	char		**env;
-// }				t_cmd_manager;
-
-// Basic functions
-// char			*ft_strjoin(char const *s1, char const *s2);
-// char			**ft_split(char const *s, char c);
-void			*free_all(char **result);
-// char			*ft_strdup(const char *s);
-// int				ft_strncmp(const char *s1, const char *s2, size_t n);
-// char			*ft_substr(char const *s, unsigned int start, size_t len);
-// size_t			ft_strlen(const char *s);
-// void			*ft_calloc(size_t nitems, size_t size);
 
 // char	*find_command_path(char *cmd);
 void			close_unused_pipes(int **pipes, int nbr_cmds, int chd_nbr);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 15:40:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:25:28 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <signal.h>
+// # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -41,6 +41,12 @@
 # define RESET "\x1b[0m"
 
 # define HEREDOC_FILE "_heredoc.txt"
+
+// Main
+void		shell_loop(t_shell **shell);
+char		*read_and_validate_input(int is_interactive);
+t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell);
+
 
 // Lexer
 t_token		*lexer(const char *line);

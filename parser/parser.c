@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:34:16 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 22:26:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,43 @@ t_token	*detach_token(t_token *target, int size)
 	return (current_updated);
 }
 
+int	process_pipe_token(t_cmd_node **head, t_token **current_token)
+{
+	t_cmd_node	*new_node;
+
+	new_node = create_cmd_node();
+	if (!new_node)
+		return (0);
+	append_cmd_node(head, &new_node);
+	*current_token = (*current_token)->next;
+	return (1);
+}
+
+void	process_word_token(t_cmd_node **head, t_token **current_token)
+{
+	t_token		*detached_token;
+	int			words_chain_len;
+
+	words_chain_len = get_words_chain_len(*current_token);
+	detached_token = *current_token;
+	*current_token = detach_token(detached_token, words_chain_len);
+	add_cmd(head, detached_token);
+}
+
+void	process_redirection_token(t_cmd_node **head, t_token **current_token)
+{
+	t_token		*detached_token;
+
+	detached_token = *current_token;
+	*current_token = detach_token(detached_token, 2);
+	add_file(head, detached_token);
+}
+
 t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 {
 	t_cmd_node	*head;
-	t_cmd_node	*new_node;
+	t_cmd_node	*last;
 	t_token		*current_token;
-	t_token		*detached_token;
-	int			words_chain_len;
 
 	head = create_cmd_node();
 	if (!head || !tokens)
@@ -50,27 +80,17 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 	{
 		if (current_token->type == PIPE)
 		{
-			new_node = create_cmd_node();
-			if (!new_node)
+			if (!process_pipe_token(&head, &current_token))
 				return (NULL);
-			append_cmd_node(&head, &new_node);
-			current_token = current_token->next;
 		}
 		else if (current_token->type == WORD)
-		{
-			words_chain_len = get_words_chain_len(current_token);
-			detached_token = current_token;
-			current_token = detach_token(detached_token, words_chain_len);
-			add_cmd(&head, detached_token);
-		}
+			process_word_token(&head, &current_token);
 		else if (current_token->type == INFILE
 			|| current_token->type == OUTFILE
 			|| current_token->type == APPEND
 			|| current_token->type == HEREDOC)
 		{
-			detached_token = current_token;
-			current_token = detach_token(detached_token, 2);
-			add_file(&head, detached_token);
+			process_redirection_token(&head, &current_token);
 		}
 		else
 		{
@@ -78,7 +98,7 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 			break ;
 		}
 	}
-	t_cmd_node	*last = get_last_node(head);
+	last = get_last_node(head);
 	last->cmd_array = linked_list2array(last->cmd);
 	if (!last->cmd_array)
 		return (NULL);

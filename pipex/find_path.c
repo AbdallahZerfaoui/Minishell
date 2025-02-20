@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 20:24:07 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:15:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,8 @@
 char	*join_paths(const char *dir, const char *cmd)
 {
 	char	*full_path;
-	// char	*tmp;
 
-	// tmp = ft_strjoin(dir, "/");
-	// if (!tmp)
-	// 	return (perror("Error"), NULL);
-	// full_path = ft_strjoin(tmp, cmd);
 	full_path = ft_strjoin_all((char *)dir, "/", cmd, NULL);
-	// free(tmp);
 	if (!full_path)
 		return (perror("Error"), NULL);
 	return (full_path);
@@ -56,7 +50,6 @@ char	**parse_env(char **env)
 			if (!path)
 				return (perror("Error"), NULL);
 			split_paths = ft_split(path, ':');
-			// free(path);
 			if (!split_paths)
 				return (perror("Error"), NULL);
 			return (split_paths);
@@ -81,32 +74,23 @@ char	*get_command_path(char *cmd, char **env)
 	char		*full_path;
 	int			i;
 
-	// static char	*default_paths[] = {"/usr/local/bin", "/usr/bin", "/bin", \
-	// 		"/usr/sbin", "/sbin", NULL}; //TODO remove this because it's not needed
-
 	if ((ft_isalpha(cmd[0]) == 0 && cmd[0] != '/')
 		|| cmd[0] == '\0')
-	{
-		// printf("i will return NULL\n");
 		return (NULL);
-	}
-	// if (access(cmd, X_OK) == 0)
-	// 	return (ft_strdup(cmd));
-	// else if (is_builtin(&cmd, builtins))
-	// 	return (ft_strjoin("./builtins/", cmd));
 	if (is_builtin(cmd)
 		|| access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	paths = parse_env(env);
 	if (!paths)
 		return (NULL);
-	// paths = default_paths;
 	i = 0;
 	while (paths[i])
 	{
 		full_path = join_paths(paths[i], cmd);
 		if (access(full_path, X_OK) == 0)
+		{
 			return (full_path);
+		}
 		i++;
 	}
 	return (NULL);

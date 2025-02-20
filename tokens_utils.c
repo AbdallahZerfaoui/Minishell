@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:02:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 16:58:19 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:21:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_token	*handle_standalone_redirections(t_token *tokens, t_shell **shell)
 	t_token	*next;
 	t_token	*prev;
 	int		tmp_fd;
-	// t_token	*tmp;
-	// int		tmp_fd2;
 
 	current = tokens;
 	prev = NULL;
@@ -41,7 +39,11 @@ t_token	*handle_standalone_redirections(t_token *tokens, t_shell **shell)
 				return (NULL);
 			}
 			if (current->next->next)
+			{
 				tokens = current->next->next;
+				if (tokens->type == PIPE)
+					tokens = tokens->next;
+			}
 			else
 				tokens = NULL;
 			current = tokens;
@@ -60,49 +62,9 @@ t_token	*handle_standalone_redirections(t_token *tokens, t_shell **shell)
 				(*shell)->exit_status = OPEN_ERROR;
 				return (NULL);
 			}
-			// else
-			// {
-			// 	tmp_fd2 = open(next->value, O_RDONLY);
-			// 	if (tmp_fd2 < 0)
-			// 	{
-			// 		ft_putstr_fd(STDERR_FILENO, "bash: : open error\n");
-			// 		(*shell)->exit_status = OPEN_ERROR;
-			// 		return (NULL);
-			// 	}
-			// 	dup2(tmp_fd2, STDIN_FILENO);
-			// 	close(tmp_fd2);
-			// 	remove_token(&tokens, current);
-			// 	remove_token(&tokens, next);
-			// 	current = move_forward_n(prev, 3);
-			// 	if (current && current->type == PIPE)
-			// 	{
-			// 		tmp = current;
-			// 		current = move_forward_n(prev, 1);
-			// 		remove_token(&tokens, tmp);
-			// 	}
-			// 	next = move_forward_n(prev, 4);
-			// 	prev = move_forward_n(prev, 2);
-			// 	continue ;
-			// }
 		}
 		prev = current;
 		current = next;
 	}
 	return (tokens);
 }
-
-// int	len_tokens_lst(t_token *tokens)
-// {
-// 	int		len;
-// 	t_token	*current;
-
-// 	len = 0;
-// 	current = tokens;
-// 	while (current)
-// 	{
-// 		len++;
-// 		current = current->next;
-// 	}
-// 	return (len);
-// }
-

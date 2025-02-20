@@ -6,11 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:42:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:22:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
+volatile sig_atomic_t	g_waiting_for_input = 1;
 
 int	get_fd_in(t_cmd_node *node)
 {
@@ -100,7 +102,6 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
         {
             if (file->type == HEREDOC && file->next)
             {
-				// ignore_signals();
                 hd_filename = generate_heredoc_filename();
                 heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
                 heredoc_loop(heredoc);
@@ -118,6 +119,7 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 		if (current->cmd_array && current->cmd_array[0])
 		{
 			custom_cmd_path = get_command_path(current->cmd_array[0], (*shell)->env); //TODO get command already does this check
+			// dprintf(2, "i : %d -> custom_cmd_path = %s\n", i, custom_cmd_path);
 			if (access(current->cmd_array[0], X_OK) == 0 && !custom_cmd_path)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else
@@ -138,7 +140,6 @@ char	*read_and_validate_input(int is_interactive)
 {
 	char	*line;
 	char	*trimmed_line;
-	g_waiting_for_input = 1;
 
 	if (is_interactive)
 	{
@@ -168,54 +169,6 @@ char	*read_and_validate_input(int is_interactive)
 	if (is_interactive)
 		add_history(line);
 	return (line);
-}
-
-static void	shell_loop(t_shell **shell)
-{
-	char			*line;
-	t_token			*tokens;
-	t_cmd_node		*cmds;
-	t_cmd_manager	*cmd_manager;
-	int				is_interactive;
-
-	gc_init_garbage_collector();
-	update_shlvl(shell);
-	is_interactive = isatty(fileno(stdin));
-	while (1)
-	{
-		setup_signals();
-		line = read_and_validate_input(is_interactive);
-		if (line == NULL)
-			break ;
-		else if (line[0] == '\0')
-			continue ;
-		tokens = lexer(line);
-		(*shell)->hd_must_expand = set_heredoc_expansion_flag(tokens);
-		tokens = expand(tokens, shell);
-		tokens = handle_standalone_redirections(tokens, shell);
-		if (!tokens)
-			continue ;
-		if (check_tokens(tokens, shell) != 0)
-			continue ;
-		cmds = parse(tokens, shell);
-		if (check_cmds(cmds, shell) != 0)
-			continue ;
-		cmd_manager = prepare_execution(cmds, shell);
-		if (!cmd_manager)
-			continue ;
-		initialize_pipes(cmd_manager);
-		create_cmd_processes(cmd_manager);
-		if (cmd_manager->nbr_cmds > 1)
-			wait_for_children(cmd_manager);
-		else
-		{
-			int	status = 0; //dont let this be uninitialized
-			wait(&status);
-			if ((*shell)->exit_status == 0)
-				(*shell)->exit_status = status >> 8 & 0xFF;
-		}
-		close_pipes(cmd_manager);
-	}
 }
 
 int	main(int argc, char **argv, char **env)

@@ -6,11 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:24:42 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:31:27 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 22:51:05 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 void	parent_signals(int sig)
 {
