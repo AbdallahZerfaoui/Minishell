@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 15:56:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:25:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ char	*read_and_validate_input(int is_interactive)
 	char	*line;
 	char	*trimmed_line;
 
+	g_waiting_for_input = 1;
 	if (is_interactive)
 	{
-		line = readline(MAGENTA "⚡️ Minishell ⚡️ " RESET);
+		line = readline(MAGENTA "⚡️ root@minihell ☠️ ~> " RESET);
 		line = ft_strtrim(line, " \n");
 		if (!line)
 			return (NULL);
