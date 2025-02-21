@@ -168,3 +168,5 @@ Here’s the classification from **easiest to hardest** for implementing shell b
 
 **ls | cat << lim | grep "asd"**-> it must return all the lines with asd
 
+**ls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > > out | cat << stop3**-> it stops after stop2 not stop3
+
