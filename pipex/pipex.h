@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 22:08:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:14:59 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void			close_pipes(t_cmd_manager *cmd_manager);
 void			handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr);
 void			handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr);
 void			handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr);
+
+// Handle children utils
+void			check_fds(int fd_in, int fd_out, t_shell **shell);
+void			setup_input(int fd_in, char *hd_filename, int pipe_fd);
+void			setup_output(int fd_out, int pipe_fd);
 
 // Main
 void			create_cmd_processes(t_cmd_manager *cmd_manager);
