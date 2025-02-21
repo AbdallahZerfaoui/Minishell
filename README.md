@@ -162,8 +162,5 @@ Here’s the classification from **easiest to hardest** for implementing shell b
 --- 
 
 ### Tests i should pass
-ls | cat << lim | >out -> it should ask for the heredoc, create an empty out
+**ls | cat << lim | >out** -> it should ask for the heredoc, create an empty out
 
-This order balances simplicity with incremental complexity. Let me know if you need code snippets for any of these! 💻
-
-This project requires a meticulous approach to C programming, deep understanding of the shell's architecture, and precise adherence to the provided requirements.
