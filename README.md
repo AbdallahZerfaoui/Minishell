@@ -163,6 +163,8 @@ Here’s the classification from **easiest to hardest** for implementing shell b
 
 ### Tests i should pass
 **ls | cat << lim | >out** -> it should ask for the heredoc, create an empty out
+
 **ls | ls | ls.............|ls** a huge line of ls without crushing
+
 **ls | cat << lim | grep "asd"**-> it must return all the lines with asd
 
