@@ -159,6 +159,14 @@ Here’s the classification from **easiest to hardest** for implementing shell b
 3. Tackle **`cd`** for filesystem interaction.  
 4. Finish with **`unset`** and **`export`** for environment manipulation.
 
-This order balances simplicity with incremental complexity. Let me know if you need code snippets for any of these! 💻
+--- 
 
-This project requires a meticulous approach to C programming, deep understanding of the shell's architecture, and precise adherence to the provided requirements.
+### Tests i should pass
+**ls | cat << lim | >out** -> it should ask for the heredoc, create an empty out
+
+**ls | ls | ls.............|ls** a huge line of ls without crushing
+
+**ls | cat << lim | grep "asd"**-> it must return all the lines with asd
+
+**ls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > > out | cat << stop3**-> it stops after stop2 not stop3
+
