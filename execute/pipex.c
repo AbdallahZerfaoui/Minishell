@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:04:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 21:59:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:03:39 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	close_pipes(t_cmd_manager *cmd_manager)
 	}
 }
 
-static int	handle_single_command(t_command *cmd, t_shell **shell)
+int	handle_single_command(t_command *cmd, t_shell **shell)
 {
 	if (cmd->path == NULL
 		&& cmd->fd_in > 2)
@@ -99,9 +99,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 		{
 			if (handle_single_command
 				(&cmd_manager->cmds[chd_nbr], cmd_manager->shell))
-			{
 				break ;
-			}
 			if (cmd_manager->cmds[chd_nbr].path
 				&& is_builtin(cmd_manager->cmds[chd_nbr].path))
 			{
@@ -135,7 +133,7 @@ void	create_cmd_processes(t_cmd_manager *cmd_manager)
 			}
 			if (cmd_manager->cmds[chd_nbr].path == NULL)
 			{
-				ft_putstr_fd(STDERR_FILENO, "bash:");
+				ft_putstr_fd(STDERR_FILENO, "bash:zzzz");
 				ft_putstr_fd(STDERR_FILENO, ": command not found\n");
 				(*(cmd_manager->shell))->exit_status = COMMAND_NOT_FOUND;
 				exit(COMMAND_NOT_FOUND);

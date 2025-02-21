@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 18:14:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:06:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define COMMAND_NOT_FOUND 127
 # define HEREDOC_ERROR 1
 # define MISUSE_ERROR 2
+# define ZERO 0
 
 # include "../minishell.h"
 # include <fcntl.h>
@@ -55,5 +56,16 @@ void			setup_output(int fd_out, int pipe_fd);
 // Main
 void			create_cmd_processes(t_cmd_manager *cmd_manager);
 void			free_cmd_manager(t_cmd_manager *cmd_manager);
+
+// Execute
+void			execute(t_cmd_manager *cmd_manager);
+void			handle_child_process(t_cmd_manager *cmd_manager, int chd_nbr);
+void			handle_parent_process(t_cmd_manager *cmd_manager);
+void			execute_command(t_command *cmd, t_shell **shell);
+int				handle_single_builtin(t_cmd_manager *cmd_manager, int chd_nbr);
+int				handle_single_command(t_command *cmd, t_shell **shell);
+void			fork_error_handler(t_shell **shell);
+void			command_error_handler(t_command *cmd, t_shell **shell);
+
 
 #endif

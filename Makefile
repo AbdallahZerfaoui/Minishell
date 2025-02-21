@@ -33,7 +33,7 @@ LIBS_DIR = minishell-lib
 # EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
 # GNL_SRC = $(wildcard GetNextLine/*.c)
 MAIN_SRC = $(wildcard main/*.c)
-PIEPX_SRC = $(wildcard pipex/*.c)
+EXECUTE_SRC = $(wildcard execute/*.c)
 LEXER_SRC = $(wildcard lexer/*.c)
 PARSER_SRC = $(wildcard parser/*.c)
 EXPANDER_SRC = $(wildcard expander/*.c)
@@ -41,9 +41,9 @@ BUILTINS_SRC = $(wildcard builtins/*.c)
 HEREDOC_SRC = $(wildcard heredoc/*.c)
 SIGNALS_SRC = $(wildcard signals/*.c)
 # COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
-# SRC = $(EXECUTION_SRC) $(PIEPX_SRC) $(GNL_SRC)
-# SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(PIEPX_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(PIEPX_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
+# SRC = $(EXECUTION_SRC) $(EXECUTE_SRC) $(GNL_SRC)
+# SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(EXECUTE_SRC) $(GNL_SRC) $(EXPANDER_SRC)
+SRC = $(wildcard *.c) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(EXECUTE_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
@@ -52,7 +52,7 @@ NAME = minishell
 #TEST : ls -la | grep ".txt" | sort | wc -l > output.txt
 #test : <"input file">"output file" | <cat>file
 
-# $(info PIEPX_SRC = $(EXECUTION_SRC))
+# $(info EXECUTE_SRC = $(EXECUTION_SRC))
 # $(info SRC = $(SRC))
 
 # Rules

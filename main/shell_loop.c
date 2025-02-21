@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:22:28 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 17:21:14 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:05:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	shell_loop(t_shell **shell)
 		if (!cmd_manager)
 			continue ;
 		initialize_pipes(cmd_manager);
-		create_cmd_processes(cmd_manager);
+		execute(cmd_manager);
 		if (cmd_manager->nbr_cmds > 1)
 			wait_for_children(cmd_manager);
 		else

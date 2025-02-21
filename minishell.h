@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 23:45:45 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:20:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "minishell-lib/includes/get_next_line.h"
 # include "minishell-lib/includes/libft.h"
 # include "structs.h"         // this line must be called before pipex
-# include "pipex/pipex.h"
+# include "execute/pipex.h"
 # include "signals/signals.h" //TODO replace it
 # include <errno.h>
 # include <fcntl.h>

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 23:15:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:42:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*join_paths(const char *dir, const char *cmd)
 {
 	char	*full_path;
 
+	if (cmd[0] == TK_SLASH)
+		return (NULL);
 	full_path = ft_strjoin_all((char *)dir, "/", cmd, NULL);
 	if (!full_path)
 		return (perror("Error"), NULL);
