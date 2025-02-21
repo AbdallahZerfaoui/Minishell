@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 21:07:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 13:30:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:34:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ int	set_heredoc_expansion_flag(t_token *tokens)
 		current = current->next;
 	}
 	return (need_expand);
+}
+
+t_heredoc	*init_heredoc_struct(char *stop_word,
+				char *hd_filename, t_shell **shell)
+{
+	t_heredoc	*heredoc;
+
+	heredoc = (t_heredoc *)ft_calloc(1, sizeof(t_heredoc));
+	if (!heredoc)
+		return (NULL);
+	heredoc->stop_word = ft_strdup(expand_word(stop_word, *shell));
+	heredoc->filename = ft_strdup(hd_filename);
+	heredoc->shell = shell;
+	return (heredoc);
 }

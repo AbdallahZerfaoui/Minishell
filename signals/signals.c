@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:24:42 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 22:51:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:54:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	parent_signals(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+	else
+	{
+		g_waiting_for_input = 1;
 	}
 }
 
