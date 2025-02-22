@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:50:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 22:26:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:36:24 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,28 @@ void	process_redirection_token(t_cmd_node **head, t_token **current_token)
 	add_file(head, detached_token);
 }
 
+int	is_redirection_token(t_token *token)
+{
+	return (token->type == INFILE
+		|| token->type == OUTFILE
+		|| token->type == APPEND
+		|| token->type == HEREDOC);
+}
+
+void	finalize_cmds_lst(t_cmd_node **head)
+{
+	t_cmd_node	*last;
+
+	last = get_last_node(*head);
+	last->cmd_array = linked_list2array(last->cmd);
+	if (!last->cmd_array)
+		return ;
+	last->cmd = NULL;
+}
+
 t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 {
 	t_cmd_node	*head;
-	t_cmd_node	*last;
 	t_token		*current_token;
 
 	head = create_cmd_node();
@@ -85,23 +103,13 @@ t_cmd_node	*parse(t_token *tokens, t_shell **shell)
 		}
 		else if (current_token->type == WORD)
 			process_word_token(&head, &current_token);
-		else if (current_token->type == INFILE
-			|| current_token->type == OUTFILE
-			|| current_token->type == APPEND
-			|| current_token->type == HEREDOC)
-		{
+		else if (is_redirection_token(current_token))
 			process_redirection_token(&head, &current_token);
-		}
 		else
 		{
 			(*shell)->exit_status = MISUSE_ERROR;
 			break ;
 		}
 	}
-	last = get_last_node(head);
-	last->cmd_array = linked_list2array(last->cmd);
-	if (!last->cmd_array)
-		return (NULL);
-	last->cmd = NULL;
-	return (head);
+	return (finalize_cmds_lst(&head), head);
 }
