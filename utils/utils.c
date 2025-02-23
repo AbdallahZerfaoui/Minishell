@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:30:25 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 23:15:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /***
  * @brief This function checks if the string has unbalanced quotes.

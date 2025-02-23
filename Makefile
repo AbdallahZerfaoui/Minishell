@@ -40,10 +40,11 @@ EXPANDER_SRC = $(wildcard expander/*.c)
 BUILTINS_SRC = $(wildcard builtins/*.c)
 HEREDOC_SRC = $(wildcard heredoc/*.c)
 SIGNALS_SRC = $(wildcard signals/*.c)
+UTILS_SRC = $(wildcard utils/*.c)
 # COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
 # SRC = $(EXECUTION_SRC) $(EXECUTE_SRC) $(GNL_SRC)
 # SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(EXECUTE_SRC) $(GNL_SRC) $(EXPANDER_SRC)
-SRC = $(wildcard *.c) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(EXECUTE_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
+SRC = $(UTILS_SRC) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(EXECUTE_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

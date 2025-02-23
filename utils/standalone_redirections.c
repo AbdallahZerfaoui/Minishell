@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:02:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:57:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 23:15:18 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	is_standalone_input_redirection(t_token *current, t_token *prev,
 		t_token *next)

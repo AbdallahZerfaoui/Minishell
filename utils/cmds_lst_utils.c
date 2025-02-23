@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:02:33 by azerfaou          #+#    #+#             */
-/*   Updated: 2024/12/28 22:04:17 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 23:15:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	len_cmds_lst(t_cmd_node *cmds)
 {

@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:28:25 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:30:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 23:15:22 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	*free_till_n(char **result, size_t j)
 {
