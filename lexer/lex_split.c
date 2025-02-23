@@ -6,14 +6,14 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/22 17:17:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:21:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	toggle_quote_state\
-	(char c, int *inside_s_quotes, int *inside_d_quotes)
+static void	toggle_quote_state(char c, int *inside_s_quotes,
+		int *inside_d_quotes)
 {
 	if (c == TK_D_QUOTE && !*inside_s_quotes)
 		*inside_d_quotes = !*inside_d_quotes;
@@ -46,15 +46,15 @@ static size_t	count_words(char const *str)
 			continue ;
 		}
 		toggle_quote_state(*str, &inside_s_quotes, &inside_d_quotes);
-		if ((*str == TK_GREATER || *str == TK_LESS)
-			&& !inside_s_quotes && !inside_d_quotes)
+		if ((*str == TK_GREATER || *str == TK_LESS) && !inside_s_quotes
+			&& !inside_d_quotes)
 		{
 			len++;
-			str += (*str == *(str + 1)) ? 1 : 0; // if the next char is the same as the current char, we skip it
+			if (*(str + 1) == *str)
+				str++;
 			inside_word = 0;
 		}
-		else if ((*str != TK_SPACE
-				&& !inside_s_quotes && !inside_d_quotes)
+		else if ((*str != TK_SPACE && !inside_s_quotes && !inside_d_quotes)
 			&& !inside_word)
 		{
 			len++;
@@ -69,9 +69,7 @@ static size_t	count_words(char const *str)
 
 static int	is_delimiter(char c)
 {
-	return (c == TK_SPACE
-		|| c == TK_GREATER || c == TK_LESS
-		|| c == TK_PIPE);
+	return (c == TK_SPACE || c == TK_GREATER || c == TK_LESS || c == TK_PIPE);
 }
 
 static int	handle_simple_words(char const *str, size_t *i)
@@ -109,8 +107,7 @@ static size_t	get_word_len(char const *str, size_t *i)
 			inside_d_quotes = !inside_d_quotes;
 		if (str[*i + len] == TK_S_QUOTE && !inside_d_quotes)
 			inside_s_quotes = !inside_s_quotes;
-		if (!inside_s_quotes && !inside_d_quotes
-			&& is_delimiter(str[*i + len]))
+		if (!inside_s_quotes && !inside_d_quotes && is_delimiter(str[*i + len]))
 			break ;
 		len++;
 	}

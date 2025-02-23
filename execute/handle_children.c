@@ -6,13 +6,12 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 19:26:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:10:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// TODO maybe i should change the input of check_fds to take cmd_manager directly
 void	handle_first_child(t_cmd_manager *cmd_manager, int chd_nbr)
 {
 	int	fd_in;

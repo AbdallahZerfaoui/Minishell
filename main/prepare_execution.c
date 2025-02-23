@@ -6,14 +6,14 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:33:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 17:41:15 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:24:30 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	process_heredocs(t_cmd_node *cmds,
-	t_cmd_manager *cmd_manager, t_shell **shell)
+void	process_heredocs(t_cmd_node *cmds, t_cmd_manager *cmd_manager,
+		t_shell **shell)
 {
 	t_cmd_node	*current;
 	t_token		*file;
@@ -31,7 +31,8 @@ void	process_heredocs(t_cmd_node *cmds,
 			if (file->type == HEREDOC && file->next)
 			{
 				hd_filename = generate_heredoc_filename();
-				heredoc = init_heredoc_struct(file->next->value, hd_filename, shell);
+				heredoc = init_heredoc_struct(file->next->value, hd_filename,
+						shell);
 				heredoc_loop(heredoc);
 				cmd_manager->cmds[i].hd_filename = heredoc->filename;
 			}
@@ -53,7 +54,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	if (!cmd_manager)
 		return (NULL);
 	cmd_manager->nbr_cmds = len_cmds_lst(cmds);
-	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds, sizeof(t_command));
+	cmd_manager->cmds = (t_command *)ft_calloc(cmd_manager->nbr_cmds,
+			sizeof(t_command));
 	if (!cmd_manager->cmds)
 		return (NULL);
 	process_heredocs(cmds, cmd_manager, shell);
@@ -63,8 +65,8 @@ t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell)
 	{
 		if (current->cmd_array && current->cmd_array[0])
 		{
-			custom_cmd_path = get_command_path(current->cmd_array[0], (*shell)->env); //TODO get command already does this check
-			// dprintf(2, "i : %d -> custom_cmd_path = %s\n", i, custom_cmd_path);
+			custom_cmd_path = get_command_path(current->cmd_array[0],
+					(*shell)->env);
 			if (access(current->cmd_array[0], X_OK) == 0 && !custom_cmd_path)
 				cmd_manager->cmds[i].path = ft_strdup(current->cmd_array[0]);
 			else

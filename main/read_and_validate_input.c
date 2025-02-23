@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 17:25:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:26:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 volatile sig_atomic_t	g_waiting_for_input = 1;
 
+// TODO improve this exit shit
 char	*read_and_validate_input(int is_interactive)
 {
 	char	*line;
@@ -31,7 +32,7 @@ char	*read_and_validate_input(int is_interactive)
 	{
 		line = get_next_line(fileno(stdin));
 		if (!line)
-			return ("exit"); //TODO improve this shit
+			return ("exit");
 		trimmed_line = ft_strtrim(line, "\n");
 		if (!trimmed_line)
 			return ("exit");

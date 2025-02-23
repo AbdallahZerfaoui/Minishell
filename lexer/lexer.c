@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 14:52:45 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:18:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:20:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ t_token	*array2linked_list(char **array)
 	}
 	return (head);
 }
+
 /**
- * @brief This function splits the string by the spaces, <, >, <<, >>, | 
+ * @brief This function splits the string by the spaces, <, >, <<, >>, |
  * then it transforms the array of strings to a linked list of tokens
  */
 t_token	*lexer(const char *line)
@@ -64,4 +65,3 @@ t_token	*lexer(const char *line)
 	free_all_split(splited_line);
 	return (tokens);
 }
-

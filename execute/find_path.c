@@ -6,11 +6,10 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:01:10 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 20:42:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:11:25 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "pipex.h"
 #include "../minishell.h"
 
 /**
@@ -61,7 +60,6 @@ char	**parse_env(char **env)
 	return (NULL);
 }
 
-
 /**
  * This function get the full path of a given command
  * @param cmd the command
@@ -72,15 +70,13 @@ char	**parse_env(char **env)
  */
 char	*get_command_path(char *cmd, char **env)
 {
-	char		**paths;
-	char		*full_path;
-	int			i;
+	char	**paths;
+	char	*full_path;
+	int		i;
 
-	if ((ft_isalpha(cmd[0]) == 0 && cmd[0] != '/')
-		|| cmd[0] == '\0')
+	if ((ft_isalpha(cmd[0]) == 0 && cmd[0] != '/') || cmd[0] == '\0')
 		return (NULL);
-	if (is_builtin(cmd)
-		|| access(cmd, X_OK) == 0)
+	if (is_builtin(cmd) || access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	paths = parse_env(env);
 	if (!paths)

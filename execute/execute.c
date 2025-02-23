@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:21:17 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 22:07:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:20:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	execute(t_cmd_manager *cmd_manager)
 			if (handle_single_command(&cmd_manager->cmds[chd_nbr],
 					cmd_manager->shell))
 				break ;
-			if (handle_single_builtin(cmd_manager, chd_nbr))
-			{
-				chd_nbr++;
+			if (handle_single_builtin(cmd_manager, &chd_nbr))
 				continue ;
-			}
 		}
 		cmd_manager->pid = fork();
 		if (cmd_manager->pid == -1)

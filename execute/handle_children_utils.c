@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:12:54 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 18:14:50 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:16:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	setup_input(int fd_in, char *hd_filename, int pipe_fd)
 		dup2(hd_fd, STDIN_FILENO);
 		close(hd_fd);
 	}
-	// If no explicit input, but from a pipe is available
 	else if (pipe_fd >= 0)
 	{
 		dup2(pipe_fd, STDIN_FILENO);

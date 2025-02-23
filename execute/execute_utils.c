@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:24:03 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 22:05:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:19:36 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ void	handle_parent_process(t_cmd_manager *cmd_manager)
 		setup_signals();
 }
 
-int	handle_single_builtin(t_cmd_manager *cmd_manager, int chd_nbr)
+int	handle_single_builtin(t_cmd_manager *cmd_manager, int *chd_nbr)
 {
-	if (cmd_manager->cmds[chd_nbr].path
-		&& is_builtin(cmd_manager->cmds[chd_nbr].path))
+	if (cmd_manager->cmds[*chd_nbr].path
+		&& is_builtin(cmd_manager->cmds[*chd_nbr].path))
 	{
-		execute_builtins(cmd_manager->cmds[chd_nbr].path,
-			cmd_manager->cmds[chd_nbr].args, cmd_manager->shell);
+		execute_builtins(cmd_manager->cmds[*chd_nbr].path,
+			cmd_manager->cmds[*chd_nbr].args, cmd_manager->shell);
+		(*chd_nbr)++;
 		return (1);
 	}
 	return (0);
