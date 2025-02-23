@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 21:40:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 12:18:52 by azerfaou         ###   ########.fr       */
-/*                                                                            */
+/*    */
+/*:::      ::::::::   */
+/*   structs.h  :+:      :+:    :+:   */
+/*    +:+ +:+ +:+     */
+/*   By: azerfaou <azerfaou@student.42.fr>  +#+  +:+       +#+*/
+/*+#+#+#+#+#+   +#+   */
+/*   Created: 2024/12/28 21:40:44 by azerfaou  #+#    #+#     */
+/*   Updated: 2025/02/22 20:45:06 by azerfaou ###   ########.fr       */
+/*    */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
@@ -73,7 +73,6 @@ typedef struct s_command
 	char				*hd_filename;
 }						t_command;
 
-
 typedef struct env_data
 {
 	char				**env;
@@ -91,11 +90,11 @@ typedef struct s_tree_node
 
 typedef struct s_env
 {
-	char			**content; // contains two strings key and value
-	int				export;
-	struct s_env	*next;
-	struct s_env	*prev;
-}					t_env;
+	char				**content; // contains two strings key and value
+	int					export;
+	struct s_env		*next;
+	struct s_env		*prev;
+}						t_env;
 
 typedef struct s_shell
 {
@@ -123,5 +122,15 @@ typedef struct s_heredoc
 	char				*filename;
 	t_shell				**shell;
 }						t_heredoc;
+
+typedef struct s_parse_state
+{
+	char				*word;
+	char				**current;
+	t_shell				*shell;
+	t_tree_node			**root;
+	int					inside_d_quotes;
+	// int					inside_s_quotes;
+}						t_parse_state;
 
 #endif

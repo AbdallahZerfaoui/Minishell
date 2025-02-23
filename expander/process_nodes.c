@@ -6,127 +6,143 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/17 21:20:50 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:01:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *replace_var(char *str, char *var, char *value) // forbidden function
+/***
+ * This function replaces the variable in the string with the value
+ * @param str the string to replace the variable in
+ * @param var the variable to replace
+ * @param value the value to replace the variable with
+ * @return the new string with the variable replaced
+ * how it works:
+ * 1- find the variable in the string
+ * 2- calculate the lengths of the parts before and after the variable
+ * 3- allocate memory for the new string
+ * 4- construct the new string
+ * 5- return the new string
+ */
+char	*replace_var(char *str, char *var, char *value)
 {
-    char *pos;
-    char *result;
-    int len_before;
-    int len_after;
-	
+	char	*pos;
+	char	*result;
+	int		len_before;
+	int		len_after;
+
 	if (!str)
-		return NULL;
+		return (NULL);
 	if (!var)
-		return ft_strdup(str);
+		return (ft_strdup(str));
 	if (!value)
-		value = strdup("");
-    // Find the position of the variable in the string
-    pos = strstr(str, var);
-    if (!pos)
-        return ft_strdup(str); // Variable not found, return a copy of the original string
+		value = ft_strdup("");
+	pos = ft_strstr(str, var);
+	if (!pos)
+		return (ft_strdup(str));
+	len_before = pos - str;
+	len_after = ft_strlen(pos + ft_strlen(var));
+	result = (char *)ft_malloc(len_before + ft_strlen(value) + len_after + 1);
+	if (!result)
+		return (NULL);
+	ft_strncpy(result, str, len_before);
+	ft_strcpy(result + len_before, value);
+	ft_strcpy(result + len_before + ft_strlen(value), pos + ft_strlen(var));
+	return (result);
+}
 
-    // Calculate the lengths of the parts before and after the variable
-    len_before = pos - str; // Length of the part before the variable
-    len_after = ft_strlen(pos + ft_strlen(var)); // Length of the part after the variable
+/***
+ * This function handles the escape sequences in the string
+ * example: \\ -> \ or \$ -> $
+ */
+static void	handle_escape_sequences(t_tree_node *root)
+{
+	if (root->can_expand && !root->children)
+	{
+		if (ft_strlen(root->value) == 2)
+		{
+			if (ft_strcmp(root->value, "\\\\") == 0)
+				root->value = ft_strdup("\\");
+			else if (ft_strcmp(root->value, "\\$") == 0)
+				root->value = ft_strdup("$");
+		}
+	}
+}
 
-    // Allocate memory for the new string
-    result = (char *)ft_malloc(len_before + ft_strlen(value) + len_after + 1);
-    if (!result)
-        return NULL; // Return NULL if memory allocation fails
+/***
+ * This function handles the special variables like $? and ~
+ * @param root the root node of the tree
+ * @param shell the shell structure
+ */
+static void	handle_special_variables(t_tree_node *root, t_shell *shell)
+{
+	if (root->can_expand)
+	{
+		if (ft_strstr(root->value, "$?"))
+		{
+			root->value = replace_var(root->value, "$?",
+					ft_itoa(shell->exit_status));
+			root->can_expand = 0;
+		}
+		else if (ft_strcmp(root->value, "~") == 0)
+			root->value = ft_strdup(ft_getenv("HOME", shell));
+	}
+}
 
-    // Construct the new string
-    ft_strncpy(result, str, len_before); // Copy the part before the variable
-    strcpy(result + len_before, value); // Insert the replacement value
-    strcpy(result + len_before + ft_strlen(value), pos + ft_strlen(var)); // Copy the part after the variable
+static void	handle_env_vars(t_tree_node *root, t_shell *shell,
+		char *dollar_sign)
+{
+	int		len;
+	char	*keyword;
+	char	*elem_to_replace;
+	char	*tmp_char;
 
-    return result;
+	keyword = NULL;
+	if (root->can_expand && !root->children && dollar_sign != NULL)
+	{
+		len = 0;
+		if (ft_strlen(root->value) == 1)
+		{
+			root->can_expand = 0;
+			dollar_sign = NULL;
+		}
+		tmp_char = dollar_sign;
+		while (tmp_char != NULL && *tmp_char != '\0' && *tmp_char != TK_D_QUOTE
+			&& *tmp_char != TK_S_QUOTE)
+		{
+			len++;
+			tmp_char++;
+		}
+		elem_to_replace = ft_substr(dollar_sign, 0, len);
+		if (elem_to_replace)
+			keyword = elem_to_replace + 1;
+		root->value = replace_var(root->value, elem_to_replace,
+				ft_getenv(keyword, shell));
+		if (!root->value)
+			root->value = ft_strdup("");
+	}
 }
 
 void	process_nodes(t_tree_node *root, t_shell *shell)
 {
 	char	*keyword;
-	char	*elem_to_replace;
-	char	*tmp_char;
 	char	*dollar_sign;
-	int		len;
 
 	if (!root)
 		return ;
 	keyword = NULL;
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
-	if (dollar_sign 
-		&& *(dollar_sign + 1) == '\0'
-		&& !root->children && !root->next_sibling) // handle the case of $ at the end of the string
+	if (dollar_sign && *(dollar_sign + 1) == '\0'
+		&& !root->children
+		&& !root->next_sibling) // handle the case of $ at the end of the string
 	{
-		// printf("im here in process nodes\n");
 		root->can_expand = 0;
 	}
-	if (root->can_expand && !root->children
-		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\\\") == 0) // handle the case of \\ in the string
-	{
-		root->value = ft_strdup("\\");
-	}
-	else if (root->can_expand && !root->children
-		&& ft_strlen(root->value) == 2 && ft_strcmp(root->value, "\\$") == 0)
-	{
-		// printf("im handling \\$\n");
-		root->value = ft_strdup("$");
-	}
-	else if (root->can_expand && ft_strstr(root->value, "$?"))
-	{
-		// root->value = ft_itoa(g_data->exit_status);
-		// printf("exit_status = %s\n", root->value);
-		// printf("%d\n", 0);
-		// root->value = ft_itoa(shell->exit_status);
-		root->value = replace_var(root->value, "$?", ft_itoa(shell->exit_status));
-		// printf("expantion of $? = %s\n", root->value);
-		root->can_expand = 0;
-		// printf("exit_status_vo = %d\n", g_data->exit_status);
-	}
-	else if (root->can_expand && ft_strcmp(root->value, "~") == 0)
-	{
-		root->value = ft_strdup(ft_getenv("HOME", shell)); //TODO use your own getenv
-	}			
-	else if (root->can_expand && !root->children
-		&& dollar_sign != NULL)
-	{
-		len = 0;
-		if (ft_strlen(root->value) == 1) // the case i have a $ sign alone
-		{
-			// root->value = ft_strdup("");
-			root->can_expand = 0;
-			dollar_sign = NULL;
-		}
-			// printf("im here : *%s*\n", root->value);
-			// printf("%d", root->can_expand);
-		// keyword = root->value + 1;
-		tmp_char = dollar_sign;
-		while (tmp_char != NULL && *tmp_char != '\0'
-			&& *tmp_char != TK_D_QUOTE && *tmp_char != TK_S_QUOTE)
-		{
-			len++;
-			tmp_char++;
-		}
-		// printf("len = %d\n", len);
-		// printf("root->value = %s\n", root->value);
-		elem_to_replace = ft_substr(dollar_sign, 0, len);
-		// printf("elem_to_replace = %s\n", elem_to_replace);
-		if (elem_to_replace)
-			keyword = elem_to_replace + 1;
-		// printf("keyword = %s\n", keyword);
-		// old_value = root->value;
-		root->value = replace_var(root->value, elem_to_replace, ft_getenv(keyword, shell));
-		if (!root->value)
-			root->value = ft_strdup("");
-		// printf("im here\n");
-		// free(old_value);
-	}
-	else if (root->can_expand && root->children == NULL
+	handle_escape_sequences(root);
+	handle_special_variables(root, shell);
+	handle_env_vars(root, shell, dollar_sign);
+	if (root->can_expand && root->children == NULL
 		&& root->value[0] == TK_D_QUOTE)
 	{
 		root->value = ft_substr(root->value, 1, ft_strlen(root->value) - 2);

@@ -21,6 +21,7 @@ get_next_line
 $*
 tests/
 expander/libft/
+expander/print_tree.c
 
 # tester
 42_minishell_tester/
