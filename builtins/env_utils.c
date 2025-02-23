@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 20:09:09 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:24:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_env	*last_node(t_env *env_lst)
  * step 2: split the entry by '='
  * step 3: if the env_lst is empty, assign the new node to the env_lst
  */
+// TODO be careful with the split, some lines contain several '='
 void	add_env_node(t_env **env_lst, char *entry)
 {
 	t_env	*new;
@@ -36,8 +37,7 @@ void	add_env_node(t_env **env_lst, char *entry)
 	new = (t_env *)ft_calloc(1, sizeof(struct s_env));
 	if (!new)
 		return ;
-	//TODO be careful with the split, some lines contain several '='
-	new->content = ft_split(entry, '='); 
+	new->content = ft_split(entry, '=');
 	if (!new->content)
 	{
 		free(new);
@@ -52,7 +52,6 @@ void	add_env_node(t_env **env_lst, char *entry)
 	last->next = new;
 	new->prev = last;
 }
-
 
 /**
  * @brief Get the value of an environment variable
@@ -80,6 +79,7 @@ void	update_env_node(t_env *node, char *new_value)
 	node->content[1] = ft_strdup(new_value);
 }
 
+// TODO you must update the env array to make it work
 void	update_shlvl(t_shell **shell)
 {
 	t_env	*shlvl;
@@ -92,5 +92,5 @@ void	update_shlvl(t_shell **shell)
 	new_lvl = ft_atoi(shlvl->content[1]) + 1;
 	new_lvl_str = ft_itoa(new_lvl);
 	update_env_node(shlvl, new_lvl_str);
-	update_env_array(shell); //TODO you must update this to make it work
+	update_env_array(shell);
 }

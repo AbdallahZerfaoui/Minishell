@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:31 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 13:15:13 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:25:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void	ft_export(char *args[], t_shell **shell)
 	}
 	update_env_array(shell);
 }
-

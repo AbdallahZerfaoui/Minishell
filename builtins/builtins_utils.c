@@ -6,10 +6,9 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:47:07 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 19:56:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:23:16 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -42,4 +41,3 @@ t_env	*find_node_by_key(char *key, t_shell *shell)
 	}
 	return (NULL);
 }
-

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 20:29:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:23:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	update_pwds(t_shell **shell, char *old_pwd)
 	else
 		add_env_node(&((*shell)->env_lst), tmp);
 	pwd_node->content[1] = ft_strdup(new_pwd);
-	// update_env_array(shell);
 }
 
 char	*get_cd_destination(char *args[], t_shell **shell)
