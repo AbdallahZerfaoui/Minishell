@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/21 21:20:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 17:37:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,24 @@ void			print_tree(t_tree_node *node, int depth, int is_last);
 void			process_nodes(t_tree_node *root, t_shell *shell);
 void			merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node		*build_word_tree(char *word, t_shell *shell);
+
+// Build word tree
+
+// Build word tree utils
+int				is_special_character(char c, int in_dquotes);
+int				len_until_special_character(char *str);
+char			*process_quotes(t_parse_state *state);
+
+// Tree node
+t_tree_node		*create_tree_node(const char *value);
+t_tree_node		*get_last_child(t_tree_node *node);
+void			append_child(t_tree_node **head, t_tree_node *new_node);
+
+// Tree utils
+int				are_empty_quotes(const char *word);
+int				count_quotes(char *word);
+int				count_dollars(char *word);
+int				is_expansion_done(char *word);
 
 // Parser
 t_cmd_node		*parse(t_token *tokens, t_shell **shell);
