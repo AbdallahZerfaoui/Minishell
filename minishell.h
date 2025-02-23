@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 18:33:52 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 23:04:54 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,18 @@ int				get_words_chain_len(t_token *token);
 char			**linked_list2array(t_token *tokens);
 int				len_cmds_lst(t_cmd_node *cmds);
 t_cmd_node		*get_last_node(t_cmd_node *head);
+void			set_error_status(t_shell **shell, char *error_msg);
+int				is_valid_pipe_token(t_token *token);
+int				is_valid_io_token(t_token *token);
+int				is_misuse_case(t_token *token);
+int				process_pipe_token(t_cmd_node **head, t_token **current_token);
+void			process_word_token(t_cmd_node **head, t_token **current_token);
+void			process_redirection_token(t_cmd_node **head,
+					t_token **current_token);
+int				is_redirection_token(t_token *token);
+void			finalize_cmds_lst(t_cmd_node **head);
+int				is_valid_pipe_token(t_token *token);
+t_token			*detach_token(t_token *target, int size);
 
 // Parser errors
 int				check_tokens(t_token *tokens, t_shell **shell);
