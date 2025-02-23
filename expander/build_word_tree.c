@@ -6,20 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 18:25:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:07:06 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_tree_node	*handle_empty_cases(char *word)
-{
-	if (!word || *word == '\0')
-		return (NULL);
-	if (are_empty_quotes(word))
-		return (create_tree_node(""));
-	return (NULL);
-}
 
 void	handle_escape_sequences(t_tree_node **root, char *word, t_shell *shell)
 {
@@ -46,7 +37,8 @@ t_tree_node	*process_word(t_parse_state *state)
 	{
 		if (**(state->current) == TK_D_QUOTE)
 			inside_d_quotes = !inside_d_quotes;
-		if (**(state->current) == TK_D_QUOTE || (**(state->current) == TK_S_QUOTE
+		if (**(state->current) == TK_D_QUOTE
+			|| (**(state->current) == TK_S_QUOTE
 				&& !inside_d_quotes))
 		{
 			*(state->current) = process_quotes(state);
@@ -66,7 +58,6 @@ t_tree_node	*process_word(t_parse_state *state)
 	}
 	return (*(state->root));
 }
-
 
 t_parse_state	*init_parse_state(t_tree_node **root, char *word,
 		t_shell *shell, char **current)

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 19:23:12 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:05:54 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,8 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 	if (!root)
 		return ;
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
-	if (dollar_sign && *(dollar_sign + 1) == '\0'
-		&& !root->children
-		&& !root->next_sibling) // handle the case of $ at the end of the string
+	if (dollar_sign && *(dollar_sign + 1) == '\0' && !root->children
+		&& !root->next_sibling)
 	{
 		root->can_expand = 0;
 	}

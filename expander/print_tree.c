@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:54:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/01/04 14:55:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:03:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+// #include "../minishell.h"
 
 // Function to print the tree
 // void	print_tree(t_tree_node *root, int depth)
@@ -42,7 +42,7 @@
 // void print_tree(const t_tree_node *root, const char *prefix, bool is_last)
 // {
 //     if (!root)
-//         return;
+//         return ;
 
 //     // Print the current prefix plus the branch symbol
 //     printf("%s", prefix);
@@ -55,9 +55,11 @@
 //     printf("%s\n", root->value);
 
 //     // Build the prefix for children:
-//     // if this node is the last sibling, we use spaces; otherwise use vertical bar.
+//     // if this node is the last sibling,
+	// we use spaces; otherwise use vertical bar.
 //     char child_prefix[256];
-//     snprintf(child_prefix, sizeof(child_prefix), "%s%s", prefix, is_last ? "    " : "│   ");
+//     snprintf(child_prefix, sizeof(child_prefix), "%s%s", prefix,
+	// is_last ? "    " : "│   ");
 
 //     // Traverse all children
 //     t_tree_node *child = root->children;
@@ -75,39 +77,41 @@
 
 // void print_tree_wrapper(const t_tree_node *root)
 // {
-//     // The root is considered "last" in the sense that there's no sibling at the same level
+//    
+	// The root is considered "last" in the sense 
+	// that there's no sibling at the same level
 //     // This simplifies the initial call
 //     print_tree(root, "", true);
 // }
 
-void print_tree(t_tree_node *node, int depth, int is_last) // forbidden function
-{
-    if (!node)
-        return;
+// void print_tree(t_tree_node *node, int depth, int is_last)
+	// forbidden function
+// {
+//     if (!node)
+//         return ;
 
-    // Print indentation based on depth
-    for (int i = 0; i < depth ; i++)
-    {
-        if (i == depth - 1)
-            printf(is_last ? "└── " : "├── ");
-        else
-            printf("    ");
-    }
+//     // Print indentation based on depth
+//     for (int i = 0; i < depth ; i++)
+//     {
+//         if (i == depth - 1)
+//             printf(is_last ? "└── " : "├── ");
+//         else
+//             printf("    ");
+//     }
 
-    // Print the value of the current node
-    printf("*%s*%d\n", node->value, node->can_expand);
+//     // Print the value of the current node
+//     printf("*%s*%d\n", node->value, node->can_expand);
 
-    // Recursively print children
-    t_tree_node *child = node->children;
-    while (child)
-    {
-        // Check if this is the last child
-        int is_child_last = (child->next_sibling == NULL);
-        print_tree(child, depth + 1, is_child_last);
-        child = child->next_sibling;
-    }
-}
-
+//     // Recursively print children
+//     t_tree_node *child = node->children;
+//     while (child)
+//     {
+//         // Check if this is the last child
+//         int is_child_last = (child->next_sibling == NULL);
+//         print_tree(child, depth + 1, is_child_last);
+//         child = child->next_sibling;
+//     }
+// }
 
 // Helper function to create a new tree node
 // t_tree_node	*create_node(char *value)

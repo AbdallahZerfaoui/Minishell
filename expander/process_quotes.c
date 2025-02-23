@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:16 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 17:31:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:04:43 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,17 @@ static void	process_s_quotes_inside(t_parse_state *state, char *sub_word)
 	}
 }
 
+// TODO change the name of the variable end_last_part
 char	*process_quotes(t_parse_state *state)
 {
 	int		len;
 	char	*sub_word;
+	char	*end_last_part;
 
-	char *end_last_part; // TODO change the name
 	end_last_part = ft_strchr(*(state->current) + 1, **(state->current));
 	if (!end_last_part)
 		return (NULL);
-	len = end_last_part - *(state->current) - 1; // we remove the quotes
+	len = end_last_part - *(state->current) - 1;
 	sub_word = ft_substr(*(state->current) + 1, 0, len);
 	process_d_quotes(state, sub_word);
 	process_s_quotes_outside(state, sub_word);

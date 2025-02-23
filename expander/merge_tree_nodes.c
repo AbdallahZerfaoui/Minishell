@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:51:50 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/22 18:33:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:29:58 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	merge_tree_nodes(t_tree_node *root, char **expanded_word)
 {
-
 	if (!root)
 		return ;
 	while (root)
