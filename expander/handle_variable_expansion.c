@@ -6,21 +6,31 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:18:50 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 18:19:14 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:10:59 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_variable_expansion(t_parse_state *state)
+int	is_quote_next(char **str)
 {
-	int			len;
-	int			len_until_slash;
+	char	next_char;
+
+	next_char = *(*str + 1);
+	if (next_char == TK_D_QUOTE || next_char == TK_S_QUOTE)
+	{
+		(*str)++;
+		return (1);
+	}
+	return (0);
+}
+
+int	contains_slash(t_parse_state *state)
+{
 	char		*sub_word;
-	t_tree_node	*new_node;
+	int			len_until_slash;
 
 	if (ft_strchr(*(state->current), TK_SLASH) != NULL)
-	// TODO clean this hell - it is the case $HOME/Desktop
 	{
 		len_until_slash = ft_strchr(*(state->current), TK_SLASH)
 			- *(state->current);
@@ -29,17 +39,19 @@ int	handle_variable_expansion(t_parse_state *state)
 				ft_strchr(*(state->current), TK_SLASH));
 		return (1);
 	}
-	// Check for $" or $' pattern
-	if (*(*(state->current) + 1) == TK_D_QUOTE || *(*(state->current)
-			+ 1) == TK_S_QUOTE)
-	{
-		*(state->current) = *(state->current) + 1;
-			// Skip the $ and continue with quote handling
+	return (0);
+}
+
+int	handle_variable_expansion(t_parse_state *state)
+{
+	int			len;
+	char		*sub_word;
+	t_tree_node	*new_node;
+
+	if (contains_slash(state) || is_quote_next(state->current))
 		return (1);
-	}
-	*(state->current) = *(state->current) + 1; // Move past $
+	(*(state->current))++;
 	len = len_until_special_character(*(state->current));
-	// Include $ in substring
 	sub_word = ft_substr(*(state->current) - 1, 0, len + 1);
 	if (!sub_word)
 		exit(1);
@@ -49,6 +61,5 @@ int	handle_variable_expansion(t_parse_state *state)
 		if (new_node)
 			append_child(state->root, new_node);
 	}
-	*(state->current) += len - 1;
-	return (0);
+	return (*(state->current) += len - 1, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/22 20:01:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:23:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,10 @@ static void	handle_env_vars(t_tree_node *root, t_shell *shell,
 
 void	process_nodes(t_tree_node *root, t_shell *shell)
 {
-	char	*keyword;
 	char	*dollar_sign;
 
 	if (!root)
 		return ;
-	keyword = NULL;
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
 	if (dollar_sign && *(dollar_sign + 1) == '\0'
 		&& !root->children
