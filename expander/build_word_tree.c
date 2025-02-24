@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:07:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:21:38 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_tree_node	*process_word(t_parse_state *state)
 		}
 		else
 			handle_normal_word(state);
-		*(state->current) = *(state->current) + 1;
+		(*(state->current))++;
 	}
 	return (*(state->root));
 }

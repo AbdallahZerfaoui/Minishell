@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:37:49 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:09:36 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:39:32 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_exit(char *args[], t_shell **shell)
 	else if (len_args(args) > 2)
 	{
 		handle_too_many_arguments(args, *shell);
-		// gc_shutdown();
 		return ;
 	}
 	validate_exit_argument(args[1], shell);

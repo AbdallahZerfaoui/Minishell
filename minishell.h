@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 23:04:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:06:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void			print_tree(t_tree_node *node, int depth, int is_last);
 void			process_nodes(t_tree_node *root, t_shell *shell);
 void			merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node		*build_word_tree(char *word, t_shell *shell);
+char			*replace_var(char *str, char *var, char *value);
+void			handle_env_variables(t_tree_node *root, t_shell *shell,
+					char *dollar_sign);
 
 // Build word tree
 void			handle_normal_word(t_parse_state *state);

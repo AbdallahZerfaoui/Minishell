@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:02:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 16:52:44 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:17:52 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_env	*get_env_lst(char **env)
 		add_env_node(&env_lst, env[i]);
 		i++;
 	}
-	// add_env_node(&env_lst, NULL);
 	return (env_lst);
 }
 

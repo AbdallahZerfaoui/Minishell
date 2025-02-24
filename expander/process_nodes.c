@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:05:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:04:45 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,40 +90,6 @@ static void	handle_special_variables(t_tree_node *root, t_shell *shell)
 	}
 }
 
-static void	handle_env_vars(t_tree_node *root, t_shell *shell,
-		char *dollar_sign)
-{
-	int		len;
-	char	*keyword;
-	char	*elem_to_replace;
-	char	*tmp_char;
-
-	keyword = NULL;
-	if (root->can_expand && !root->children && dollar_sign != NULL)
-	{
-		len = 0;
-		if (ft_strlen(root->value) == 1)
-		{
-			root->can_expand = 0;
-			dollar_sign = NULL;
-		}
-		tmp_char = dollar_sign;
-		while (tmp_char != NULL && *tmp_char != '\0' && *tmp_char != TK_D_QUOTE
-			&& *tmp_char != TK_S_QUOTE)
-		{
-			len++;
-			tmp_char++;
-		}
-		elem_to_replace = ft_substr(dollar_sign, 0, len);
-		if (elem_to_replace)
-			keyword = elem_to_replace + 1;
-		root->value = replace_var(root->value, elem_to_replace,
-				ft_getenv(keyword, shell));
-		if (!root->value)
-			root->value = ft_strdup("");
-	}
-}
-
 void	process_nodes(t_tree_node *root, t_shell *shell)
 {
 	char	*dollar_sign;
@@ -138,7 +104,7 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 	}
 	handle_escape_sequences(root);
 	handle_special_variables(root, shell);
-	handle_env_vars(root, shell, dollar_sign);
+	handle_env_variables(root, shell, dollar_sign);
 	if (root->can_expand && root->children == NULL
 		&& root->value[0] == TK_D_QUOTE)
 	{
