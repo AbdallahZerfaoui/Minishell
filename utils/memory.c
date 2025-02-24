@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:28:25 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 23:15:22 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:47:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,6 @@ void	*free_till_n(char **result, size_t j)
 	return (NULL);
 }
 
-void	free_if_not_in_gc(char *str)
-{
-	t_garbage_collector	*gc;
-	t_gc_node			*current;
-	size_t				i;
-
-	if (!str)
-		return ;
-	i = 0;
-	gc = get_gc();
-	current = gc->head;
-	while (current && i < gc->size)
-	{
-		if (current->pointer == str)
-			return ;
-		current = current->next;
-		i++;
-	}
-	free(str);
-}
-
 void	free_all_split(char **split)
 {
 	int		i;
@@ -51,8 +30,8 @@ void	free_all_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		free_if_not_in_gc(split[i]);
+		gc_untracked_free(split[i]);
 		i++;
 	}
-	free_if_not_in_gc((char *)split);
+	gc_untracked_free((char *)split);
 }

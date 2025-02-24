@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:24:55 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:49:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	add_env_node(t_env **env_lst, char *entry)
 		return ;
 	new->content = ft_split(entry, '=');
 	if (!new->content)
-	{
-		free(new);
 		return ;
-	}
 	if (!(*env_lst))
 	{
 		(*env_lst) = new;
@@ -76,6 +73,7 @@ char	*ft_getenv(char *key, t_shell *shell)
 
 void	update_env_node(t_env *node, char *new_value)
 {
+	gc_untracked_free(node->content[1]);
 	node->content[1] = ft_strdup(new_value);
 }
 

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:26:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:28:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ char	*read_and_validate_input(int is_interactive)
 	if (is_interactive)
 	{
 		line = readline(MAGENTA "⚡️ root@minihell ☠️ ~> " RESET);
-		line = ft_strtrim(line, " \n");
-		if (!line)
+		trimmed_line = ft_strtrim(line, " \n");
+		free(line);
+		if (!trimmed_line)
 			return (NULL);
 	}
 	else
@@ -35,9 +36,11 @@ char	*read_and_validate_input(int is_interactive)
 			return ("exit");
 		trimmed_line = ft_strtrim(line, "\n");
 		if (!trimmed_line)
+		{
 			return ("exit");
-		line = trimmed_line;
+		}
 	}
+	line = trimmed_line;
 	if (line[0] != '\0')
 		g_waiting_for_input = 0;
 	if (!line)

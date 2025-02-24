@@ -3,5 +3,5 @@ echo Hello
 ls -l | wc -l
 ls | cat -n
 echo abdallah
-/bin/echo "exit_code ->$? user ->$USER home -> $HOME"
 exit
+/bin/echo "exit_code ->$? user ->$USER home -> $HOME"

@@ -91,7 +91,7 @@ typedef struct s_tree_node
 typedef struct s_env
 {
 	char				**content; // contains two strings key and value
-	int					export;
+	int					export; //TODO remove
 	struct s_env		*next;
 	struct s_env		*prev;
 }						t_env;
@@ -130,7 +130,6 @@ typedef struct s_parse_state
 	t_shell				*shell;
 	t_tree_node			**root;
 	int					inside_d_quotes;
-	// int					inside_s_quotes;
 }						t_parse_state;
 
 #endif

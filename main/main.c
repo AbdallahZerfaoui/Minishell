@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/20 23:34:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:43:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ int	main(int argc, char **argv, char **env)
 	shell_loop(&shell);
 	if (is_interactive)
 		clear_history();
-	main_cleanup();
-	return (0);
+	gc_shutdown();
 }
