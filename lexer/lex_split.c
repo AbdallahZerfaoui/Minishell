@@ -6,65 +6,19 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 20:52:00 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:21:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:15:01 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	toggle_quote_state(char c, int *inside_s_quotes,
+void	toggle_quote_state(char c, int *inside_s_quotes,
 		int *inside_d_quotes)
 {
 	if (c == TK_D_QUOTE && !*inside_s_quotes)
 		*inside_d_quotes = !*inside_d_quotes;
 	if (c == TK_S_QUOTE && !*inside_d_quotes)
 		*inside_s_quotes = !*inside_s_quotes;
-}
-
-/**
- * @brief This function counts the number of words in the string
- * a word is a sequence of characters separated by spaces or  <, >, <<, >>
- */
-static size_t	count_words(char const *str)
-{
-	size_t	len;
-	int		inside_word;
-	int		inside_s_quotes;
-	int		inside_d_quotes;
-
-	len = 0;
-	inside_word = 0;
-	inside_s_quotes = 0;
-	inside_d_quotes = 0;
-	while (*str)
-	{
-		if (*str == TK_PIPE)
-		{
-			len++;
-			str++;
-			inside_word = 0;
-			continue ;
-		}
-		toggle_quote_state(*str, &inside_s_quotes, &inside_d_quotes);
-		if ((*str == TK_GREATER || *str == TK_LESS) && !inside_s_quotes
-			&& !inside_d_quotes)
-		{
-			len++;
-			if (*(str + 1) == *str)
-				str++;
-			inside_word = 0;
-		}
-		else if ((*str != TK_SPACE && !inside_s_quotes && !inside_d_quotes)
-			&& !inside_word)
-		{
-			len++;
-			inside_word = 1;
-		}
-		else if ((*str == TK_SPACE && !inside_s_quotes && !inside_d_quotes))
-			inside_word = 0;
-		str++;
-	}
-	return (len);
 }
 
 static int	is_delimiter(char c)
@@ -123,7 +77,7 @@ char	**lex_split(char const *s)
 
 	if (!s || !ft_strlen(s))
 		return (NULL);
-	result = (char **)ft_calloc(count_words(s) + 1, sizeof(char *));
+	result = (char **)ft_calloc(lex_count_words(s) + 1, sizeof(char *));
 	if (!result)
 		return (NULL);
 	i = 0;
