@@ -6,11 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:54:32 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:03:26 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:38:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../minishell.h"
+#include "../minishell.h"
 
 // Function to print the tree
 // void	print_tree(t_tree_node *root, int depth)
@@ -56,10 +56,10 @@
 
 //     // Build the prefix for children:
 //     // if this node is the last sibling,
-	// we use spaces; otherwise use vertical bar.
+// 	// we use spaces; otherwise use vertical bar.
 //     char child_prefix[256];
 //     snprintf(child_prefix, sizeof(child_prefix), "%s%s", prefix,
-	// is_last ? "    " : "│   ");
+// 	is_last ? "    " : "│   ");
 
 //     // Traverse all children
 //     t_tree_node *child = root->children;
@@ -84,8 +84,9 @@
 //     print_tree(root, "", true);
 // }
 
+// //this is the real build tree function
 // void print_tree(t_tree_node *node, int depth, int is_last)
-	// forbidden function
+// 	// forbidden function
 // {
 //     if (!node)
 //         return ;

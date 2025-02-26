@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:18:50 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:10:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:30:06 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	handle_variable_expansion(t_parse_state *state)
 	{
 		new_node = build_word_tree(sub_word, state->shell);
 		if (new_node)
+		{
 			append_child(state->root, new_node);
+		}
 	}
 	return (*(state->current) += len - 1, 0);
 }

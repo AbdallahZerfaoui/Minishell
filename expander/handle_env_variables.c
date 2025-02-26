@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:04:26 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 20:04:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:10:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ static char	*extract_keyword(char *dollar_sign, int *len)
 
 	*len = 0;
 	tmp_char = dollar_sign;
-	while (tmp_char != NULL && *tmp_char != '\0'
+	while (tmp_char != NULL && *tmp_char != TK_NULL_CHAR
 		&& *tmp_char != TK_D_QUOTE
-		&& *tmp_char != TK_S_QUOTE)
+		&& *tmp_char != TK_S_QUOTE
+		&& *tmp_char != TK_SPACE)
 	{
 		(*len)++;
 		tmp_char++;

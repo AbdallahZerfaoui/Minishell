@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 20:04:45 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:12:17 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,62 @@ static void	handle_special_variables(t_tree_node *root, t_shell *shell)
 		{
 			root->value = replace_var(root->value, "$?",
 					ft_itoa(shell->exit_status));
-			root->can_expand = 0;
+			// root->can_expand = 0;
 		}
 		else if (ft_strcmp(root->value, "~") == 0)
 			root->value = ft_strdup(ft_getenv("HOME", shell));
 	}
 }
 
+// void	process_nodes(t_tree_node *root, t_shell *shell)
+// {
+// 	char	*dollar_sign;
+
+// 	if (!root)
+// 		return ;
+// 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
+// 	if (dollar_sign && *(dollar_sign + 1) == '\0' && !root->children
+// 		&& !root->next_sibling)
+// 	{
+// 		root->can_expand = 0;
+// 	}
+// 	handle_escape_sequences(root);
+// 	handle_special_variables(root, shell);
+// 	handle_env_variables(root, shell, dollar_sign);
+// 	if (root->can_expand && root->children == NULL
+// 		&& root->value[0] == TK_D_QUOTE)
+// 	{
+// 		root->value = ft_substr(root->value, 1, ft_strlen(root->value) - 2);
+// 		if (!root->value)
+// 			root->value = ft_strdup("");
+// 	}
+// 	process_nodes(root->children, shell);
+// 	process_nodes(root->next_sibling, shell);
+// }
+
+/**
+ * This function is recursive and will process the nodes of the tree
+ */
 void	process_nodes(t_tree_node *root, t_shell *shell)
 {
 	char	*dollar_sign;
 
 	if (!root)
 		return ;
-	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
-	if (dollar_sign && *(dollar_sign + 1) == '\0' && !root->children
-		&& !root->next_sibling)
-	{
-		root->can_expand = 0;
-	}
 	handle_escape_sequences(root);
 	handle_special_variables(root, shell);
-	handle_env_variables(root, shell, dollar_sign);
+	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
+	while (dollar_sign)
+	{
+		if (dollar_sign && *(dollar_sign + 1) == '\0' && !root->children
+			&& !root->next_sibling)
+		{
+			root->can_expand = 0;
+			break ;
+		}
+		handle_env_variables(root, shell, dollar_sign);
+		dollar_sign = ft_strchr(dollar_sign + 1, TK_DOLLAR);
+	}
 	if (root->can_expand && root->children == NULL
 		&& root->value[0] == TK_D_QUOTE)
 	{
