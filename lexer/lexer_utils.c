@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:02:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 14:33:39 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:32:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	count_expansion_chars(const char *str) // need improvement
 		{
 			count++;
 			i++;
-			while (str[i] && str[i] != str[i - 1])
-				i++;
 		}
 		else
 			i++;

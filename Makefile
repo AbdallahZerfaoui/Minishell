@@ -106,8 +106,7 @@ fclean: clean collect_tester_garbage
 re: fclean all
 
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME)
-#< tests/valgrind_test.txt
+	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < tests/valgrind_test.txt
 # valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < valgrind_test.txt
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
 
@@ -116,7 +115,6 @@ cppcheck: re
 
 success_message:
 	@echo "\033[31m	------------------***༺ (\033[31m\033[32mMinishell Compiled!\033[31m)༻***------------------\n\033[0m"
-
 
 art:
 	@echo "${GREEN}::::    ::::: ::::::::::: ::::    ::: ::::::::::: ::::::::  :::    ::: :::::::::: :::        :::        ${RESET}"

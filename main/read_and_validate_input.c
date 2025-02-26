@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 16:23:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:39:28 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,14 @@ static char	*read_input(int is_interactive)
 	if (is_interactive)
 	{
 		line = readline(MAGENTA "⚡️ root@minihell ☠️ ~> " RESET);
+		if (!line)
+			return (NULL);
 		trimmed_line = ft_strtrim(line, " \n");
 		free(line);
 		if (!trimmed_line)
+		{
 			return (NULL);
+		}
 	}
 	else
 	{

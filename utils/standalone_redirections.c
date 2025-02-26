@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:02:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 23:15:18 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:19:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	handle_input_redirection(t_token *next, t_shell **shell)
 	return (1);
 }
 
-static int	handle_output_redirection(t_token *next, t_shell **shell)
+static int	open_output_file(t_token *next, t_shell **shell)
 {
 	int	tmp_fd;
 
@@ -56,6 +56,22 @@ static int	handle_output_redirection(t_token *next, t_shell **shell)
 	return (1);
 }
 
+static t_token	*advance_tokens_after_redirection(t_token *tokens,
+	t_token *next, t_shell **shell)
+{
+	if (!open_output_file(next, shell))
+		return (NULL);
+	if (next->next)
+	{
+		tokens = next->next;
+		if (tokens->type == PIPE)
+			tokens = tokens->next;
+	}
+	else
+		tokens = NULL;
+	return (tokens);
+}
+
 t_token	*handle_standalone_redirections(t_token *tokens, t_shell **shell)
 {
 	t_token	*current;
@@ -69,19 +85,7 @@ t_token	*handle_standalone_redirections(t_token *tokens, t_shell **shell)
 		next = current->next;
 		if (is_standalone_output_redirection(current, prev, next))
 		{
-			if (!handle_output_redirection(next, shell))
-				return (NULL);
-			if (current->next->next)
-			{
-				tokens = current->next->next;
-				if (tokens->type == PIPE)
-					tokens = tokens->next;
-			}
-			else
-				tokens = NULL;
-			current = tokens;
-			if (current && current->next)
-				next = current->next;
+			tokens = advance_tokens_after_redirection(tokens, next, shell);
 		}
 		else if (is_standalone_input_redirection(current, prev, next))
 		{
