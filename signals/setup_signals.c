@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:24:51 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/19 17:37:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:03:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	setup_signals(void)
 	struct termios		termios_settings;
 
 	sa_sigint = (struct sigaction){};
-	tcgetattr(0, &termios_settings);
+	sa_sigint.sa_handler = parent_signals;
+	ft_memset(&termios_settings, 0, sizeof(termios_settings));
+	tcgetattr(STDIN_FILENO, &termios_settings);
 	termios_settings.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, 0, &termios_settings);
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios_settings);
 	sa_sigint.sa_handler = parent_signals;
 	sigaction(SIGINT, &sa_sigint, NULL);
 	signal(SIGQUIT, SIG_IGN);

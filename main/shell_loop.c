@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:22:28 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 16:31:21 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:44:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	shell_loop(t_shell **shell)
 	char			*line;
 	int				is_interactive;
 
-	gc_init();
 	update_shlvl(shell);
 	is_interactive = isatty(fileno(stdin));
 	while (1)
@@ -74,5 +73,4 @@ void	shell_loop(t_shell **shell)
 			continue ;
 		process_line(line, shell);
 	}
-	// rl_clear_history();
 }
