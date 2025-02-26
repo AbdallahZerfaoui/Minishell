@@ -6,12 +6,13 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:21:17 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:20:45 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:12:26 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//TODO it would be better if you handle execution based on being last command or not
 void	execute(t_cmd_manager *cmd_manager)
 {
 	int	chd_nbr;
@@ -21,11 +22,8 @@ void	execute(t_cmd_manager *cmd_manager)
 	{
 		if (cmd_manager->nbr_cmds == 1)
 		{
-			if (handle_single_command(&cmd_manager->cmds[chd_nbr],
-					cmd_manager->shell))
-				break ;
 			if (handle_single_builtin(cmd_manager, &chd_nbr))
-				continue ;
+				break ;
 		}
 		cmd_manager->pid = fork();
 		if (cmd_manager->pid == -1)

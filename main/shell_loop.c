@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:22:28 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 15:29:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:31:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void	shell_loop(t_shell **shell)
 			continue ;
 		process_line(line, shell);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 }

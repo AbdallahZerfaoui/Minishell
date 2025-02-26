@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 15:28:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:23:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 volatile sig_atomic_t	g_waiting_for_input = 1;
 
 // TODO improve this exit shit
-char	*read_and_validate_input(int is_interactive)
+static char	*read_input(int is_interactive)
 {
 	char	*line;
 	char	*trimmed_line;
@@ -40,8 +40,15 @@ char	*read_and_validate_input(int is_interactive)
 			return ("exit");
 		}
 	}
-	line = trimmed_line;
-	if (line[0] != '\0')
+	return (trimmed_line);
+}
+
+char	*read_and_validate_input(int is_interactive)
+{
+	char	*line;
+
+	line = read_input(is_interactive);
+	if (line && line[0] != '\0')
 		g_waiting_for_input = 0;
 	if (!line)
 		return (NULL);
