@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:26:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 15:42:06 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:18:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,4 @@ void	execute_builtins(char *path, char *args[], t_shell **shell)
 		print_env(*shell);
 	else if (ft_strcmp(cmd_name, "exit") == 0)
 		ft_exit(args, shell);
-	// else
-	// {
-	// 	ft_putstr_fd(STDERR_FILENO, "bash: :command not found\n");
-	// 	(*shell)->exit_status = COMMAND_NOT_FOUND;
-	// }
 }

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 20:06:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:07:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ t_token			*get_last_token(t_token *token);
 void			append_token(t_token **head, t_token *new_token);
 void			remove_token(t_token **head, t_token *token);
 char			**lex_split(const char *str);
+size_t			lex_count_words(char const *str);
+void			toggle_quote_state(char c, int *inside_s_quotes,
+					int *inside_d_quotes);
 t_token			*array2linked_list(char **array);
-// void		free_all_split(char **split);
 int				count_expansion_chars(const char *str);
 
 // Expander
@@ -71,7 +73,7 @@ void			process_nodes(t_tree_node *root, t_shell *shell);
 void			merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node		*build_word_tree(char *word, t_shell *shell);
 char			*replace_var(char *str, char *var, char *value);
-void			handle_env_variables(t_tree_node *root, t_shell *shell,
+void			substitute_variable_value(t_tree_node *root, t_shell *shell,
 					char *dollar_sign);
 
 // Build word tree

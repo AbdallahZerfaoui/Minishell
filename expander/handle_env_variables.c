@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:04:26 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 18:10:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:07:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*extract_keyword(char *dollar_sign, int *len)
 	return (keyword);
 }
 
-void	handle_env_variables(t_tree_node *root, t_shell *shell,
+void	substitute_variable_value(t_tree_node *root, t_shell *shell,
 		char *dollar_sign)
 {
 	int		len;

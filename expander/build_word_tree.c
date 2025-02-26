@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 23:05:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:40:13 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ t_tree_node	*process_word(t_parse_state *state)
 		if (**(state->current) == TK_D_QUOTE)
 			inside_d_quotes = !inside_d_quotes;
 		if (**(state->current) == TK_D_QUOTE
-			|| (**(state->current) == TK_S_QUOTE
-				&& !inside_d_quotes))
+			|| (**(state->current) == TK_S_QUOTE && !inside_d_quotes))
 		{
-			*(state->current) = process_quotes(state);
-			if (!*(state->current))
+			if (!process_quotes(state))
 				return (NULL);
 			else if (**(state->current) == TK_D_QUOTE)
 				inside_d_quotes = !inside_d_quotes;

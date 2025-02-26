@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 18:31:12 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:25:58 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:59:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			handle_child_process(t_cmd_manager *cmd_manager, int chd_nbr);
 void			handle_parent_process(t_cmd_manager *cmd_manager);
 void			execute_command(t_command *cmd, t_shell **shell);
 int				handle_single_builtin(t_cmd_manager *cmd_manager, int *chd_nbr);
-int				handle_single_command(t_command *cmd, t_shell **shell);
+// int				handle_single_command(t_command *cmd, t_shell **shell);
 void			fork_error_handler(t_shell **shell);
 void			command_error_handler(t_command *cmd, t_shell **shell);
 

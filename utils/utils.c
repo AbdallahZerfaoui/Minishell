@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/24 16:51:03 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:45:30 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	unbalanced_quotes(const char *str)
 //TODO are you sure about the if condition?
 void	update_env_array(t_shell **shell)
 {
-	// if ((*shell)->env)
-	// 	(*shell)->env = NULL;
 	(*shell)->env = env_lst_to_array((*shell)->env_lst);
 }
 
