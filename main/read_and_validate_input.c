@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 22:39:28 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:21:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static char	*read_input(int is_interactive)
 		trimmed_line = ft_strtrim(line, " \n");
 		free(line);
 		if (!trimmed_line)
-		{
 			return (NULL);
-		}
 	}
 	else
 	{
@@ -40,9 +38,7 @@ static char	*read_input(int is_interactive)
 			return ("exit");
 		trimmed_line = ft_strtrim(line, "\n");
 		if (!trimmed_line)
-		{
 			return ("exit");
-		}
 	}
 	return (trimmed_line);
 }

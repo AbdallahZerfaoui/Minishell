@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:17:53 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 22:45:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:21:12 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **env)
 	gc_init();
 	shell = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	is_interactive = isatty(fileno(stdin));
-	if ((argc != 1 && is_interactive) || *argv == NULL)	
+	if ((argc != 1 && is_interactive) || *argv == NULL)
 		return (2);
 	init_shell(&shell, env);
 	shell_loop(&shell);

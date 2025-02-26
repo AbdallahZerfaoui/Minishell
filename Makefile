@@ -27,34 +27,21 @@ CFLAGS = -Wall -Wextra -Werror -g
 LIB_FLAGS = -lreadline
 LIBS = minishell-lib.a
 GITHUB_REPO = https://github.com/AbdallahZerfaoui/minishell-lib
-FOLDER_NAME = minishell-lib
 LIBS_DIR = minishell-lib
-# ZIP_URL = $(GITHUB_REPO)/archive/main.zip
-# EXECUTION_SRC = $(shell find ./src -name "*.c") $(wildcard ft_malloc/*.c)
-# GNL_SRC = $(wildcard GetNextLine/*.c)
-MAIN_SRC = $(wildcard main/*.c)
-EXECUTE_SRC = $(wildcard execute/*.c)
-LEXER_SRC = $(wildcard lexer/*.c)
-PARSER_SRC = $(wildcard parser/*.c)
-EXPANDER_SRC = $(wildcard expander/*.c)
+
 BUILTINS_SRC = $(wildcard builtins/*.c)
+EXECUTE_SRC = $(wildcard execute/*.c)
+EXPANDER_SRC = $(wildcard expander/*.c)
 HEREDOC_SRC = $(wildcard heredoc/*.c)
+LEXER_SRC = $(wildcard lexer/*.c)
+MAIN_SRC = $(wildcard main/*.c)
+PARSER_SRC = $(wildcard parser/*.c)
 SIGNALS_SRC = $(wildcard signals/*.c)
 UTILS_SRC = $(wildcard utils/*.c)
-# COLLECTOR_SRC = $(wildcard $(LIBS_DIR)/collector/*.c)
-# SRC = $(EXECUTION_SRC) $(EXECUTE_SRC) $(GNL_SRC)
-# SRC = $(LEXER_SRC) $(PARSER_SRC) $(wildcard *.c) $(EXECUTE_SRC) $(GNL_SRC) $(EXPANDER_SRC)
 SRC = $(UTILS_SRC) $(MAIN_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(PARSER_SRC) $(EXECUTE_SRC) $(BUILTINS_SRC) $(HEREDOC_SRC) $(SIGNALS_SRC)
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
-
-#TEST : ls -la | grep "hello .txt" | sort > output.txt
-#TEST : ls -la | grep ".txt" | sort | wc -l > output.txt
-#test : <"input file">"output file" | <cat>file
-
-# $(info EXECUTE_SRC = $(EXECUTION_SRC))
-# $(info SRC = $(SRC))
 
 # Rules
 all: setup build
@@ -65,18 +52,6 @@ $(NAME): $(OBJ) $(LIBS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# download_resources:
-# 	@if [ ! -d "./$(FOLDER_NAME)" ]; then \
-# 		echo "${GREEN}Downloading $(FOLDER_NAME) from GitHub...${RESET}"; \
-# 		mkdir -p $(LIBS_DIR); \
-# 		curl -L $(ZIP_URL) -o $(LIBS_DIR)/repo.zip; \
-# 		unzip $(LIBS_DIR)/repo.zip -d $(LIBS_DIR); \
-# 		mv $(LIBS_DIR)/minishell-lib-main/* $(LIBS_DIR)/; \
-# 		rm -rf $(LIBS_DIR)/minishell-lib-main $(LIBS_DIR)/repo.zip; \
-# 		echo "${GREEN}$(FOLDER_NAME) downloaded successfully!${RESET}"; \
-# 	else \
-# 		echo "${GREEN}$(FOLDER_NAME) already exists. Skipping download.${RESET}"; \
-# 	fi
 download_resources:
 	git submodule update --init --remote --recursive 
 #be careful with this command it doesnt update if you delete the folder
@@ -106,7 +81,8 @@ fclean: clean collect_tester_garbage
 re: fclean all
 
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < tests/valgrind_test.txt
+	valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) 
+# < tests/valgrind_test.txt
 # valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes ./$(NAME) < valgrind_test.txt
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) < valgrind_test.txt
 

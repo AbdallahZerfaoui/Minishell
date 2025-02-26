@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 20:09:53 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 00:19:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ static void	handle_special_variables(t_tree_node *root, t_shell *shell)
 		}
 		else if (ft_strcmp(root->value, "~") == 0)
 			root->value = ft_strdup(ft_getenv("HOME", shell));
+		else if (ft_strstr(root->value, "$/"))
+		{
+			root->can_expand = 0;
+		}
 	}
 }
 
