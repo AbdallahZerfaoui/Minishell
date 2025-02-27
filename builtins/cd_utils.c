@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:19:05 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:31:56 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*get_cd_destination(char *args[], t_shell **shell)
 	{
 		args[2] = NULL;
 		destination = ft_strjoin(ft_getenv("HOME", *shell), args[1] + 1);
+		(*shell)->exit_status = 0;
 		return (destination);
 	}
 	if (args[1][0] == TK_HYPHEN)

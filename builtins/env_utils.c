@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 23:53:46 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:14:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,16 @@ void	update_env_node(t_env *node, char *new_value)
 {
 	gc_untracked_free(node->content[1]);
 	node->content[1] = ft_strdup(new_value);
+}
+
+void	update_env_value(t_shell **shell, char *key, char *new_value)
+{
+	t_env	*node;
+
+	node = find_node_by_key(key, *shell);
+	if (!node)
+		return ;
+	update_env_node(node, new_value);
 }
 
 // TODO you must update the env array to make it work

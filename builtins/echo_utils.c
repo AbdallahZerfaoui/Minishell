@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:01:06 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/10 20:01:13 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_n_flag(char *args[])
 			j = 1;
 			while (args[i][j] == 'n')
 				j++;
-			if (args[i][j] == '\0')
+			if (args[i][j] == TK_NULL_CHAR)
 				i++;
 			else
 				break ;

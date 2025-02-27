@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 23:21:57 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*read_and_validate_input(int is_interactive)
 	char	*line;
 
 	line = read_input(is_interactive);
-	if (line && line[0] != '\0')
+	if (line && line[0] != TK_NULL_CHAR)
 		g_waiting_for_input = 0;
 	if (!line)
 		return (NULL);

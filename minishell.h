@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:25:46 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:14:33 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ char			*ft_getenv(char *key, t_shell *shell);
 char			*get_env(char **env);
 void			add_env_node(t_env **env_lst, char *entry);
 void			update_env_node(t_env *node, char *new_value);
+void			update_env_value(t_shell **shell, char *key, char *new_value);
 void			update_shlvl(t_shell **shell);
 char			**env_lst_to_array(t_env *env_lst);
 void			update_env_array(t_shell **shell);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:16 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:04:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:00:49 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	process_d_quotes(t_parse_state *state, char *sub_word)
 {
 	t_tree_node	*new_node;
 
-	if (sub_word && *sub_word != '\0' && ft_strcmp(sub_word, state->word) != 0
+	if (sub_word && *sub_word != TK_NULL_CHAR
+		&& ft_strcmp(sub_word, state->word) != 0
 		&& **(state->current) == TK_D_QUOTE)
 	{
 		new_node = build_word_tree(sub_word, state->shell);

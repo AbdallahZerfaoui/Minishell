@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:21:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:58:51 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	init_shell(t_shell **shell, char **env)
 	(*shell)->env_lst = get_env_lst(env);
 	(*shell)->exit_status = 0;
 	(*shell)->hd_must_expand = 1;
+	update_env_value(shell, "OLDPWD", "");
 }
 
 int	is_standalone_input_redirection(t_token *current, t_token *prev,

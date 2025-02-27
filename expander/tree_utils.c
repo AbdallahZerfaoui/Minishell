@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:35:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 17:35:42 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	count_quotes(char *word)
 
 	count = 0;
 	i = 0;
-	if (!word || *word == '\0')
+	if (!word || *word == TK_NULL_CHAR)
 		return (0);
 	while (word[i])
 	{
@@ -46,7 +46,7 @@ int	count_dollars(char *word)
 
 	count = 0;
 	i = 0;
-	if (!word || *word == '\0')
+	if (!word || *word == TK_NULL_CHAR)
 		return (0);
 	while (word[i])
 	{

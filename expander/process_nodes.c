@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:09:02 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:00:29 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ static void	expand_environment_variables(t_tree_node *root, t_shell *shell)
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
 	while (dollar_sign)
 	{
-		if ((*(dollar_sign + 1) == '\0'|| *(dollar_sign + 1) == TK_SPACE)
+		if ((*(dollar_sign + 1) == TK_NULL_CHAR
+				|| *(dollar_sign + 1) == TK_SPACE)
 			&& !root->children
 			&& !root->next_sibling)
 		{

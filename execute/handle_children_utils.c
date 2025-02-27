@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:12:54 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:02:43 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	setup_input(int fd_in, char *hd_filename, int pipe_fd)
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-	if (hd_filename != NULL && hd_filename[0] != '\0')
+	if (hd_filename != NULL && hd_filename[0] != TK_NULL_CHAR)
 	{
 		hd_fd = open(hd_filename, O_RDONLY);
 		unlink(hd_filename);

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 16:40:00 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_tree_node	*build_word_tree(char *word, t_shell *shell)
 	root = create_tree_node(word);
 	if (!root)
 		exit(1);
-	if (!word || *word == '\0')
+	if (!word || *word == TK_NULL_CHAR)
 		return (NULL);
 	else if (are_empty_quotes(word))
 		return (create_tree_node(""));

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:38:07 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/18 21:26:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	are_only_digits(char *str)
 	int	i;
 
 	i = 0;
-	if (!str || str[0] == '\0')
+	if (!str || str[0] == TK_NULL_CHAR)
 		return (0);
 	while (str[i])
 	{

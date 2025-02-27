@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:36:23 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 16:12:59 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	heredoc_loop(t_heredoc *heredoc)
 		line = get_next_line(STDIN_FILENO);
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0';
+			line[len - 1] = TK_NULL_CHAR;
 		if (!line || !ft_strcmp(line, heredoc->stop_word))
 			break ;
 		if ((*(heredoc->shell))->hd_must_expand)

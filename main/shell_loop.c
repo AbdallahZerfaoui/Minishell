@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:22:28 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:17:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	shell_loop(t_shell **shell)
 		line = read_and_validate_input(is_interactive);
 		if (line == NULL)
 			break ;
-		else if (line[0] == '\0')
+		else if (line[0] == TK_NULL_CHAR)
 			continue ;
 		process_line(line, shell);
 	}
