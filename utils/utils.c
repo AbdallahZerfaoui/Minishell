@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 22:45:30 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:21:35 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,18 @@ void	init_shell(t_shell **shell, char **env)
 	(*shell)->env_lst = get_env_lst(env);
 	(*shell)->exit_status = 0;
 	(*shell)->hd_must_expand = 1;
+}
+
+int	is_standalone_input_redirection(t_token *current, t_token *prev,
+		t_token *next)
+{
+	return ((current->type == INFILE) && (!prev || prev->type != WORD) && (next
+			&& next->type == WORD));
+}
+
+int	is_standalone_output_redirection(t_token *current, t_token *prev,
+		t_token *next)
+{
+	return ((current->type == OUTFILE || current->type == APPEND) && (!prev
+			|| prev->type != WORD) && (next && next->type == WORD));
 }

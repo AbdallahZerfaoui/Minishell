@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 20:07:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:41:20 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "minishell-lib/includes/garbage_collector.h"
 # include "minishell-lib/includes/get_next_line.h"
 # include "minishell-lib/includes/libft.h"
+# include "signals/signals.h" //TODO replace it
 # include "structs.h"         // this line must be called before pipex
 # include "execute/pipex.h"
-# include "signals/signals.h" //TODO replace it
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -47,8 +47,8 @@ char			*read_and_validate_input(int is_interactive);
 t_cmd_manager	*prepare_execution(t_cmd_node *cmds, t_shell **shell);
 int				get_fd_in(t_cmd_node *node);
 int				get_fd_out(t_cmd_node *node);
-t_heredoc		*init_heredoc_struct(char *stop_word,
-					char *hd_filename, t_shell **shell);
+t_heredoc		*init_heredoc_struct(char *stop_word, char *hd_filename,
+					t_shell **shell);
 
 // Lexer
 t_token			*lexer(const char *line);
@@ -68,8 +68,10 @@ int				count_expansion_chars(const char *str);
 // Expander
 t_token			*expand(t_token *tokens, t_shell **shell);
 char			*expand_word(char *word, t_shell *shell);
+char			*hd_expand_word_stop_word(char *word, t_shell *shell);
 void			print_tree(t_tree_node *node, int depth, int is_last);
 void			process_nodes(t_tree_node *root, t_shell *shell);
+void			hd_process_nodes(t_tree_node *root, t_shell *shell);
 void			merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node		*build_word_tree(char *word, t_shell *shell);
 char			*replace_var(char *str, char *var, char *value);
@@ -133,6 +135,10 @@ void			init_shell(t_shell **shell, char **env);
 int				count_quotes(char *word);
 t_token			*handle_standalone_redirections(t_token *tokens,
 					t_shell **shell);
+int				is_standalone_input_redirection(t_token *current, t_token *prev,
+					t_token *next);
+int				is_standalone_output_redirection(t_token *current,
+					t_token *prev, t_token *next);
 
 // Heredoc
 void			heredoc_loop(t_heredoc *heredoc);

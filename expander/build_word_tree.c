@@ -6,13 +6,14 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 15:23:21 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 19:40:13 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:40:00 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_escape_sequences(t_tree_node **root, char *word, t_shell *shell)
+static void	handle_escape_sequences(t_tree_node **root, char *word,
+		t_shell *shell)
 {
 	t_tree_node	*new_node;
 

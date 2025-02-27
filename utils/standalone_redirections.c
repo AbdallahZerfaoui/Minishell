@@ -6,25 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:02:47 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 19:19:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:21:23 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static int	is_standalone_input_redirection(t_token *current, t_token *prev,
-		t_token *next)
-{
-	return ((current->type == INFILE) && (!prev || prev->type != WORD) && (next
-			&& next->type == WORD));
-}
-
-static int	is_standalone_output_redirection(t_token *current, t_token *prev,
-		t_token *next)
-{
-	return ((current->type == OUTFILE || current->type == APPEND) && (!prev
-			|| prev->type != WORD) && (next && next->type == WORD));
-}
 
 static int	handle_input_redirection(t_token *next, t_shell **shell)
 {
