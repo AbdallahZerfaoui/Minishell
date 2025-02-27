@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:31:44 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 16:29:54 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:09:02 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ static void	expand_environment_variables(t_tree_node *root, t_shell *shell)
 	dollar_sign = ft_strchr(root->value, TK_DOLLAR);
 	while (dollar_sign)
 	{
-		if (*(dollar_sign + 1) == '\0' && !root->children
+		if ((*(dollar_sign + 1) == '\0'|| *(dollar_sign + 1) == TK_SPACE)
+			&& !root->children
 			&& !root->next_sibling)
 		{
 			root->can_expand = 0;
@@ -114,13 +115,14 @@ static void	expand_environment_variables(t_tree_node *root, t_shell *shell)
 /**
  * This function is recursive and will process the nodes of the tree
  */
-void	process_nodes(t_tree_node *root, t_shell *shell)
+void	process_nodes(t_tree_node *root, t_shell *shell, int is_stop_word)
 {
 	if (!root)
 		return ;
 	handle_escape_sequences(root);
 	handle_special_variables(root, shell);
-	expand_environment_variables(root, shell);
+	if (!is_stop_word)
+		expand_environment_variables(root, shell);
 	if (root->can_expand && root->children == NULL
 		&& root->value[0] == TK_D_QUOTE)
 	{
@@ -128,23 +130,6 @@ void	process_nodes(t_tree_node *root, t_shell *shell)
 		if (!root->value)
 			root->value = ft_strdup("");
 	}
-	process_nodes(root->children, shell);
-	process_nodes(root->next_sibling, shell);
-}
-
-void	hd_process_nodes(t_tree_node *root, t_shell *shell)
-{
-	if (!root)
-		return ;
-	handle_escape_sequences(root);
-	handle_special_variables(root, shell);
-	if (root->can_expand && root->children == NULL
-		&& root->value[0] == TK_D_QUOTE)
-	{
-		root->value = ft_substr(root->value, 1, ft_strlen(root->value) - 2);
-		if (!root->value)
-			root->value = ft_strdup("");
-	}
-	hd_process_nodes(root->children, shell);
-	hd_process_nodes(root->next_sibling, shell);
+	process_nodes(root->children, shell, is_stop_word);
+	process_nodes(root->next_sibling, shell, is_stop_word);
 }

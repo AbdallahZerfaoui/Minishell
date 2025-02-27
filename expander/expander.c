@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 17:04:38 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 16:17:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:54:57 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expand_word(char *word, t_shell *shell)
 	root = build_word_tree(word, shell);
 	if (!root)
 		return (NULL);
-	process_nodes(root, shell);
+	process_nodes(root, shell, 0);
 	merge_tree_nodes(root, &expanded);
 	return (expanded);
 }
@@ -35,7 +35,7 @@ char	*hd_expand_word_stop_word(char *word, t_shell *shell)
 	root = build_word_tree(word, shell);
 	if (!root)
 		return (NULL);
-	hd_process_nodes(root, shell);
+	process_nodes(root, shell, 1);
 	merge_tree_nodes(root, &expanded);
 	return (expanded);
 }

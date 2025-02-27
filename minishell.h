@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 16:41:20 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:25:46 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ t_token			*expand(t_token *tokens, t_shell **shell);
 char			*expand_word(char *word, t_shell *shell);
 char			*hd_expand_word_stop_word(char *word, t_shell *shell);
 void			print_tree(t_tree_node *node, int depth, int is_last);
-void			process_nodes(t_tree_node *root, t_shell *shell);
-void			hd_process_nodes(t_tree_node *root, t_shell *shell);
+void			process_nodes(t_tree_node *root, t_shell *shell,
+					int is_stop_word);
 void			merge_tree_nodes(t_tree_node *root, char **expanded);
 t_tree_node		*build_word_tree(char *word, t_shell *shell);
 char			*replace_var(char *str, char *var, char *value);
@@ -173,6 +173,7 @@ void			update_pwds(t_shell **shell, char *old_pwd);
 char			*get_cd_destination(char *args[], t_shell **shell);
 void			cd(char *args[], t_shell **shell);
 void			ft_unset(char *args[], t_shell **shell);
+void			delete_node_by_key(t_shell **shell, char *key);
 int				is_valid_key(char *key);
 t_env			*last_node(t_env *env_lst);
 int				is_builtin(char *cmd);

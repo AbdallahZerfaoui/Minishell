@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:32:30 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/26 23:53:40 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:44:41 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	cd(char *args[], t_shell **shell)
 
 	old_pwd = get_pwd(shell);
 	destination = get_cd_destination(args, shell);
+	if (!destination)
+		return ;
 	if (chdir(destination) != 0)
 	{
 		handle_cd_error(shell, args);
@@ -28,6 +30,8 @@ void	cd(char *args[], t_shell **shell)
 	{
 		printf("%s\n", destination);
 	}
+	else
+		(*shell)->exit_status = 0;
 	update_pwds(shell, old_pwd);
 	update_env_array(shell);
 }
