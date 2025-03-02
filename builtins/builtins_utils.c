@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:47:07 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/03/02 15:38:04 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:14:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_env	*find_node_by_key(char *key, t_shell *shell)
 	return (NULL);
 }
 
-// TODO you must update the env array to make it work
 void	update_shlvl(t_shell **shell)
 {
 	t_env	*shlvl;

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 18:38:35 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 22:31:56 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:14:14 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	handle_cd_error(t_shell **shell, char *args[])
 	(*shell)->exit_status = 1;
 }
 
-// TODO check if i need to update shell at the end of the fucntion
 void	update_pwds(t_shell **shell, char *old_pwd)
 {
 	char	*new_pwd;

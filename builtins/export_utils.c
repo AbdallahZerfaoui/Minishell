@@ -6,19 +6,11 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:50:20 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:37 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:13:40 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	set_export_value_to_one(t_env **env_lst)
-{
-	t_env	*last;
-
-	last = last_node(*env_lst);
-	last->export = 1;
-}
 
 void	export_invalid_identifier(char *arg, t_shell **shell)
 {
@@ -56,5 +48,4 @@ void	process_export_argument(char *arg, t_shell **shell)
 	else
 		add_env_node(&(*shell)->env_lst, arg);
 	(*shell)->exit_status = 0;
-	set_export_value_to_one(&(*shell)->env_lst);
 }

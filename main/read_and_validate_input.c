@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:29:43 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 22:02:34 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:28:31 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 volatile sig_atomic_t	g_waiting_for_input = 1;
 
-// TODO improve this exit shit
 static char	*read_input(int is_interactive)
 {
 	char	*line;

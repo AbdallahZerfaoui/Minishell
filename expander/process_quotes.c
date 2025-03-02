@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:30:16 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 23:00:49 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:11:30 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	process_s_quotes_inside(t_parse_state *state, char *sub_word)
 	}
 }
 
-// TODO change the name of the variable end_last_part
 char	*process_quotes(t_parse_state *state)
 {
 	int		len;

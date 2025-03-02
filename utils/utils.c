@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 22:40:05 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 22:58:51 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:11:55 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ int	unbalanced_quotes(const char *str)
  * @brief This function updates the env array
  * @note this function is called after each change in the env_lst
  */
-//TODO are you sure about the if condition?
 void	update_env_array(t_shell **shell)
 {
 	(*shell)->env = env_lst_to_array((*shell)->env_lst);
 }
 
-//TODO: check if the exit status should be 1 or 0
 void	init_shell(t_shell **shell, char **env)
 {
 	(*shell)->env = env;

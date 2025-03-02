@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/03/02 15:48:41 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:12:03 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell-lib/includes/garbage_collector.h"
 # include "minishell-lib/includes/get_next_line.h"
 # include "minishell-lib/includes/libft.h"
-# include "signals/signals.h" //TODO replace it
+# include "signals/signals.h"
 # include "structs.h"         // this line must be called before pipex
 # include "execute/execute.h"
 # include <errno.h>

@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:49:36 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 22:10:31 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:28:21 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	handle_last_child(t_cmd_manager *cmd_manager, int chd_nbr)
 	cmd_manager->pid = getpid();
 }
 
-// TODO fix this shit NOW
 void	handle_mid_children(t_cmd_manager *cmd_manager, int chd_nbr)
 {
 	int	fd_out;

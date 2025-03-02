@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/03/02 15:38:08 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:14:07 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_env	*last_node(t_env *env_lst)
  * step 2: split the entry by '='
  * step 3: if the env_lst is empty, assign the new node to the env_lst
  */
-// TODO be careful with the split, some lines contain several '='
 void	add_env_node(t_env **env_lst, char *entry)
 {
 	t_env	*new;
