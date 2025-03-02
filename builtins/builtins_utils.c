@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:47:07 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/23 21:23:16 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 15:38:04 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,20 @@ t_env	*find_node_by_key(char *key, t_shell *shell)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+// TODO you must update the env array to make it work
+void	update_shlvl(t_shell **shell)
+{
+	t_env	*shlvl;
+	int		new_lvl;
+	char	*new_lvl_str;
+
+	shlvl = find_node_by_key("SHLVL", *shell);
+	if (!shlvl)
+		return ;
+	new_lvl = ft_atoi(shlvl->content[1]) + 1;
+	new_lvl_str = ft_itoa(new_lvl);
+	update_env_node(shlvl, new_lvl_str);
+	update_env_array(shell);
 }

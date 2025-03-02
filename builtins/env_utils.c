@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 21:15:13 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 22:14:07 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 15:38:08 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,4 @@ void	update_env_value(t_shell **shell, char *key, char *new_value)
 	if (!node)
 		return ;
 	update_env_node(node, new_value);
-}
-
-// TODO you must update the env array to make it work
-void	update_shlvl(t_shell **shell)
-{
-	t_env	*shlvl;
-	int		new_lvl;
-	char	*new_lvl_str;
-
-	shlvl = find_node_by_key("SHLVL", *shell);
-	if (!shlvl)
-		return ;
-	new_lvl = ft_atoi(shlvl->content[1]) + 1;
-	new_lvl_str = ft_itoa(new_lvl);
-	update_env_node(shlvl, new_lvl_str);
-	update_env_array(shell);
 }

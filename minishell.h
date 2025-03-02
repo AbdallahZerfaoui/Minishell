@@ -6,7 +6,7 @@
 /*   By: azerfaou <azerfaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:14:52 by azerfaou          #+#    #+#             */
-/*   Updated: 2025/02/27 22:14:33 by azerfaou         ###   ########.fr       */
+/*   Updated: 2025/03/02 15:48:41 by azerfaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "minishell-lib/includes/libft.h"
 # include "signals/signals.h" //TODO replace it
 # include "structs.h"         // this line must be called before pipex
-# include "execute/pipex.h"
+# include "execute/execute.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -57,7 +57,7 @@ t_token			*lexer(const char *line);
 t_token			*create_token(char *value, t_token_type type);
 t_token			*get_last_token(t_token *token);
 void			append_token(t_token **head, t_token *new_token);
-void			remove_token(t_token **head, t_token *token);
+// void			remove_token(t_token **head, t_token *token);
 char			**lex_split(const char *str);
 size_t			lex_count_words(char const *str);
 void			toggle_quote_state(char c, int *inside_s_quotes,
@@ -129,7 +129,7 @@ int				check_tokens(t_token *tokens, t_shell **shell);
 int				check_cmds(t_cmd_node *cmds, t_shell **shell);
 
 // Utils
-int				len_tokens_lst(t_token *tokens);
+// int				len_tokens_lst(t_token *tokens);
 int				unbalanced_quotes(const char *str);
 void			init_shell(t_shell **shell, char **env);
 int				count_quotes(char *word);
@@ -154,7 +154,7 @@ char			*get_pwd(t_shell **shell);
 int				pwd(t_shell **shell);
 t_env			*get_env_lst(char **env);
 char			*ft_getenv(char *key, t_shell *shell);
-char			*get_env(char **env);
+// char			*get_env(char **env);
 void			add_env_node(t_env **env_lst, char *entry);
 void			update_env_node(t_env *node, char *new_value);
 void			update_env_value(t_shell **shell, char *key, char *new_value);
@@ -191,10 +191,9 @@ int				get_n_flag(char *args[]);
 
 // Memory
 void			*free_till_n(char **result, size_t j);
-void			free_if_not_in_gc(char *str);
+// void			free_if_not_in_gc(char *str);
 void			free_all_split(char **split);
-void			free_tokens(t_token *head);
-void			free_cmds(t_cmd_node *head);
-// t_exe	*parse_line(char *line, char **env);
+// void			free_tokens(t_token *head);
+// void			free_cmds(t_cmd_node *head);
 
 #endif
